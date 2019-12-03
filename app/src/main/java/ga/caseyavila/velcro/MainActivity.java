@@ -2,13 +2,11 @@ package ga.caseyavila.velcro;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import ga.caseyavila.velcrotest.R;
-
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 

@@ -12,11 +12,12 @@ public class User {
 
     private String username;
     private String password;
-    static String school_url = "ahs-fusd-ca";
-    private static String full_url = "https://" + User.school_url + ".schoolloop.com/portal/login?etarget=login_form";
+    private String school_url = "ahs-fusd-ca";
+    private String full_url = "https://" + this.school_url + ".schoolloop.com/portal/login?etarget=login_form";
     private Document login_document;
-    private Connection.Response login_response;
     private String form_data_id;
+    private Connection.Response login_response;
+    private Connection.Response main_response;
 
     public String getUsername() {
         return this.username;
@@ -34,6 +35,13 @@ public class User {
         this.password = password;
     }
 
+    public String getSchool_url() {
+        return this.school_url;
+    }
+
+    public void setSchool_url(String school_url) {
+        this.school_url = school_url;
+    }
 
     private void getLoginResponse() {
         try {
