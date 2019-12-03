@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ga.caseyavila.velcro", appContext.getPackageName());
+        assertEquals("ga.caseyavila.velcrotest", appContext.getPackageName());
     }
 }

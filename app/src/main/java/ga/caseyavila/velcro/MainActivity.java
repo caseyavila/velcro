@@ -1,51 +1,53 @@
 package ga.caseyavila.velcro;
 
-import android.os.Bundle;
-import android.view.MenuItem;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import android.os.Bundle;
+import ga.caseyavila.velcrotest.R;
+
+import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_grades:
-                    mTextMessage.setText(R.string.title_grades);
-                    return true;
-                case R.id.navigation_assignments:
-                    mTextMessage.setText(R.string.title_assignments);
-                    return true;
-                case R.id.navigation_loopmail:
-                    mTextMessage.setText(R.string.title_loopmail);
-                    return true;
-                case R.id.navigation_locker:
-                    mTextMessage.setText(R.string.title_locker);
-                    return true;
-            }
-            return false;
-        }
-    };
+    private TextView text1;
+    private TextView text2;
+    private TextView text3;
+    private TextView text4;
+    private EditText input1;
+    private EditText input2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        text1 = (TextView) findViewById(R.id.text1);
+        text2 = (TextView) findViewById(R.id.text2);
+        text3 = (TextView) findViewById(R.id.text3);
+        text4 = (TextView) findViewById(R.id.text4);
+        input1 = (EditText) findViewById(R.id.input1);
+        input2 = (EditText) findViewById(R.id.input2);
+    }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);  //Set toolbar as action bar
-        getSupportActionBar().setDisplayShowTitleEnabled(true);
+    public void find_website(View v) throws ExecutionException, InterruptedException, IOException {
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        User casey = new User();
+        casey.setUsername(input1.getText().toString());
+        casey.setPassword(input2.getText().toString());
+
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("Account", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("username", input1.getText().toString());
+        editor.putString("password", input2.getText().toString());
+        editor.apply();
+
+        text1.setText(casey.getTeachers());
+        text2.setText(casey.getGrades());
+        text3.setText(casey.getClasses());
     }
 }
