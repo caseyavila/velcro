@@ -14,8 +14,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/username"
             android:inputType="text"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
+            app:layout_constraintStart_toStartOf="@+id/button1"
+            app:layout_constraintEnd_toEndOf="@+id/button1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/text1">
     </EditText>
@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/password"
             android:inputType="textPassword"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
+            app:layout_constraintStart_toStartOf="@+id/button1"
+            app:layout_constraintEnd_toEndOf="@+id/button1"
             app:layout_constraintTop_toBottomOf="@+id/input1">
     </EditText>
 
@@ -41,10 +41,10 @@
             android:gravity="center"
             android:paddingTop="4dp"
             android:paddingBottom="4dp"
-            app:layout_constraintStart_toStartOf="@+id/button2"
-            app:layout_constraintEnd_toEndOf="@+id/button2"
+            app:layout_constraintStart_toStartOf="@+id/button1"
+            app:layout_constraintEnd_toEndOf="@+id/button1"
             app:layout_constraintTop_toTopOf="@+id/input1"
-            app:layout_constraintBottom_toTopOf="@+id/button2">
+            app:layout_constraintBottom_toTopOf="@+id/button1">
     </TextView>
 
 
@@ -93,7 +93,7 @@
             android:layout_height="wrap_content"
             android:text="@string/submit"
             tools:ignore="MissingConstraints"
-            android:id="@+id/button2"
+            android:id="@+id/button1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"

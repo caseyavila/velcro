@@ -1,12 +1,13 @@
 package ga.caseyavila.velcro;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
-import java.util.concurrent.*;
 
 public class User {
 
@@ -63,39 +64,33 @@ public class User {
         this.form_data_id = form_data_id.val();
     }
 
-    public Connection.Response getMainDocument() throws ExecutionException, InterruptedException {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        Callable<Connection.Response> callable = () -> {
-            getLoginResponse();
-            getLoginDocument();
-            getFormDataId();
-            Connection.Response main_response = Jsoup.connect(full_url)
-                    .method(Connection.Method.POST)
-                    .data("login_name", getUsername())
-                    .data("password", getPassword())
-                    .data("event_override", "login")
-                    .data("form_data_id", form_data_id)
-                    .cookies(this.login_response.cookies())
-                    .execute();
-            main_response.bufferUp();
-            return main_response;
-        };
-        Future<Connection.Response> future = executorService.submit(callable);
-        return future.get();
+    public void getMainDocument() throws IOException {
+        getLoginResponse();
+        getLoginDocument();
+        getFormDataId();
+        main_response = Jsoup.connect(full_url)
+                .method(Connection.Method.POST)
+                .data("login_name", getUsername())
+                .data("password", getPassword())
+                .data("event_override", "login")
+                .data("form_data_id", form_data_id)
+                .cookies(login_response.cookies())
+                .execute();
+        main_response = main_response.bufferUp();
     }
 
-    public String getClasses() throws ExecutionException, InterruptedException, IOException {
-        Elements classes = getMainDocument().parse().getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
+    public String getClasses() throws IOException {
+        Elements classes = this.main_response.parse().getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
         return classes.text();
     }
 
-    public String getTeachers() throws ExecutionException, InterruptedException, IOException {
-        Elements teachers = getMainDocument().parse().getElementsByClass("teacher co-teacher");
+    public String getTeachers() throws IOException {
+        Elements teachers = this.main_response.parse().getElementsByClass("teacher co-teacher");
         return teachers.text();
     }
 
-    public String getGrades() throws ExecutionException, InterruptedException, IOException {
-        Elements grades = getMainDocument().parse().getElementsByClass("float_l grade");
+    public String getGrades() throws IOException {
+        Elements grades = this.main_response.parse().getElementsByClass("float_l grade");
         return grades.text();
     }
 }
