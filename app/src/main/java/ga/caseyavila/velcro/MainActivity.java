@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 import java.util.concurrent.*;
 
+import static ga.caseyavila.velcro.LoginActivity.casey;
+
 public class MainActivity extends AppCompatActivity {
 
     private TextView text1;
@@ -32,45 +34,17 @@ public class MainActivity extends AppCompatActivity {
         input1 = (EditText) findViewById(R.id.input1);
         input2 = (EditText) findViewById(R.id.input2);
         button1 = (Button) findViewById(R.id.button1);
+        try {
+            find_website();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void find_website(View v) throws IOException {
-        button1.setEnabled(false);
-        text1.setText("");
-        text2.setText(R.string.loading);
-        text3.setText("");
 
-        User casey = new User();
-        casey.setUsername(input1.getText().toString());
-        casey.setPassword(input2.getText().toString());
-
-//        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("Account", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString("username", casey.getUsername());
-//        editor.putString("password", casey.getPassword());
-//        editor.apply();
-
-        Thread thread = new Thread(new Runnable() {
-            public void run() {
-                try {
-                    casey.getMainDocument();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                runOnUiThread(new Runnable() {
-                    public void run() {
-                        try {
-                            text1.setText(casey.getTeachers());
-                            text2.setText(casey.getGrades());
-                            text3.setText(casey.getClasses());
-                            button1.setEnabled(true);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
-        thread.start();
+    public void find_website() throws IOException {
+        text1.setText(casey.getTeachers());
+        text2.setText(casey.getGrades());
+        text3.setText(casey.getClasses());
     }
 }
