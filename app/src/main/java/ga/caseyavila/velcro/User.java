@@ -1,7 +1,5 @@
 package ga.caseyavila.velcro;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -53,14 +53,14 @@
             android:onClick="login"/>
 
     <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible"
-            android:id="@+id/progress_bar"/>
+            android:indeterminate="true"
+            android:max="100"
+            android:visibility="visible"
+            android:layout_marginTop="-7dp"
+            tools:ignore="MissingConstraints"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

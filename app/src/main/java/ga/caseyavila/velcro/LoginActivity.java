@@ -1,16 +1,11 @@
 package ga.caseyavila.velcro;
 
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.io.IOException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
     public static User casey = new User();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -29,15 +24,16 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.password_input);
         loginButton = findViewById(R.id.login_button);
         progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
 
     }
 
-    public void login(View v) throws InterruptedException {
-
+    public void login (View v) {
         casey.setUsername(usernameText.getText().toString());
         casey.setPassword(passwordText.getText().toString());
 
-        new Login(this).execute();
+        progressBar.setVisibility(View.VISIBLE);
 
+        new LoginService(this).execute();
     }
 }
