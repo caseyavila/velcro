@@ -77,18 +77,31 @@ public class User {
         main_response = main_response.bufferUp();
     }
 
-    public String getClasses() throws IOException {
+    public boolean isLoggedIn() throws IOException {
+        return this.main_response.parse().title().contains("Portal");
+    }
+
+    public int getNumberOfPeriods() throws IOException {
+        int elements = 0;
+        Elements periods = this.main_response.parse().getElementsByAttributeValueMatching("class", "period");
+        for (Element period : periods) {
+            elements++;
+        }
+        return elements;
+    }
+
+    public String getClasses(int period) throws IOException {
         Elements classes = this.main_response.parse().getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
-        return classes.text();
+        return classes.get(period).text();
     }
 
-    public String getTeachers() throws IOException {
+    public String getTeachers(int period) throws IOException {
         Elements teachers = this.main_response.parse().getElementsByClass("teacher co-teacher");
-        return teachers.text();
+        return teachers.get(period).text();
     }
 
-    public String getGrades() throws IOException {
+    public String getGrades(int period) throws IOException {
         Elements grades = this.main_response.parse().getElementsByClass("float_l grade");
-        return grades.text();
+        return grades.get(period).text();
     }
 }

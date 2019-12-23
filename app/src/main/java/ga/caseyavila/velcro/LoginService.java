@@ -11,12 +11,11 @@ import static ga.caseyavila.velcro.LoginActivity.casey;
 
 public class LoginService extends AsyncTask<Void, Void, Void> {
 
-    private static WeakReference<Activity> activityReference;
+    private WeakReference<Activity> activityReference;
 
     LoginService(Activity activity) {
         activityReference = new WeakReference<>(activity);
     }
-
 
     @Override
     protected void onPreExecute() {
@@ -33,9 +32,20 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     }
     @Override
     protected void onPostExecute(Void result) {
+
         Activity activity = activityReference.get();
-        Intent intent = new Intent(activity, MainActivity.class);
-        activity.startActivity(intent);
+
+        try {
+            if (casey.isLoggedIn()) {  //Alert user if username and password doesn't match
+                Intent intent = new Intent(activity, MainActivity.class);
+                activity.startActivity(intent);
+                activity.findViewById(R.id.login_notification).setVisibility(View.INVISIBLE);
+            } else {
+                activity.findViewById(R.id.login_notification).setVisibility(View.VISIBLE);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         activity.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
     }
 }
