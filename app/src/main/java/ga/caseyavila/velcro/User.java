@@ -21,7 +21,7 @@ public class User {
     public static SparseArray<String> teacherMap = new SparseArray<String>();
     public static SparseArray<String> gradeMap = new SparseArray<String>();
     public static int numberOfPeriods;
-    public static boolean isLoggedIn = false;
+    public static boolean isLoggedIn;
 
     public String getUsername() {
         return this.username;
