@@ -28,6 +28,8 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
             casey.findNumberOfPeriods();
             casey.teacherFinder();
             casey.gradeFinder();
+            casey.classFinder();
+            casey.percentageFinder();
         } catch (IOException e) {
             e.printStackTrace();
         }

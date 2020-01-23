@@ -20,6 +20,8 @@ public class User {
     private Connection.Response main_response;
     public static SparseArray<String> teacherMap = new SparseArray<String>();
     public static SparseArray<String> gradeMap = new SparseArray<String>();
+    public static SparseArray<String> classMap = new SparseArray<String>();
+    public static SparseArray<String> percentageMap = new SparseArray<String>();
     public static int numberOfPeriods;
     public static boolean isLoggedIn;
 
@@ -97,9 +99,11 @@ public class User {
         numberOfPeriods = elements;
     }
 
-    public String classFinder(int period) throws IOException {
+    public void classFinder() throws IOException {
         Elements classes = this.main_response.parse().getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
-        return classes.get(period).text();
+        for (int i = 0; i < numberOfPeriods; i++) {
+            classMap.put(i, classes.get(i).text());
+        }
     }
 
     public void teacherFinder() throws IOException {
@@ -113,6 +117,13 @@ public class User {
         Elements grades = this.main_response.parse().getElementsByClass("float_l grade");
         for (int i = 0; i < numberOfPeriods; i++) {
             gradeMap.put(i, grades.get(i).text());
+        }
+    }
+
+    public void percentageFinder() throws IOException {
+        Elements percentages = this.main_response.parse().getElementsByClass("float_l percent");
+        for (int i = 0; i < numberOfPeriods; i++) {
+            percentageMap.put(i, percentages.get(i).text());
         }
     }
 }

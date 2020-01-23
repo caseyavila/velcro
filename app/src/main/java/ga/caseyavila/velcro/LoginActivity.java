@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -28,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         loginNotification.setVisibility(View.INVISIBLE);
         progressBar.setVisibility(View.INVISIBLE);
-
     }
 
     public void login (View v) {
