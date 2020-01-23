@@ -18,9 +18,10 @@ public class User {
     private String form_data_id;
     private Connection.Response login_response;
     private Connection.Response main_response;
-    private SparseArray<String> teacherMap = new SparseArray<String>();
-    private SparseArray<String> gradeMap = new SparseArray<String>();
-    private int numberOfPeriods;
+    public static SparseArray<String> teacherMap = new SparseArray<String>();
+    public static SparseArray<String> gradeMap = new SparseArray<String>();
+    public static int numberOfPeriods;
+    public static boolean isLoggedIn = false;
 
     public String getUsername() {
         return this.username;
@@ -81,21 +82,19 @@ public class User {
         main_response = main_response.bufferUp();
     }
 
-    public boolean isLoggedIn() throws IOException {
-        return this.main_response.parse().title().contains("Portal");
+    public void loginChecker() throws IOException {
+        if (this.main_response.parse().title().contains("Portal")) {
+            isLoggedIn = true;
+        }
     }
 
     public void findNumberOfPeriods() throws IOException {
-        int elements = 0;
         Elements periods = this.main_response.parse().getElementsByAttributeValueMatching("class", "period");
+        int elements = 0;
         for (Element period : periods) {
             elements++;
         }
         numberOfPeriods = elements;
-    }
-
-    public int numberOfPeriods() {
-        return numberOfPeriods;
     }
 
     public String classFinder(int period) throws IOException {
@@ -110,18 +109,10 @@ public class User {
         }
     }
 
-    public String teacher(int period) {
-        return teacherMap.get(period);
-    }
-
     public void gradeFinder() throws IOException {
         Elements grades = this.main_response.parse().getElementsByClass("float_l grade");
         for (int i = 0; i < numberOfPeriods; i++) {
             gradeMap.put(i, grades.get(i).text());
         }
-    }
-
-    public String grade(int period) {
-        return gradeMap.get(period);
     }
 }

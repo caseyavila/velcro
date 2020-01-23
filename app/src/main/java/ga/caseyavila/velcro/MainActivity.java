@@ -8,8 +8,6 @@ import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import java.io.IOException;
 
-import static ga.caseyavila.velcro.LoginActivity.casey;
-
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout linearLayout;
@@ -28,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCards() throws IOException {
 
-        int numberOfCards = casey.numberOfPeriods();
+        int numberOfCards = User.numberOfPeriods;
 
         linearLayout = findViewById(R.id.linear_layout);
 
@@ -59,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
             TextView grades = new TextView(this);
             grades.setPadding(20, 20, 20, 20);
             grades.setLayoutParams(gradesLayoutParams);
-            grades.setText(casey.grade(i));
+            grades.setText(User.gradeMap.get(i));
             teachers.setLayoutParams(teacherLayoutParams);
-            teachers.setText(casey.teacher(i));
+            teachers.setText(User.teacherMap.get(i));
 
             constraintLayout.addView(teachers);
             constraintLayout.addView(grades);
