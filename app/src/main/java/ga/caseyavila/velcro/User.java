@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro;
 
+import android.util.SparseArray;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -17,6 +18,9 @@ public class User {
     private String form_data_id;
     private Connection.Response login_response;
     private Connection.Response main_response;
+    private SparseArray<String> teacherMap = new SparseArray<String>();
+    private SparseArray<String> gradeMap = new SparseArray<String>();
+    private int numberOfPeriods;
 
     public String getUsername() {
         return this.username;
@@ -81,27 +85,43 @@ public class User {
         return this.main_response.parse().title().contains("Portal");
     }
 
-    public int getNumberOfPeriods() throws IOException {
+    public void findNumberOfPeriods() throws IOException {
         int elements = 0;
         Elements periods = this.main_response.parse().getElementsByAttributeValueMatching("class", "period");
         for (Element period : periods) {
             elements++;
         }
-        return elements;
+        numberOfPeriods = elements;
     }
 
-    public String getClasses(int period) throws IOException {
+    public int numberOfPeriods() {
+        return numberOfPeriods;
+    }
+
+    public String classFinder(int period) throws IOException {
         Elements classes = this.main_response.parse().getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
         return classes.get(period).text();
     }
 
-    public String getTeachers(int period) throws IOException {
+    public void teacherFinder() throws IOException {
         Elements teachers = this.main_response.parse().getElementsByClass("teacher co-teacher");
-        return teachers.get(period).text();
+        for (int i = 0; i < numberOfPeriods; i++) {
+            teacherMap.put(i, teachers.get(i).text());
+        }
     }
 
-    public String getGrades(int period) throws IOException {
+    public String teacher(int period) {
+        return teacherMap.get(period);
+    }
+
+    public void gradeFinder() throws IOException {
         Elements grades = this.main_response.parse().getElementsByClass("float_l grade");
-        return grades.get(period).text();
+        for (int i = 0; i < numberOfPeriods; i++) {
+            gradeMap.put(i, grades.get(i).text());
+        }
+    }
+
+    public String grade(int period) {
+        return gradeMap.get(period);
     }
 }

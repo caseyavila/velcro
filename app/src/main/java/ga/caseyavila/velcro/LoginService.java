@@ -25,6 +25,9 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         try {
             casey.getMainDocument();
+            casey.findNumberOfPeriods();
+            casey.teacherFinder();
+            casey.gradeFinder();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,7 +39,7 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
         Activity activity = activityReference.get();
 
         try {
-            if (casey.isLoggedIn()) {  //Alert user if username and password doesn't match
+            if (casey.isLoggedIn()) {  // Alert user if username and password doesn't match
                 Intent intent = new Intent(activity, MainActivity.class);
                 activity.startActivity(intent);
                 activity.findViewById(R.id.login_notification).setVisibility(View.INVISIBLE);

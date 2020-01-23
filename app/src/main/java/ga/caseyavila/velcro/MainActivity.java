@@ -5,7 +5,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-
+import androidx.constraintlayout.widget.ConstraintLayout;
 import java.io.IOException;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
@@ -28,27 +28,44 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCards() throws IOException {
 
-        int numberOfCards = casey.getNumberOfPeriods();
+        int numberOfCards = casey.numberOfPeriods();
 
         linearLayout = findViewById(R.id.linear_layout);
+
+        LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        cardViewLayoutParams.setMargins(20, 20, 20, 0);
 
         for (int i = 0; i < numberOfCards; i++) {
 
             CardView cardView = new CardView(this);
-
-            LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT);
-
-            cardViewLayoutParams.setMargins(10, 10, 10, 0);
-
             cardView.setLayoutParams(cardViewLayoutParams);
 
-            TextView textView = new TextView(this);
-            textView.setText(casey.getTeachers(i));
+            ConstraintLayout constraintLayout = new ConstraintLayout(cardView.getContext());
 
-            cardView.addView(textView);
+            ConstraintLayout.LayoutParams teacherLayoutParams = new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            teacherLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
 
+            ConstraintLayout.LayoutParams gradesLayoutParams = new ConstraintLayout.LayoutParams(
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT);
+            gradesLayoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+
+            TextView teachers = new TextView(this);
+            teachers.setPadding(20, 20, 20, 20);
+            TextView grades = new TextView(this);
+            grades.setPadding(20, 20, 20, 20);
+            grades.setLayoutParams(gradesLayoutParams);
+            grades.setText(casey.grade(i));
+            teachers.setLayoutParams(teacherLayoutParams);
+            teachers.setText(casey.teacher(i));
+
+            constraintLayout.addView(teachers);
+            constraintLayout.addView(grades);
+            cardView.addView(constraintLayout);
             linearLayout.addView(cardView);
         }
     }
