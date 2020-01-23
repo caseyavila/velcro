@@ -23,6 +23,7 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
+            User.isLoggedIn = false;
             casey.getMainDocument();
             casey.loginChecker();
             casey.findNumberOfPeriods();
