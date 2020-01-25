@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             ConstraintLayout.LayoutParams classLayoutParams = new ConstraintLayout.LayoutParams(
                     ConstraintLayout.LayoutParams.WRAP_CONTENT,
                     ConstraintLayout.LayoutParams.WRAP_CONTENT);
-            classLayoutParams.width = 300;
+            classLayoutParams.width = 350;
             classLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
             classLayoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
 
