@@ -114,16 +114,22 @@ public class User {
     }
 
     public void gradeFinder() throws IOException {
-        Elements grades = this.main_response.parse().getElementsByClass("float_l grade");
-        for (int i = 0; i < numberOfPeriods; i++) {
-            gradeMap.put(i, grades.get(i).text());
+        int period = 0;
+        Elements rows = this.main_response.parse().getElementsByClass("student_row");
+        for (Element row : rows) {
+            Elements grade = row.getElementsByClass("float_l grade");
+            gradeMap.put(period, grade.text());
+            period++;
         }
     }
 
     public void percentageFinder() throws IOException {
-        Elements percentages = this.main_response.parse().getElementsByClass("float_l percent");
-        for (int i = 0; i < numberOfPeriods; i++) {
-            percentageMap.put(i, percentages.get(i).text());
+        int period = 0;
+        Elements rows = this.main_response.parse().getElementsByClass("student_row");
+        for (Element row : rows) {
+            Elements percent = row.getElementsByClass("float_l percent");
+            percentageMap.put(period, percent.text());
+            period++;
         }
     }
 }
