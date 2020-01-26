@@ -1,7 +1,9 @@
 package ga.caseyavila.velcro;
 
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,15 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameText = findViewById(R.id.username_input);
         passwordText = findViewById(R.id.password_input);
+        passwordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_GO) {
+                    login(loginButton);
+                }
+                return false;
+            }
+        });
         loginButton = findViewById(R.id.login_button);
         loginNotification = findViewById(R.id.login_notification);
         progressBar = findViewById(R.id.progress_bar);
@@ -30,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBar.setVisibility(View.INVISIBLE);
     }
 
-    public void login (View v) {
+    public void login(View v) {
         casey.setUsername(usernameText.getText().toString());
         casey.setPassword(passwordText.getText().toString());
 

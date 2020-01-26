@@ -26,6 +26,7 @@
     <EditText
             android:id="@+id/password_input"
             android:hint="@string/password"
+            android:imeOptions="actionGo"
             android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,9 +40,9 @@
     </EditText>
 
     <Button
+            android:id="@+id/login_button"
             android:text="@string/login"
             tools:ignore="MissingConstraints"
-            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="40dp"
