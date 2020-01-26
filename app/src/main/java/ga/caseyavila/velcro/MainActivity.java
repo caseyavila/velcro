@@ -9,7 +9,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
