@@ -2,11 +2,13 @@ package ga.caseyavila.velcro;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.LoginActivity.casey;
+import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
 
 public class LoginService extends AsyncTask<Void, Void, Void> {
 
@@ -34,6 +36,10 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
                 casey.gradeFinder();
                 casey.classFinder();
                 casey.percentageFinder();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("username", casey.getUsername());
+                editor.putString("password", casey.getPassword());
+                editor.apply();
             }
         } catch (IOException e) {
             e.printStackTrace();

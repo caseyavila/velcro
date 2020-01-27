@@ -31,6 +31,12 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameText = findViewById(R.id.username_input);
         passwordText = findViewById(R.id.password_input);
+        loginButton = findViewById(R.id.login_button);
+        loginNotification = findViewById(R.id.login_notification);
+        progressBar = findViewById(R.id.progress_bar);
+        loginNotification.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.INVISIBLE);
+
         passwordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -40,24 +46,30 @@ public class LoginActivity extends AppCompatActivity {
                 return false;
             }
         });
-        loginButton = findViewById(R.id.login_button);
-        loginNotification = findViewById(R.id.login_notification);
-        progressBar = findViewById(R.id.progress_bar);
-        loginNotification.setVisibility(View.INVISIBLE);
-        progressBar.setVisibility(View.INVISIBLE);
+        if(sharedPreferences.contains("username")) {
+            autoLogin();
+        }
     }
 
     public void login(View v) {
-        loginButton.setEnabled(false);
         casey.setUsername(usernameText.getText().toString());
         casey.setPassword(passwordText.getText().toString());
 
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("username", casey.getUsername());
-        editor.putString("password", casey.getPassword());
-
         progressBar.setVisibility(View.VISIBLE);
+        loginButton.setEnabled(false);
 
+        new LoginService(this).execute();
+    }
+
+    public void autoLogin() {
+        progressBar.setVisibility(View.VISIBLE);
+        loginButton.setEnabled(false);
+
+        usernameText.setText(sharedPreferences.getString("username", "error"));
+        casey.setUsername(sharedPreferences.getString("username", "error"));
+
+        passwordText.setText(sharedPreferences.getString("password", "error"));
+        casey.setPassword(sharedPreferences.getString("password", "error"));
         new LoginService(this).execute();
     }
 }
