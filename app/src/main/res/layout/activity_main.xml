@@ -7,22 +7,28 @@
         android:layout_height="match_parent"
         tools:context="ga.caseyavila.velcro.MainActivity">
 
-
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false">
+            android:layout_height="match_parent">
 
-        <LinearLayout
-                android:id="@+id/linear_layout"
+        <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingBottom="20px"
-                android:clipToPadding="false">
+                android:layout_height="match_parent"
+                android:clipChildren="false">
 
-        </LinearLayout>
+            <LinearLayout
+                    android:id="@+id/linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="20px"
+                    android:clipToPadding="false">
 
-    </ScrollView>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

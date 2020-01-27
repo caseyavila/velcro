@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro;
 
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -7,8 +8,10 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.google.android.material.card.MaterialCardView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,10 +20,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
+        refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
+
+        refreshLayout.setOnRefreshListener(
+            new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    new RefreshService((Activity) findViewById(R.id.linear_layout).getContext()).execute();
+                }
+            }
+        );
         addCards();
     }
 
-    private void addCards() {
+    public void addCards() {
 
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
 
@@ -31,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < User.numberOfPeriods; i++) {
 
-            CardView cardView = new CardView(this);
+            MaterialCardView cardView = new MaterialCardView(this);
+            cardView.setCardElevation(4f);
             cardView.setLayoutParams(cardViewLayoutParams);
 
             ConstraintLayout constraintLayout = new ConstraintLayout(cardView.getContext());
