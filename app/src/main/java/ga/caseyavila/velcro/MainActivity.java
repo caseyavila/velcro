@@ -24,8 +24,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCards() {
 
-        int numberOfCards = User.numberOfPeriods;
-
         linearLayout = findViewById(R.id.linear_layout);
 
         LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT);
         cardViewLayoutParams.setMargins(20, 20, 20, 0);
 
-        for (int i = 0; i < numberOfCards; i++) {
+        for (int i = 0; i < User.numberOfPeriods; i++) {
 
             CardView cardView = new CardView(this);
             cardView.setLayoutParams(cardViewLayoutParams);
