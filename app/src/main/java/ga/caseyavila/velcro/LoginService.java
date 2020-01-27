@@ -26,11 +26,15 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
             User.isLoggedIn = false;
             casey.getMainDocument();
             casey.loginChecker();
-            casey.findNumberOfPeriods();
-            casey.teacherFinder();
-            casey.gradeFinder();
-            casey.classFinder();
-            casey.percentageFinder();
+            if (!User.isLoggedIn) {
+                return null;
+            } else {
+                casey.findNumberOfPeriods();
+                casey.teacherFinder();
+                casey.gradeFinder();
+                casey.classFinder();
+                casey.percentageFinder();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,6 +44,7 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
 
         Activity activity = activityReference.get();
+        activity.findViewById(R.id.login_button).setEnabled(true);
 
         if (User.isLoggedIn) {  // Alert user if username and password doesn't match
             Intent intent = new Intent(activity, MainActivity.class);

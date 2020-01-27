@@ -12,8 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private LinearLayout linearLayout;
-
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCards() {
 
-        linearLayout = findViewById(R.id.linear_layout);
+        LinearLayout linearLayout = findViewById(R.id.linear_layout);
 
         LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

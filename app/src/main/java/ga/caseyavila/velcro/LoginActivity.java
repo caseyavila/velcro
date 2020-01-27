@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View v) {
+        loginButton.setEnabled(false);
         casey.setUsername(usernameText.getText().toString());
         casey.setPassword(passwordText.getText().toString());
 
