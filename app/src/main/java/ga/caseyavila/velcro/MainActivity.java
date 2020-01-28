@@ -1,29 +1,43 @@
 package ga.caseyavila.velcro;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.card.MaterialCardView;
+import static ga.caseyavila.velcro.LoginActivity.casey;
+
 
 public class MainActivity extends AppCompatActivity {
+
+    private ProgressBar progressBar;
+    public static SharedPreferences sharedPreferences;
+
+    static {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    }
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        sharedPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+
         SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
         refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
-
         refreshLayout.setOnRefreshListener(
             new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -32,7 +46,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         );
-        addCards();
+
+        progressBar = findViewById(R.id.progress_bar);
+
+        if (User.isLoggedIn) {
+            addCards();
+        } else if (sharedPreferences.contains("username")) {
+            progressBar.setVisibility(View.VISIBLE);
+            casey.setUsername(sharedPreferences.getString("username", "error"));
+            casey.setPassword(sharedPreferences.getString("password", "error"));
+            new AutoLoginService(this).execute();
+        } else {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     public void addCards() {
@@ -47,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < User.numberOfPeriods; i++) {
 
             MaterialCardView cardView = new MaterialCardView(this);
-            cardView.setCardElevation(4f);
+            cardView.setStrokeWidth(2);
+            cardView.setStrokeColor(ContextCompat.getColor(this, R.color.colorRefresh));
+            cardView.setCardElevation(1f);
             cardView.setLayoutParams(cardViewLayoutParams);
 
             ConstraintLayout constraintLayout = new ConstraintLayout(cardView.getContext());
@@ -116,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             TextView percentages = new TextView(this);
             percentages.setPadding(20, 20, 20, 20);
             percentages.setText(User.percentageMap.get(i));
-            percentages.setTextSize(16);
+            percentages.setTextSize(18);
             percentages.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
             percentages.setLayoutParams(percentageLayoutParams);
 
@@ -132,5 +161,14 @@ public class MainActivity extends AppCompatActivity {
             cardView.addView(constraintLayout);
             linearLayout.addView(cardView);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -1,10 +1,7 @@
 package ga.caseyavila.velcro;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.view.View;
 import android.widget.LinearLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -48,12 +45,12 @@ public class RefreshService extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
 
+        LinearLayout linearLayout = activity.findViewById(R.id.linear_layout);
+        linearLayout.removeAllViews();
+
+        ((MainActivity) activity).addCards();
+
         SwipeRefreshLayout refreshLayout = activity.findViewById(R.id.refresh);
-
-        activity.finish();
-        Intent intent = new Intent(activity, MainActivity.class);
-        activity.startActivity(intent);
-
         refreshLayout.setRefreshing(false);
     }
 }
