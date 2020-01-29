@@ -9,4 +9,8 @@
         <item name="android:colorBackground">@color/colorBackground</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+    </style>
+
 </resources>
