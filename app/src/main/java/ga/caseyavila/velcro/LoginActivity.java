@@ -7,6 +7,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.android.material.button.MaterialButton;
 
 import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
 
@@ -15,7 +16,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextView usernameText;
     private TextView passwordText;
-    private TextView loginButton;
+    private MaterialButton loginButton;
     private TextView loginNotification;
     private ProgressBar progressBar;
     public static User casey = new User();

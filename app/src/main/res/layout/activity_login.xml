@@ -39,7 +39,7 @@
             tools:ignore="MissingConstraints">
     </EditText>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
             android:text="@string/login"
             tools:ignore="MissingConstraints"

@@ -48,7 +48,6 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     }
     @Override
     protected void onPostExecute(Void result) {
-
         Activity activity = activityReference.get();
         activity.findViewById(R.id.login_button).setEnabled(true);
 
