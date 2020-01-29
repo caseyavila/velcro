@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#0E0E0E</color>
     <color name="colorAccent">#B32424</color>
     <color name="colorCardBorder">#323232</color>
+    <color name="colorRefresh">#242424</color>
     <color name="colorBackground">#121212</color>
     <color name="textHighEmphasis">#DEFFFFFF</color>
     <color name="textMediumEmphasis">#A6FFFFFF</color>

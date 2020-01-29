@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         refreshLayout = findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
-        refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorBackground));
+        refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
         refreshLayout.setOnRefreshListener(
             new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
