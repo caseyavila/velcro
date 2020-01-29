@@ -18,6 +18,8 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.textview.MaterialTextView;
+
 import static ga.caseyavila.velcro.LoginActivity.casey;
 
 
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         refreshLayout = findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
-        refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
+        refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorBackground));
         refreshLayout.setOnRefreshListener(
             new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -119,12 +122,12 @@ public class MainActivity extends AppCompatActivity {
             percentageLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
             percentageLayoutParams.horizontalBias = 0f;
 
-            TextView period = new TextView(this);
+            TextView period = new MaterialTextView(this);
             period.setPadding(15,10,0,0);
             period.setText(String.valueOf(i + 1));
             period.setLayoutParams(periodLayoutParams);
 
-            TextView teachers = new TextView(this);
+            TextView teachers = new MaterialTextView(this);
             teachers.setPadding(20, 20, 40, 30);
             teachers.setText(User.teacherMap.get(i).toUpperCase());
             teachers.setTextSize(10);
@@ -132,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             teachers.setId(View.generateViewId());
             teachers.setLayoutParams(teacherLayoutParams);
 
-            TextView grades = new TextView(this);
+            TextView grades = new MaterialTextView(this);
             grades.setWidth(250);
             grades.setPadding(60, 15, 20, 20);
             grades.setText(User.gradeMap.get(i));
@@ -140,14 +143,14 @@ public class MainActivity extends AppCompatActivity {
             grades.setLayoutParams(gradesLayoutParams);
             grades.setId(View.generateViewId());
 
-            TextView classes = new TextView(this);
+            TextView classes = new MaterialTextView(this);
             classes.setPadding(20, 20, 40, 20);
             classes.setGravity(Gravity.END);
             classes.setText(User.classMap.get(i));
             classes.setId(View.generateViewId());
             classes.setLayoutParams(classLayoutParams);
 
-            TextView percentages = new TextView(this);
+            TextView percentages = new MaterialTextView(this);
             percentages.setPadding(20, 20, 20, 20);
             percentages.setText(User.percentageMap.get(i));
             percentages.setTextSize(18);

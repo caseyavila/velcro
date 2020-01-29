@@ -8,16 +8,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
+import org.w3c.dom.Text;
 
 import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView usernameText;
-    private TextView passwordText;
+    private TextInputEditText usernameText;
+    private TextInputEditText passwordText;
     private MaterialButton loginButton;
-    private TextView loginNotification;
+    private MaterialTextView loginNotification;
     private ProgressBar progressBar;
     public static User casey = new User();
 
