@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
             MaterialCardView cardView = new MaterialCardView(this);
             cardView.setStrokeWidth(2);
-            cardView.setStrokeColor(ContextCompat.getColor(this, R.color.colorRefresh));
+            cardView.setStrokeColor(ContextCompat.getColor(this, R.color.colorCardBorder));
             cardView.setCardElevation(1f);
             cardView.setLayoutParams(cardViewLayoutParams);
 
@@ -122,12 +121,12 @@ public class MainActivity extends AppCompatActivity {
             percentageLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
             percentageLayoutParams.horizontalBias = 0f;
 
-            TextView period = new MaterialTextView(this);
+            MaterialTextView period = new MaterialTextView(this);
             period.setPadding(15,10,0,0);
             period.setText(String.valueOf(i + 1));
             period.setLayoutParams(periodLayoutParams);
 
-            TextView teachers = new MaterialTextView(this);
+            MaterialTextView teachers = new MaterialTextView(this);
             teachers.setPadding(20, 20, 40, 30);
             teachers.setText(User.teacherMap.get(i).toUpperCase());
             teachers.setTextSize(10);
@@ -135,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             teachers.setId(View.generateViewId());
             teachers.setLayoutParams(teacherLayoutParams);
 
-            TextView grades = new MaterialTextView(this);
+            MaterialTextView grades = new MaterialTextView(this);
             grades.setWidth(250);
             grades.setPadding(60, 15, 20, 20);
             grades.setText(User.gradeMap.get(i));
@@ -143,14 +142,14 @@ public class MainActivity extends AppCompatActivity {
             grades.setLayoutParams(gradesLayoutParams);
             grades.setId(View.generateViewId());
 
-            TextView classes = new MaterialTextView(this);
+            MaterialTextView classes = new MaterialTextView(this);
             classes.setPadding(20, 20, 40, 20);
             classes.setGravity(Gravity.END);
             classes.setText(User.classMap.get(i));
             classes.setId(View.generateViewId());
             classes.setLayoutParams(classLayoutParams);
 
-            TextView percentages = new MaterialTextView(this);
+            MaterialTextView percentages = new MaterialTextView(this);
             percentages.setPadding(20, 20, 20, 20);
             percentages.setText(User.percentageMap.get(i));
             percentages.setTextSize(18);

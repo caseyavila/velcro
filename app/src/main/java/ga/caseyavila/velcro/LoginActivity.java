@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
-import org.w3c.dom.Text;
 
 import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
 
