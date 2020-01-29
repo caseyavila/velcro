@@ -60,5 +60,6 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
             activity.findViewById(R.id.login_notification).setVisibility(View.VISIBLE);
         }
         activity.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
+        activity.finish();
     }
 }
