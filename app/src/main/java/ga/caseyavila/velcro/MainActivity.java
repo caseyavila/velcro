@@ -124,13 +124,15 @@ public class MainActivity extends AppCompatActivity {
             MaterialTextView period = new MaterialTextView(this);
             period.setPadding(15,10,0,0);
             period.setText(String.valueOf(i + 1));
+            period.setTextColor(ContextCompat.getColor(this, R.color.textMediumEmphasis));
             period.setLayoutParams(periodLayoutParams);
 
             MaterialTextView teachers = new MaterialTextView(this);
             teachers.setPadding(20, 20, 40, 30);
             teachers.setText(User.teacherMap.get(i).toUpperCase());
             teachers.setTextSize(10);
-            teachers.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+            teachers.setTextColor(ContextCompat.getColor(this, R.color.textMediumEmphasis));
+            teachers.setTypeface(Typeface.create("sans-serif-regular", Typeface.NORMAL));
             teachers.setId(View.generateViewId());
             teachers.setLayoutParams(teacherLayoutParams);
 
@@ -153,7 +155,8 @@ public class MainActivity extends AppCompatActivity {
             percentages.setPadding(20, 20, 20, 20);
             percentages.setText(User.percentageMap.get(i));
             percentages.setTextSize(18);
-            percentages.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+//            percentages.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
+            percentages.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/Manrope-Medium.ttf"));
             percentages.setLayoutParams(percentageLayoutParams);
 
             classLayoutParams.bottomToTop = teachers.getId();  // Apply constraints to LayoutParams after TextViews are created

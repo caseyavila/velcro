@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
 import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
@@ -18,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText usernameText;
     private TextInputEditText passwordText;
+    private TextInputLayout usernameLayout;
+    private TextInputLayout passwordLayout;
     private MaterialButton loginButton;
     private MaterialTextView loginNotification;
     private ProgressBar progressBar;
@@ -30,7 +34,11 @@ public class LoginActivity extends AppCompatActivity {
 
 
         usernameText = findViewById(R.id.username_input);
+        usernameLayout = findViewById(R.id.username_layout);
+        usernameLayout.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Manrope-Medium.ttf"));
         passwordText = findViewById(R.id.password_input);
+        passwordLayout = findViewById(R.id.password_layout);
+        passwordLayout.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Manrope-Medium.ttf"));
         loginButton = findViewById(R.id.login_button);
         loginNotification = findViewById(R.id.login_notification);
         loginNotification.setVisibility(View.INVISIBLE);
