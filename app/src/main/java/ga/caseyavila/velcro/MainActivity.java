@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     public static SharedPreferences sharedPreferences;
+    private SwipeRefreshLayout refreshLayout;
 
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
 
-        SwipeRefreshLayout refreshLayout = findViewById(R.id.refresh);
+        refreshLayout = findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
         refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
         refreshLayout.setOnRefreshListener(
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         );
+        refreshLayout.setEnabled(false);
 
         progressBar = findViewById(R.id.progress_bar);
 
@@ -64,8 +66,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addCards() {
 
-        LinearLayout linearLayout = findViewById(R.id.linear_layout);
+        refreshLayout.setEnabled(true);
 
+        LinearLayout linearLayout = findViewById(R.id.linear_layout);
         LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT);
