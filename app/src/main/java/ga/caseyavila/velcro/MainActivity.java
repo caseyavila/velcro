@@ -177,6 +177,6 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         DialogFragment dialogFragment = new LogoutDialogFragment();
-        dialogFragment.show(fragmentManager, "logout_dialog");
+        dialogFragment.show(fragmentManager, "logoutDialog");
     }
 }
