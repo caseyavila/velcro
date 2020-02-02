@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     public void addCards() {
 
         refreshLayout.setEnabled(true);
+        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/Manrope-Medium.ttf");
 
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
         LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(
@@ -140,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
             grades.setWidth(250);
             grades.setPadding(60, 15, 20, 20);
             grades.setText(User.gradeMap.get(i));
+            grades.setTypeface(manrope);
             grades.setTextSize(34);
             grades.setLayoutParams(gradesLayoutParams);
             grades.setId(View.generateViewId());
@@ -156,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             percentages.setText(User.percentageMap.get(i));
             percentages.setTextSize(18);
 //            percentages.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
-            percentages.setTypeface(Typeface.createFromAsset(getAssets(),"fonts/Manrope-Medium.ttf"));
+            percentages.setTypeface(manrope);
             percentages.setLayoutParams(percentageLayoutParams);
 
             classLayoutParams.bottomToTop = teachers.getId();  // Apply constraints to LayoutParams after TextViews are created
