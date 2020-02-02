@@ -157,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
             percentages.setPadding(20, 20, 20, 20);
             percentages.setText(User.percentageMap.get(i));
             percentages.setTextSize(18);
-//            percentages.setTypeface(Typeface.create("sans-serif-light", Typeface.NORMAL));
             percentages.setTypeface(manrope);
             percentages.setLayoutParams(percentageLayoutParams);
 

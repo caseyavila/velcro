@@ -31,11 +31,7 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
             if (!User.isLoggedIn) {
                 return null;
             } else {
-                casey.findNumberOfPeriods();
-                casey.teacherFinder();
-                casey.gradeFinder();
-                casey.classFinder();
-                casey.percentageFinder();
+                casey.infoFinder();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("username", casey.getUsername());
                 editor.putString("password", casey.getPassword());

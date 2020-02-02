@@ -98,46 +98,20 @@ public class User {
         }
     }
 
-    public void findNumberOfPeriods() throws IOException {
-        Elements periods = this.main_response.parse().getElementsByAttributeValueMatching("class", "period");
-        int elements = 0;
-        for (Element period : periods) {
-            elements++;
-        }
-        numberOfPeriods = elements;
-    }
-
-    public void classFinder() throws IOException {
-        Elements classes = this.main_response.parse().getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
-        for (int i = 0; i < numberOfPeriods; i++) {
-            classMap.put(i, classes.get(i).text());
-        }
-    }
-
-    public void teacherFinder() throws IOException {
-        Elements teachers = this.main_response.parse().getElementsByClass("teacher co-teacher");
-        for (int i = 0; i < numberOfPeriods; i++) {
-            teacherMap.put(i, teachers.get(i).text());
-        }
-    }
-
-    public void gradeFinder() throws IOException {
+    public void infoFinder() throws IOException {
         int period = 0;
         Elements rows = this.main_response.parse().getElementsByClass("student_row");
         for (Element row : rows) {
             Elements grade = row.getElementsByClass("float_l grade");
             gradeMap.put(period, grade.text());
-            period++;
-        }
-    }
-
-    public void percentageFinder() throws IOException {
-        int period = 0;
-        Elements rows = this.main_response.parse().getElementsByClass("student_row");
-        for (Element row : rows) {
             Elements percent = row.getElementsByClass("float_l percent");
             percentageMap.put(period, percent.text());
+            Elements teacher = row.getElementsByClass("teacher co-teacher");
+            teacherMap.put(period, teacher.text());
+            Elements classes = row.getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
+            classMap.put(period, classes.text());
             period++;
         }
+        numberOfPeriods = period;
     }
 }

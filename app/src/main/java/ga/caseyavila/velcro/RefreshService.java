@@ -30,11 +30,7 @@ public class RefreshService extends AsyncTask<Void, Void, Void> {
             if (!User.isLoggedIn) {
                 return null;
             } else {
-                casey.findNumberOfPeriods();
-                casey.teacherFinder();
-                casey.gradeFinder();
-                casey.classFinder();
-                casey.percentageFinder();
+                casey.infoFinder();
             }
         } catch (IOException e) {
             e.printStackTrace();
