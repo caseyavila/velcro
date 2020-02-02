@@ -62,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View v) {
         casey.setUsername(usernameText.getText().toString());
         casey.setPassword(passwordText.getText().toString());
+        User.timeSinceLogin = null;
 
         progressBar.setVisibility(View.VISIBLE);
         loginButton.setEnabled(false);

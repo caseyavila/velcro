@@ -18,6 +18,7 @@ public class User {
     private String form_data_id;
     private Connection.Response login_response;
     private Connection.Response main_response;
+    public static Long timeSinceLogin;
     public static SparseArray<String> teacherMap = new SparseArray<String>();
     public static SparseArray<String> gradeMap = new SparseArray<String>();
     public static SparseArray<String> classMap = new SparseArray<String>();
@@ -54,6 +55,7 @@ public class User {
             this.login_response = Jsoup.connect(full_url)
                     .method(Connection.Method.GET)
                     .execute();
+            timeSinceLogin = System.nanoTime();
             this.login_response = login_response.bufferUp();
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,9 +72,15 @@ public class User {
     }
 
     public void getMainDocument() throws IOException {
-        getLoginResponse();
-        getLoginDocument();
-        getFormDataId();
+        if (timeSinceLogin == null) {  // Check for first time login
+            getLoginResponse();
+            getLoginDocument();
+            getFormDataId();
+        } else if (System.nanoTime() - timeSinceLogin > 3.6e12) {  // Check if previous login was with in the previous hour
+            getLoginResponse();
+            getLoginDocument();
+            getFormDataId();
+        }
         main_response = Jsoup.connect(full_url)
                 .method(Connection.Method.POST)
                 .data("login_name", getUsername())
