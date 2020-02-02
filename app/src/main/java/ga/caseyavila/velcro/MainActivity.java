@@ -25,7 +25,7 @@ import static ga.caseyavila.velcro.LoginActivity.casey;
 public class MainActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
-    public static SharedPreferences sharedPreferences;
+    static SharedPreferences sharedPreferences;
     private SwipeRefreshLayout refreshLayout;
 
     static {
@@ -43,12 +43,7 @@ public class MainActivity extends AppCompatActivity {
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
         refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
         refreshLayout.setOnRefreshListener(
-            new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    new RefreshService((Activity) findViewById(R.id.linear_layout).getContext()).execute();
-                }
-            }
+                () -> new RefreshService((Activity) findViewById(R.id.linear_layout).getContext()).execute()
         );
         refreshLayout.setEnabled(false);
 
@@ -68,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void addCards() {
+    void addCards() {
 
         refreshLayout.setEnabled(true);
         Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/Manrope-Medium.ttf");
@@ -86,6 +81,12 @@ public class MainActivity extends AppCompatActivity {
             cardView.setStrokeColor(ContextCompat.getColor(this, R.color.colorCardBorder));
             cardView.setCardElevation(1f);
             cardView.setLayoutParams(cardViewLayoutParams);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                }
+            });
 
             ConstraintLayout constraintLayout = new ConstraintLayout(cardView.getContext());
 
