@@ -1,10 +1,12 @@
 package ga.caseyavila.velcro;
 
+import android.app.Activity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +14,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+
+import java.util.Objects;
 
 import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
 
@@ -45,6 +49,18 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
+        usernameText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
+        passwordText.setOnFocusChangeListener((v, hasFocus) -> {  // Hide keyboard when user clicks off TextView
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         passwordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -57,6 +73,11 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameText.setText(sharedPreferences.getString("username", ""));
         passwordText.setText(sharedPreferences.getString("password", ""));
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public void login(View v) {
