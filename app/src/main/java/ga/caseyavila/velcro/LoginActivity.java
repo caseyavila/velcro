@@ -15,8 +15,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
-import java.util.Objects;
-
 import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
 
 
@@ -49,13 +47,13 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        usernameText.setOnFocusChangeListener((v, hasFocus) -> {
+        usernameText.setOnFocusChangeListener((v, hasFocus) -> {  // Hide keyboard when user clicks off TextView
             if (!hasFocus) {
                 hideKeyboard(v);
             }
         });
 
-        passwordText.setOnFocusChangeListener((v, hasFocus) -> {  // Hide keyboard when user clicks off TextView
+        passwordText.setOnFocusChangeListener((v, hasFocus) -> {
             if (!hasFocus) {
                 hideKeyboard(v);
             }
@@ -77,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void hideKeyboard(View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        assert inputMethodManager != null;
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 

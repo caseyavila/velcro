@@ -13,7 +13,7 @@ public class User {
     private String username;
     private String password;
     private String school_url = "ahs-fusd-ca";
-    private String full_url = "https://" + this.school_url + ".schoolloop.com/portal/login?etarget=login_form";
+    private String base_url = "https://" + this.school_url + ".schoolloop.com";
     private Document login_document;
     private String form_data_id;
     private Connection.Response login_response;
@@ -23,6 +23,7 @@ public class User {
     public static SparseArray<String> gradeMap = new SparseArray<String>();
     public static SparseArray<String> classMap = new SparseArray<String>();
     public static SparseArray<String> percentageMap = new SparseArray<String>();
+    public static SparseArray<String> linkMap = new SparseArray<String>();
     public static int numberOfPeriods;
     public static boolean isLoggedIn;
 
@@ -52,7 +53,7 @@ public class User {
 
     private void getLoginResponse() {
         try {
-            this.login_response = Jsoup.connect(full_url)
+            this.login_response = Jsoup.connect(base_url + "/portal/login?etarget=login_form")
                     .method(Connection.Method.GET)
                     .execute();
             timeSinceLogin = System.nanoTime();
@@ -81,7 +82,7 @@ public class User {
             getLoginDocument();
             getFormDataId();
         }
-        main_response = Jsoup.connect(full_url)
+        main_response = Jsoup.connect(base_url + "/portal/login?etarget=login_form")
                 .method(Connection.Method.POST)
                 .data("login_name", getUsername())
                 .data("password", getPassword())
@@ -110,6 +111,8 @@ public class User {
             teacherMap.put(period, teacher.text());
             Elements classes = row.getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
             classMap.put(period, classes.text());
+            Elements link = row.getElementsByClass("pr_link").select("a[href]");
+            linkMap.put(period, base_url + link.attr("href"));
             period++;
         }
         numberOfPeriods = period;
