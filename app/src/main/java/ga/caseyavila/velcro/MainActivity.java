@@ -14,9 +14,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
@@ -83,10 +81,15 @@ public class MainActivity extends AppCompatActivity {
             cardView.setStrokeColor(ContextCompat.getColor(this, R.color.colorCardBorder));
             cardView.setCardElevation(1f);
             cardView.setLayoutParams(cardViewLayoutParams);
+            cardView.setId(i);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
+                    Intent intent = new Intent(MainActivity.this, PeriodActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("period", view.getId());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
             });
 
