@@ -6,6 +6,7 @@
     <color name="colorCardBorder">#323232</color>
     <color name="colorRefresh">#242424</color>
     <color name="colorBackground">#121212</color>
+    <color name="colorToolBar">#99121212</color>
     <color name="textHighEmphasis">#DEFFFFFF</color>
     <color name="textMediumEmphasis">#A6FFFFFF</color>
 </resources>

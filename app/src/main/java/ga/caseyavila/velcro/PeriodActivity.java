@@ -1,10 +1,9 @@
 package ga.caseyavila.velcro;
 
 import android.os.Bundle;
-import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.android.material.appbar.MaterialToolbar;
+import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.android.material.appbar.AppBarLayout;
 
@@ -14,7 +13,7 @@ public class PeriodActivity extends AppCompatActivity {
 
     private MaterialTextView testView;
     private AppBarLayout appBarLayout;
-    private MaterialToolbar appBar;
+    private Toolbar appBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +31,6 @@ public class PeriodActivity extends AppCompatActivity {
         setSupportActionBar(appBar);
         getSupportActionBar().setTitle(User.classMap.get(bundle.getInt("period")));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
-        getSupportActionBar().setElevation(4);
         appBar.setNavigationOnClickListener(view -> finish());
     }
 }
