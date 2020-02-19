@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     void addCards() {
 
         refreshLayout.setEnabled(true);
-        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/Manrope-Medium.ttf");
+        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
 
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
         LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(

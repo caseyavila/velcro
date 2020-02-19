@@ -34,13 +34,14 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
 
         usernameText = findViewById(R.id.username_input);
         usernameLayout = findViewById(R.id.username_layout);
-        usernameLayout.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Manrope-Medium.ttf"));
+        usernameLayout.setTypeface(manrope);
         passwordText = findViewById(R.id.password_input);
         passwordLayout = findViewById(R.id.password_layout);
-        passwordLayout.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Manrope-Medium.ttf"));
+        passwordLayout.setTypeface(manrope);
         loginButton = findViewById(R.id.login_button);
         loginNotification = findViewById(R.id.login_notification);
         loginNotification.setVisibility(View.INVISIBLE);
