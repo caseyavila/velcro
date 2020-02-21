@@ -2,9 +2,7 @@ package ga.caseyavila.velcro;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import android.widget.LinearLayout;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.LoginActivity.casey;
@@ -40,9 +38,6 @@ public class RefreshService extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
-
-//        LinearLayout linearLayout = activity.findViewById(R.id.linear_layout);
-//        linearLayout.removeAllViews();
 
         ((MainActivity) activity).addCards();
 
