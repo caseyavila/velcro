@@ -1,17 +1,19 @@
 package ga.caseyavila.velcro;
 
 import android.os.Bundle;
+import android.util.SparseArray;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.android.material.appbar.AppBarLayout;
 
-import static ga.caseyavila.velcro.User.linkMap;
+import static ga.caseyavila.velcro.User.*;
 
 public class PeriodActivity extends AppCompatActivity {
 
-    private MaterialTextView testView;
     private AppBarLayout appBarLayout;
     private Toolbar appBar;
 
@@ -26,11 +28,14 @@ public class PeriodActivity extends AppCompatActivity {
 
         appBarLayout = findViewById(R.id.appbar_layout);
         appBar = findViewById(R.id.appbar);
-        testView = findViewById(R.id.test_view);
-        testView.setText(linkMap.get(period));
         setSupportActionBar(appBar);
         getSupportActionBar().setTitle(User.classMap.get(bundle.getInt("period")));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
         appBar.setNavigationOnClickListener(view -> finish());
+
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        AssignmentViewAdapter adapter = new AssignmentViewAdapter();
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

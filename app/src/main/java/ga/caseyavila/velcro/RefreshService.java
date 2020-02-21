@@ -41,8 +41,8 @@ public class RefreshService extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
 
-        LinearLayout linearLayout = activity.findViewById(R.id.linear_layout);
-        linearLayout.removeAllViews();
+//        LinearLayout linearLayout = activity.findViewById(R.id.linear_layout);
+//        linearLayout.removeAllViews();
 
         ((MainActivity) activity).addCards();
 

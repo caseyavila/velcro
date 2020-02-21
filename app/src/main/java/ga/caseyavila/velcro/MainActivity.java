@@ -15,9 +15,13 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
+
+import java.time.Period;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 
@@ -42,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
         refreshLayout = findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
         refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
-        refreshLayout.setOnRefreshListener(
-                () -> new RefreshService((Activity) findViewById(R.id.linear_layout).getContext()).execute()
-        );
+//        refreshLayout.setOnRefreshListener(
+//                () -> new RefreshService((Activity) findViewById(R.id.linear_layout).getContext()).execute()
+//        );
         refreshLayout.setEnabled(false);
 
         progressBar = findViewById(R.id.progress_bar);
@@ -66,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
     void addCards() {
 
         refreshLayout.setEnabled(true);
-        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
 
+        /*
         LinearLayout linearLayout = findViewById(R.id.linear_layout);
         LinearLayout.LayoutParams cardViewLayoutParams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -178,6 +182,14 @@ public class MainActivity extends AppCompatActivity {
             cardView.addView(constraintLayout);
             linearLayout.addView(cardView);
         }
+         */
+
+        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
+
+        RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
+        PeriodViewAdapter periodViewAdapter = new PeriodViewAdapter(this, manrope);
+        recyclerView.setAdapter(periodViewAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override

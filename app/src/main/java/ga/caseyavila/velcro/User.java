@@ -18,12 +18,17 @@ public class User {
     private String form_data_id;
     private Connection.Response login_response;
     private Connection.Response main_response;
+    private Connection.Response period_response;
     public static Long timeSinceLogin;
     public static SparseArray<String> teacherMap = new SparseArray<String>();
     public static SparseArray<String> gradeMap = new SparseArray<String>();
     public static SparseArray<String> classMap = new SparseArray<String>();
     public static SparseArray<String> percentageMap = new SparseArray<String>();
     public static SparseArray<String> linkMap = new SparseArray<String>();
+    public static SparseArray<String> assignmentNames = new SparseArray<String>();
+    public static SparseArray<Integer> pointsPossibleArray = new SparseArray<Integer>();
+    public static SparseArray<Integer> pointsEarnedArray = new SparseArray<Integer>();
+    public static SparseArray<String> categoryNames = new SparseArray<String>();
     public static int numberOfPeriods;
     public static boolean isLoggedIn;
 
@@ -116,5 +121,23 @@ public class User {
             period++;
         }
         numberOfPeriods = period;
+    }
+
+    public void getPeriodDocument(String periodUrl) throws IOException {
+        period_response = Jsoup.connect(base_url + periodUrl)
+                .method(Connection.Method.GET)
+                .cookies(login_response.cookies())
+                .execute();
+        period_response.bufferUp();
+    }
+
+    public void assignmentFinder() throws IOException {
+        int assignment = 0;
+        Elements rows = this.period_response.parse().getElementsByClass("general_body").select("tr");
+        for (Element row : rows) {
+            Elements assignmentName = row.select("a");
+            assignmentNames.put(assignment, assignmentName.text());
+            assignment++;
+        }
     }
 }
