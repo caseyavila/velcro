@@ -5,23 +5,16 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.textview.MaterialTextView;
-
-import java.time.Period;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 
@@ -31,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     static SharedPreferences sharedPreferences;
     private SwipeRefreshLayout refreshLayout;
+    private PeriodViewAdapter adapter;
 
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -74,9 +68,10 @@ public class MainActivity extends AppCompatActivity {
         Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
 
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
-        PeriodViewAdapter periodViewAdapter = new PeriodViewAdapter(this, manrope);
-        recyclerView.setAdapter(periodViewAdapter);
+        adapter = new PeriodViewAdapter(this, manrope);
+        recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.scheduleLayoutAnimation();
     }
 
     @Override
