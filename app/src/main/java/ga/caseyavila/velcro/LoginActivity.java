@@ -1,6 +1,7 @@
 package ga.caseyavila.velcro;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -10,16 +11,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
-import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
-
 
 public class LoginActivity extends AppCompatActivity {
 
+    static SharedPreferences sharedPreferences;
     private TextInputEditText usernameText;
     private TextInputEditText passwordText;
     private TextInputLayout usernameLayout;
@@ -29,11 +30,16 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     public static User casey = new User();
 
+    static {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+    }
+
     @Override
     protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        sharedPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
         Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
 
         usernameText = findViewById(R.id.username_input);
@@ -72,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
 
         usernameText.setText(sharedPreferences.getString("username", ""));
         passwordText.setText(sharedPreferences.getString("password", ""));
+
+        autoLogin();
     }
 
     private void hideKeyboard(View view) {
@@ -87,7 +95,15 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
         loginButton.setEnabled(false);
+        usernameText.setEnabled(false);
+        passwordText.setEnabled(false);
 
         new LoginService(this).execute();
+    }
+
+    private void autoLogin() {
+        if (sharedPreferences.contains("username") && sharedPreferences.contains("password")) {
+            login(loginButton);
+        }
     }
 }

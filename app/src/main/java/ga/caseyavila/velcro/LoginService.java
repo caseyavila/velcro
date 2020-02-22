@@ -8,7 +8,7 @@ import android.view.View;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.LoginActivity.casey;
-import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
+import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
 
 public class LoginService extends AsyncTask<Void, Void, Void> {
 
@@ -45,15 +45,17 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
-        activity.findViewById(R.id.login_button).setEnabled(true);
 
-        if (User.isLoggedIn) {  // Alert user if username and password doesn't match
+        if (User.isLoggedIn) {
             Intent intent = new Intent(activity, MainActivity.class);
             activity.startActivity(intent);
             activity.findViewById(R.id.login_notification).setVisibility(View.INVISIBLE);
             activity.finish();
-        } else {
+        } else {  // Alert user if username and password doesn't match
             activity.findViewById(R.id.login_notification).setVisibility(View.VISIBLE);
+            activity.findViewById(R.id.login_button).setEnabled(true);
+            activity.findViewById(R.id.username_input).setEnabled(true);
+            activity.findViewById(R.id.password_input).setEnabled(true);
         }
         activity.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
     }

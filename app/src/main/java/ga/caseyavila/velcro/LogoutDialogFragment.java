@@ -12,7 +12,7 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Objects;
 
-import static ga.caseyavila.velcro.MainActivity.sharedPreferences;
+import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
 
 public class LogoutDialogFragment extends DialogFragment {
     @NonNull
