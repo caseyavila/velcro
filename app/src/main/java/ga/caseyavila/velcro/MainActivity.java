@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void addCards() {
-
         refreshLayout.setEnabled(true);
 
         Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new PeriodViewAdapter(this, manrope);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.scheduleLayoutAnimation();
     }
 
     @Override

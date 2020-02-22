@@ -49,7 +49,6 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
         if (User.isLoggedIn) {
             Intent intent = new Intent(activity, MainActivity.class);
             activity.startActivity(intent);
-            activity.findViewById(R.id.login_notification).setVisibility(View.INVISIBLE);
             activity.finish();
         } else {  // Alert user if username and password doesn't match
             activity.findViewById(R.id.login_notification).setVisibility(View.VISIBLE);
