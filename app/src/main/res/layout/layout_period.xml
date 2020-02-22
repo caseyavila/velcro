@@ -73,7 +73,7 @@
                     android:id="@+id/class_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:maxWidth="150dp"
+                    android:width="150dp"
                     android:gravity="end"
                     android:paddingStart="10dp"
                     android:paddingTop="7dp"
