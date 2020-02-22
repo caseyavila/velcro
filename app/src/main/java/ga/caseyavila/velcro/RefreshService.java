@@ -39,7 +39,7 @@ public class RefreshService extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
 
-        ((MainActivity) activity).addCards();
+        ((MainActivity) activity).updateCards();
 
         SwipeRefreshLayout refreshLayout = activity.findViewById(R.id.refresh);
         refreshLayout.setRefreshing(false);
