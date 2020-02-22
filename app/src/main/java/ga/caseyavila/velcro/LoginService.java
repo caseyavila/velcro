@@ -54,8 +54,8 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
         } else {  // Alert user if username and password doesn't match
             activity.findViewById(R.id.login_notification).setVisibility(View.VISIBLE);
             activity.findViewById(R.id.login_button).setEnabled(true);
-            activity.findViewById(R.id.username_input).setEnabled(true);
-            activity.findViewById(R.id.password_input).setEnabled(true);
+            activity.findViewById(R.id.username_layout).setEnabled(true);
+            activity.findViewById(R.id.password_layout).setEnabled(true);
         }
         activity.findViewById(R.id.progress_bar).setVisibility(View.INVISIBLE);
     }

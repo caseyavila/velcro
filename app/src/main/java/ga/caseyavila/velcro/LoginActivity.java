@@ -95,8 +95,8 @@ public class LoginActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
         loginButton.setEnabled(false);
-        usernameText.setEnabled(false);
-        passwordText.setEnabled(false);
+        usernameLayout.setEnabled(false);
+        passwordLayout.setEnabled(false);
 
         new LoginService(this).execute();
     }
