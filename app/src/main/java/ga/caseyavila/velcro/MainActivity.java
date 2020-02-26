@@ -1,7 +1,6 @@
 package ga.caseyavila.velcro;
 
 import android.app.Activity;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,10 +43,8 @@ public class MainActivity extends AppCompatActivity {
     void addCards() {
         refreshLayout.setEnabled(true);
 
-        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
-
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
-        adapter = new PeriodViewAdapter(this, manrope);
+        adapter = new PeriodViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

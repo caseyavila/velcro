@@ -2,7 +2,6 @@ package ga.caseyavila.velcro;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +15,10 @@ import static ga.caseyavila.velcro.User.*;
 
 public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.ViewHolder> {
 
-    Typeface typeface;
     Context context;
 
-    PeriodViewAdapter(Context ctx, Typeface font) {
+    PeriodViewAdapter(Context ctx) {
         context = ctx;
-        typeface = font;
     }
 
     @NonNull
@@ -74,10 +71,8 @@ public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.Vi
             periodNumber = itemView.findViewById(R.id.period_number);
             teacher = itemView.findViewById(R.id.teacher);
             grade = itemView.findViewById(R.id.grade);
-            grade.setTypeface(typeface);
             className = itemView.findViewById(R.id.class_name);
             percentage = itemView.findViewById(R.id.percentage);
-            percentage.setTypeface(typeface);
         }
     }
 }
