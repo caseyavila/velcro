@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.res.ResourcesCompat;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         sharedPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
-        Typeface manrope = Typeface.createFromAsset(getAssets(), "fonts/manrope_medium.ttf");
+        Typeface manrope = ResourcesCompat.getFont(this, R.font.manrope_medium);
 
         usernameText = findViewById(R.id.username_input);
         usernameLayout = findViewById(R.id.username_layout);
