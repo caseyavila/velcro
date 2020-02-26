@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.android.material.appbar.AppBarLayout;
 
@@ -15,7 +16,7 @@ import static ga.caseyavila.velcro.User.*;
 public class PeriodActivity extends AppCompatActivity {
 
     private AppBarLayout appBarLayout;
-    private Toolbar appBar;
+    private MaterialToolbar appBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

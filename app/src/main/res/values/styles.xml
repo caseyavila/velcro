@@ -14,5 +14,9 @@
     <style name="AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="colorPrimary">@color/colorPrimary</item>
     </style>
+
+    <style name="ToolbarTheme" parent="AppTheme">
+        <item name="android:fontFamily">@font/manrope_medium</item>
+    </style>
     
 </resources>
