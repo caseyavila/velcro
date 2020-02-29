@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/courses"
+            android:title="@string/courses"
+            android:icon="@drawable/ic_book">
+    </item>
+
+    <item
+            android:id="@+id/assignments"
+            android:title="@string/assignments"
+            android:icon="@drawable/ic_assignment">
+    </item>
+
+
+    <item
+            android:id="@+id/loopmail"
+            android:title="@string/loopmail"
+            android:icon="@drawable/ic_email">
+    </item>
+
+    <item
+            android:id="@+id/news"
+            android:title="@string/news"
+            android:icon="@drawable/ic_radio">
+    </item>
+
+    <item
+            android:id="@+id/locker"
+            android:title="@string/locker"
+            android:icon="@drawable/ic_dns">
+    </item>
+
+</menu>

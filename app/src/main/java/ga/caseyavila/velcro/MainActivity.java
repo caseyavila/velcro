@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
@@ -17,7 +18,6 @@ import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ProgressBar progressBar;
     private SwipeRefreshLayout refreshLayout;
     private MainViewAdapter adapter;
 
@@ -36,18 +36,16 @@ public class MainActivity extends AppCompatActivity {
         );
         refreshLayout.setEnabled(false);
 
-        progressBar = findViewById(R.id.progress_bar);
-
         addCards();
     }
 
     void addCards() {
-        refreshLayout.setEnabled(true);
-
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
         adapter = new MainViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        refreshLayout.setEnabled(true);
     }
 
     void updateCards() {
