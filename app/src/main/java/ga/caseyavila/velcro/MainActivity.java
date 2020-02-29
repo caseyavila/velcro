@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
+import static ga.caseyavila.velcro.User.numberOfPeriods;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -50,7 +51,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void updateCards() {
-        adapter.notifyDataSetChanged();
+        for (int i = 0; i < numberOfPeriods; i++) {
+            adapter.notifyItemChanged(i);
+        }
     }
 
     @Override

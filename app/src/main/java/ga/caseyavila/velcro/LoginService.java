@@ -4,7 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.view.View;
+import androidx.annotation.RequiresApi;
+import org.json.JSONException;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.LoginActivity.casey;
@@ -26,8 +30,8 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         try {
             User.isLoggedIn = false;
-            casey.getMainDocument();
-            casey.loginChecker();
+            casey.getStudentId();
+//            casey.loginChecker();
             if (!User.isLoggedIn) {
                 return null;
             } else {
@@ -37,7 +41,7 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
                 editor.putString("password", casey.getPassword());
                 editor.apply();
             }
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;

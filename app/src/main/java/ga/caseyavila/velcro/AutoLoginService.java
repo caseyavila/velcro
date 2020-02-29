@@ -24,7 +24,7 @@ public class AutoLoginService extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         try {
             User.isLoggedIn = false;
-            casey.getMainDocument();
+//            casey.getMainDocument();
             casey.loginChecker();
             if (!User.isLoggedIn) {
                 return null;

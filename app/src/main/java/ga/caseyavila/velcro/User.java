@@ -1,12 +1,18 @@
 package ga.caseyavila.velcro;
 
+import android.os.Build;
 import android.util.SparseArray;
+import androidx.annotation.RequiresApi;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
+import android.util.Base64;
+import java.util.UUID;
 
 public class User {
 
@@ -18,7 +24,12 @@ public class User {
     private String form_data_id;
     private Connection.Response login_response;
     private Connection.Response main_response;
+    private Connection.Response studentIdResponse;
+    private Connection.Response reportCardResponse;
     private Connection.Response period_response;
+    private JSONObject loginJSON;
+    private JSONObject reportCardJSON;
+    private Long studentId;
     public static Long timeSinceLogin;
     public static SparseArray<String> teacherMap = new SparseArray<String>();
     public static SparseArray<String> gradeMap = new SparseArray<String>();
@@ -56,52 +67,40 @@ public class User {
         this.school_url = school_url;
     }
 
-    private void getLoginResponse() {
-        try {
-            this.login_response = Jsoup.connect(base_url + "/portal/login?etarget=login_form")
-                    .method(Connection.Method.GET)
-                    .execute();
-            timeSinceLogin = System.nanoTime();
-            this.login_response = login_response.bufferUp();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private String credentials(String username, String password) {
+        String encodedInput = username + ":" + password;
+        return Base64.encodeToString(encodedInput.getBytes(), Base64.NO_WRAP);
     }
 
-    private void getLoginDocument() throws IOException {
-        login_document = login_response.parse();
-    }
-
-    private void getFormDataId() {
-        Element form_data_id = this.login_document.getElementById("form_data_id");
-        this.form_data_id = form_data_id.val();
-    }
-
-    public void getMainDocument() throws IOException {
-        if (timeSinceLogin == null) {  // Check for first time login
-            getLoginResponse();
-            getLoginDocument();
-            getFormDataId();
-        } else if (System.nanoTime() - timeSinceLogin > 3.6e12) {  // Check if previous login was with in the previous hour
-            getLoginResponse();
-            getLoginDocument();
-            getFormDataId();
-        }
-        main_response = Jsoup.connect(base_url + "/portal/login?etarget=login_form")
-                .method(Connection.Method.POST)
-                .data("login_name", getUsername())
-                .data("password", getPassword())
-                .data("event_override", "login")
-                .data("form_data_id", form_data_id)
-                .cookies(login_response.cookies())
+    void getStudentId() throws IOException, JSONException {
+        this.studentIdResponse = Jsoup.connect(base_url + "/mapi/login")
+                .method(Connection.Method.GET)
+                .data("devOS", "Android")
+                .data("hash", "false")
+                .data("uuid", UUID.randomUUID().toString())
+                .data("version", "3.2.4")
+                .data("year", "2020")
+                .header("Authorization", "Basic " + credentials(username, password))
                 .execute();
-        main_response = main_response.bufferUp();
+
+        loginJSON = new JSONObject(this.studentIdResponse.parse().text());
+        studentId = loginJSON.getLong("userID");
+    }
+
+    void getReportCard() throws IOException, JSONException {
+        this.reportCardResponse = Jsoup.connect(base_url + "/mapi/report_card")
+                .method(Connection.Method.GET)
+                .data("studentID", studentId.toString())
+                .data("trim", "true")
+                .header("Authorization", "Basic " + credentials(username, password))
+                .execute();
+        reportCardJSON = new JSONObject(this.reportCardResponse.parse().text());
     }
 
     public void loginChecker() throws IOException {
-        if (this.main_response.parse().title().contains("Portal")) {
-            isLoggedIn = true;
-        }
+//        if (this.main_response.parse().title().contains("Portal")) {
+//            isLoggedIn = true;
+//        }
     }
 
     public void infoFinder() throws IOException {
