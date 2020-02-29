@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
     private SwipeRefreshLayout refreshLayout;
-    private PeriodViewAdapter adapter;
+    private MainViewAdapter adapter;
 
     @Override
     protected void onCreate (Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         refreshLayout.setEnabled(true);
 
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
-        adapter = new PeriodViewAdapter(this);
+        adapter = new MainViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

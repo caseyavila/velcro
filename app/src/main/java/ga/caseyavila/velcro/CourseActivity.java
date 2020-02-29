@@ -10,7 +10,7 @@ import com.google.android.material.appbar.AppBarLayout;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 
-public class PeriodActivity extends AppCompatActivity {
+public class CourseActivity extends AppCompatActivity {
 
     private AppBarLayout appBarLayout;
     private MaterialToolbar appBar;
@@ -18,7 +18,7 @@ public class PeriodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_period);
+        setContentView(R.layout.activity_course);
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
@@ -32,7 +32,7 @@ public class PeriodActivity extends AppCompatActivity {
         appBar.setNavigationOnClickListener(view -> finish());
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        AssignmentViewAdapter adapter = new AssignmentViewAdapter();
+        CourseViewAdapter adapter = new CourseViewAdapter();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

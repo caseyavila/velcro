@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 
 
-public class AssignmentViewAdapter extends RecyclerView.Adapter<AssignmentViewAdapter.ViewHolder> {
+public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.ViewHolder> {
 
 
     @NonNull

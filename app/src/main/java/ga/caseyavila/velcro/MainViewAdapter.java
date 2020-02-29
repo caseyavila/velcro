@@ -13,18 +13,18 @@ import com.google.android.material.textview.MaterialTextView;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 
-public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.ViewHolder> {
+public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHolder> {
 
     Context context;
 
-    PeriodViewAdapter(Context ctx) {
+    MainViewAdapter(Context ctx) {
         context = ctx;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_period, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_course, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
@@ -34,12 +34,12 @@ public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.Vi
         holder.periodNumber.setText(String.valueOf(position + 1));  // Add one since "position" starts at 0
         holder.teacher.setText(casey.getTeacher(position).toUpperCase());
         holder.grade.setText(casey.getGrade(position));
-        holder.className.setText(casey.getCourseName(position));
-        holder.percentage.setText(casey.getScore(position));
+        holder.courseName.setText(casey.getCourseName(position));
+        holder.score.setText(casey.getScore(position));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, PeriodActivity.class);
+                Intent intent = new Intent(context, CourseActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("period", position);
                 intent.putExtras(bundle);
@@ -60,8 +60,8 @@ public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.Vi
         MaterialTextView periodNumber;
         MaterialTextView teacher;
         MaterialTextView grade;
-        MaterialTextView className;
-        MaterialTextView percentage;
+        MaterialTextView courseName;
+        MaterialTextView score;
 
 
         public ViewHolder(View itemView) {
@@ -72,8 +72,8 @@ public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.Vi
             periodNumber = itemView.findViewById(R.id.period_number);
             teacher = itemView.findViewById(R.id.teacher);
             grade = itemView.findViewById(R.id.grade);
-            className = itemView.findViewById(R.id.class_name);
-            percentage = itemView.findViewById(R.id.percentage);
+            courseName = itemView.findViewById(R.id.course_name);
+            score = itemView.findViewById(R.id.score);
         }
     }
 }

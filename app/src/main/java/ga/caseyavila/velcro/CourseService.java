@@ -1,4 +1,4 @@
 package ga.caseyavila.velcro;
 
-public class AssignmentService {
+public class CourseService {
 }
