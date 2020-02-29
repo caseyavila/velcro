@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 
-import static ga.caseyavila.velcro.User.*;
+import static ga.caseyavila.velcro.LoginActivity.casey;
 
 public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.ViewHolder> {
 
@@ -32,10 +32,10 @@ public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.periodNumber.setText(String.valueOf(position + 1));  // Add one since "position" starts at 0
-        holder.teacher.setText(teacherMap.get(position).toUpperCase());
-        holder.grade.setText(gradeMap.get(position));
-        holder.className.setText(classMap.get(position));
-        holder.percentage.setText(percentageMap.get(position));
+        holder.teacher.setText(casey.getTeacher(position).toUpperCase());
+        holder.grade.setText(casey.getGrade(position));
+        holder.className.setText(casey.getCourseName(position));
+        holder.percentage.setText(casey.getScore(position));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,7 +50,7 @@ public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return numberOfPeriods;
+        return casey.getNumberOfPeriods();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -62,6 +62,7 @@ public class PeriodViewAdapter extends RecyclerView.Adapter<PeriodViewAdapter.Vi
         MaterialTextView grade;
         MaterialTextView className;
         MaterialTextView percentage;
+
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -1,18 +1,15 @@
 package ga.caseyavila.velcro;
 
-import android.os.Build;
-import android.util.SparseArray;
-import androidx.annotation.RequiresApi;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import java.io.IOException;
 import android.util.Base64;
 import java.util.UUID;
+
+import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
 
 public class User {
 
@@ -20,28 +17,14 @@ public class User {
     private String password;
     private String school_url = "ahs-fusd-ca";
     private String base_url = "https://" + this.school_url + ".schoolloop.com";
-    private Document login_document;
-    private String form_data_id;
-    private Connection.Response login_response;
-    private Connection.Response main_response;
     private Connection.Response studentIdResponse;
     private Connection.Response reportCardResponse;
     private Connection.Response period_response;
     private JSONObject loginJSON;
-    private JSONObject reportCardJSON;
+    private JSONArray reportCardJSON;
     private Long studentId;
-    public static Long timeSinceLogin;
-    public static SparseArray<String> teacherMap = new SparseArray<String>();
-    public static SparseArray<String> gradeMap = new SparseArray<String>();
-    public static SparseArray<String> classMap = new SparseArray<String>();
-    public static SparseArray<String> percentageMap = new SparseArray<String>();
-    public static SparseArray<String> linkMap = new SparseArray<String>();
-    public static SparseArray<String> assignmentNames = new SparseArray<String>();
-    public static SparseArray<Integer> pointsPossibleArray = new SparseArray<Integer>();
-    public static SparseArray<Integer> pointsEarnedArray = new SparseArray<Integer>();
-    public static SparseArray<String> categoryNames = new SparseArray<String>();
-    public static int numberOfPeriods;
-    public static boolean isLoggedIn;
+    private boolean isLoggedIn;
+    private int numberOfPeriods;
 
     public String getUsername() {
         return this.username;
@@ -51,11 +34,15 @@ public class User {
         return this.password;
     }
 
-    public void setUsername(String username) {
+    public String getStudentId() {
+        return this.studentId.toString();
+    }
+
+    void setUsername(String username) {
         this.username = username;
     }
 
-    public void setPassword(String password) {
+    void setPassword(String password) {
         this.password = password;
     }
 
@@ -72,7 +59,8 @@ public class User {
         return Base64.encodeToString(encodedInput.getBytes(), Base64.NO_WRAP);
     }
 
-    void getStudentId() throws IOException, JSONException {
+    void findStudentId() throws IOException, JSONException {
+        isLoggedIn = false;
         this.studentIdResponse = Jsoup.connect(base_url + "/mapi/login")
                 .method(Connection.Method.GET)
                 .data("devOS", "Android")
@@ -85,58 +73,78 @@ public class User {
 
         loginJSON = new JSONObject(this.studentIdResponse.parse().text());
         studentId = loginJSON.getLong("userID");
+        if (studentIdResponse.statusCode() == 200) {
+            isLoggedIn = true;
+        }
     }
 
     void getReportCard() throws IOException, JSONException {
         this.reportCardResponse = Jsoup.connect(base_url + "/mapi/report_card")
                 .method(Connection.Method.GET)
-                .data("studentID", studentId.toString())
+                .data("studentID", sharedPreferences.getString("studentId", ""))
                 .data("trim", "true")
-                .header("Authorization", "Basic " + credentials(username, password))
+                .header("Authorization", "Basic " + credentials(sharedPreferences.getString("username", ""), sharedPreferences.getString("password", "")))
                 .execute();
-        reportCardJSON = new JSONObject(this.reportCardResponse.parse().text());
+
+        reportCardJSON = new JSONArray(this.reportCardResponse.parse().text());
+        this.setNumberOfPeriods(reportCardJSON.length());
     }
 
-    public void loginChecker() throws IOException {
-//        if (this.main_response.parse().title().contains("Portal")) {
-//            isLoggedIn = true;
-//        }
-    }
-
-    public void infoFinder() throws IOException {
-        int period = 0;
-        Elements rows = this.main_response.parse().getElementsByClass("student_row");
-        for (Element row : rows) {
-            Elements grade = row.getElementsByClass("float_l grade");
-            gradeMap.put(period, grade.text());
-            Elements percent = row.getElementsByClass("float_l percent");
-            percentageMap.put(period, percent.text());
-            Elements teacher = row.getElementsByClass("teacher co-teacher");
-            teacherMap.put(period, teacher.text());
-            Elements classes = row.getElementsByAttributeValueMatching("data-track-link", "Academic Classroom");
-            classMap.put(period, classes.text());
-            Elements link = row.getElementsByClass("pr_link").select("a[href]");
-            linkMap.put(period, base_url + link.attr("href"));
-            period++;
+    String getScore(int period) {
+        try {
+            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            // Return a blank string if the score is null
+            return (periodJSON.getString("score").equals("null")) ? "" : periodJSON.getString("score");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        numberOfPeriods = period;
+        return "error";
     }
 
-    public void getPeriodDocument(String periodUrl) throws IOException {
-        period_response = Jsoup.connect(base_url + periodUrl)
-                .method(Connection.Method.GET)
-                .cookies(login_response.cookies())
-                .execute();
-        period_response.bufferUp();
-    }
-
-    public void assignmentFinder() throws IOException {
-        int assignment = 0;
-        Elements rows = this.period_response.parse().getElementsByClass("general_body").select("tr");
-        for (Element row : rows) {
-            Elements assignmentName = row.select("a");
-            assignmentNames.put(assignment, assignmentName.text());
-            assignment++;
+    String getGrade(int period) {
+        try {
+            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            // Return a blank string if the grade is null
+            return (periodJSON.getString("grade").equals("null")) ? "" : periodJSON.getString("grade");
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        return "error";
+    }
+
+    String getTeacher(int period) {
+        try {
+            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            return periodJSON.getString("teacherName");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "error";
+    }
+
+    String getCourseName(int period) {
+        try {
+            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            return periodJSON.getString("courseName");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "error";
+    }
+
+    private void setNumberOfPeriods(int periods) {
+        numberOfPeriods = periods;
+    }
+
+    int getNumberOfPeriods() {
+        return numberOfPeriods;
+    }
+
+    boolean isLoggedIn() {
+        return this.isLoggedIn;
+    }
+
+    void setLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
     }
 }

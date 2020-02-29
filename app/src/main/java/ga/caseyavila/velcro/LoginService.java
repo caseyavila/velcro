@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.view.View;
-import androidx.annotation.RequiresApi;
 import org.json.JSONException;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.LoginActivity.casey;
@@ -29,18 +26,15 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            User.isLoggedIn = false;
-            casey.getStudentId();
-//            casey.loginChecker();
-            if (!User.isLoggedIn) {
-                return null;
-            } else {
-                casey.infoFinder();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("username", casey.getUsername());
-                editor.putString("password", casey.getPassword());
-                editor.apply();
-            }
+            casey.findStudentId();
+
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("username", casey.getUsername());
+            editor.putString("password", casey.getPassword());
+            editor.putString("studentId", casey.getStudentId());
+            editor.apply();
+
+            casey.getReportCard();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
@@ -50,7 +44,7 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
 
-        if (User.isLoggedIn) {
+        if (casey.isLoggedIn()) {
             Intent intent = new Intent(activity, MainActivity.class);
             activity.startActivity(intent);
             activity.finish();

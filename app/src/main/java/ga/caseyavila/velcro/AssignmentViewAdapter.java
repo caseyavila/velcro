@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 
-import static ga.caseyavila.velcro.User.assignmentNames;
 
 public class AssignmentViewAdapter extends RecyclerView.Adapter<AssignmentViewAdapter.ViewHolder> {
 
@@ -22,12 +21,13 @@ public class AssignmentViewAdapter extends RecyclerView.Adapter<AssignmentViewAd
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.assignmentName.setText(assignmentNames.get(position));
+//        holder.assignmentName.setText(assignmentNames.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return assignmentNames.size();
+//        return assignmentNames.size();
+        return 0;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

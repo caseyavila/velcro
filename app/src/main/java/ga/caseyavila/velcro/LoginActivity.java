@@ -77,9 +77,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        usernameText.setText(sharedPreferences.getString("username", ""));
-        passwordText.setText(sharedPreferences.getString("password", ""));
-
         autoLogin();
     }
 
@@ -92,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View v) {
         casey.setUsername(usernameText.getText().toString());
         casey.setPassword(passwordText.getText().toString());
-        User.timeSinceLogin = null;
 
         progressBar.setVisibility(View.VISIBLE);
         loginButton.setEnabled(false);
@@ -103,7 +99,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void autoLogin() {
-        if (sharedPreferences.contains("username") && sharedPreferences.contains("password")) {
+        if (sharedPreferences.contains("username") && sharedPreferences.contains("password") && sharedPreferences.contains("studentId")) {
+            usernameText.setText(sharedPreferences.getString("username", ""));
+            passwordText.setText(sharedPreferences.getString("password", ""));
+
             login(loginButton);
         }
     }

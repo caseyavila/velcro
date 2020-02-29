@@ -1,17 +1,14 @@
 package ga.caseyavila.velcro;
 
 import android.os.Bundle;
-import android.util.SparseArray;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.textview.MaterialTextView;
 import com.google.android.material.appbar.AppBarLayout;
 
-import static ga.caseyavila.velcro.User.*;
+import static ga.caseyavila.velcro.LoginActivity.casey;
 
 public class PeriodActivity extends AppCompatActivity {
 
@@ -30,7 +27,7 @@ public class PeriodActivity extends AppCompatActivity {
         appBarLayout = findViewById(R.id.appbar_layout);
         appBar = findViewById(R.id.appbar);
         setSupportActionBar(appBar);
-        getSupportActionBar().setTitle(User.classMap.get(bundle.getInt("period")));
+        getSupportActionBar().setTitle(casey.getCourseName(bundle.getInt("period")));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
         appBar.setNavigationOnClickListener(view -> finish());
 
