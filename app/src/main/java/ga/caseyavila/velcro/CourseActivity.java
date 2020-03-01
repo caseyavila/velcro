@@ -1,6 +1,5 @@
 package ga.caseyavila.velcro;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,11 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.appbar.AppBarLayout;
-import org.json.JSONException;
-
-import java.io.IOException;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
+
 
 public class CourseActivity extends AppCompatActivity {
 
