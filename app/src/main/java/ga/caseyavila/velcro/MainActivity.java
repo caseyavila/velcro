@@ -39,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     void addCards() {
         RecyclerView recyclerView = findViewById(R.id.main_recycler_view);
+
+        recyclerView.setNestedScrollingEnabled(false); // Fix scrolling of RecyclerView
+
         adapter = new MainViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
