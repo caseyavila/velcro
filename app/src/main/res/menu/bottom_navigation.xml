@@ -23,7 +23,7 @@
     <item
             android:id="@+id/news"
             android:title="@string/news"
-            android:icon="@drawable/ic_radio">
+            android:icon="@drawable/ic_news">
     </item>
 
     <item

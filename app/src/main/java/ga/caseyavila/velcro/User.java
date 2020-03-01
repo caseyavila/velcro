@@ -9,20 +9,22 @@ import java.io.IOException;
 import android.util.Base64;
 import java.util.UUID;
 
+import static ga.caseyavila.velcro.LoginActivity.casey;
 import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
 
 public class User {
 
     private String username;
     private String password;
-    private String school_url = "ahs-fusd-ca";
-    private String base_url = "https://" + this.school_url + ".schoolloop.com";
+    private String schoolUrl = "ahs-fusd-ca";
+    private String baseUrl = "https://" + this.schoolUrl + ".schoolloop.com";
     private Connection.Response studentIdResponse;
     private Connection.Response reportCardResponse;
-    private Connection.Response period_response;
+    private Connection.Response progressReportResponse;
     private JSONObject loginJSON;
-    private JSONArray reportCardJSON;
-    private Long studentId;
+    private JSONArray coursesJSON;
+    private JSONArray progressReportJSON = new JSONArray();
+    private String studentId;
     private boolean isLoggedIn;
     private int numberOfPeriods;
 
@@ -34,8 +36,12 @@ public class User {
         return this.password;
     }
 
-    public String getStudentId() {
+    String getStudentId() {
         return this.studentId.toString();
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
     }
 
     void setUsername(String username) {
@@ -47,11 +53,11 @@ public class User {
     }
 
     public String getSchool_url() {
-        return this.school_url;
+        return this.schoolUrl;
     }
 
-    public void setSchool_url(String school_url) {
-        this.school_url = school_url;
+    public void setSchool_url(String url) {
+        this.schoolUrl = url;
     }
 
     private String credentials(String username, String password) {
@@ -61,7 +67,7 @@ public class User {
 
     void findStudentId() throws IOException, JSONException {
         isLoggedIn = false;
-        this.studentIdResponse = Jsoup.connect(base_url + "/mapi/login")
+        studentIdResponse = Jsoup.connect(baseUrl + "/mapi/login")
                 .method(Connection.Method.GET)
                 .data("devOS", "Android")
                 .data("hash", "false")
@@ -71,28 +77,40 @@ public class User {
                 .header("Authorization", "Basic " + credentials(username, password))
                 .execute();
 
-        loginJSON = new JSONObject(this.studentIdResponse.parse().text());
-        studentId = loginJSON.getLong("userID");
-        if (studentIdResponse.statusCode() == 200) {
-            isLoggedIn = true;
-        }
+        loginJSON = new JSONObject(studentIdResponse.body());
+        studentId = loginJSON.getString("userID");
     }
 
     void getReportCard() throws IOException, JSONException {
-        this.reportCardResponse = Jsoup.connect(base_url + "/mapi/report_card")
+        reportCardResponse = Jsoup.connect(baseUrl + "/mapi/report_card")
                 .method(Connection.Method.GET)
+                .data("studentID", casey.getStudentId())
+                .data("trim", "true")
+                .header("Authorization", "Basic " + credentials(casey.getUsername(), casey.getPassword()))
+                .execute();
+
+        coursesJSON = new JSONArray(reportCardResponse.body());
+        if (reportCardResponse.statusCode() == 200) {
+            isLoggedIn = true;
+        }
+        setNumberOfPeriods(coursesJSON.length());
+    }
+
+    void findProgressReport(int period) throws IOException, JSONException {
+        progressReportResponse = Jsoup.connect(baseUrl + "/mapi/progress_report")
+                .method(Connection.Method.GET)
+                .data("periodID", casey.getCourseId(period))
                 .data("studentID", sharedPreferences.getString("studentId", ""))
                 .data("trim", "true")
                 .header("Authorization", "Basic " + credentials(sharedPreferences.getString("username", ""), sharedPreferences.getString("password", "")))
                 .execute();
 
-        reportCardJSON = new JSONArray(this.reportCardResponse.parse().text());
-        this.setNumberOfPeriods(reportCardJSON.length());
+        progressReportJSON.put(period, progressReportResponse.body());
     }
 
     String getScore(int period) {
         try {
-            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            JSONObject periodJSON = coursesJSON.getJSONObject(period);
             // Return a blank string if the score is null
             return (periodJSON.getString("score").equals("null")) ? "" : periodJSON.getString("score");
         } catch (JSONException e) {
@@ -103,7 +121,7 @@ public class User {
 
     String getGrade(int period) {
         try {
-            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            JSONObject periodJSON = coursesJSON.getJSONObject(period);
             // Return a blank string if the grade is null
             return (periodJSON.getString("grade").equals("null")) ? "" : periodJSON.getString("grade");
         } catch (JSONException e) {
@@ -114,7 +132,7 @@ public class User {
 
     String getTeacher(int period) {
         try {
-            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            JSONObject periodJSON = coursesJSON.getJSONObject(period);
             return periodJSON.getString("teacherName");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -124,8 +142,18 @@ public class User {
 
     String getCourseName(int period) {
         try {
-            JSONObject periodJSON = reportCardJSON.getJSONObject(period);
+            JSONObject periodJSON = coursesJSON.getJSONObject(period);
             return periodJSON.getString("courseName");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "error";
+    }
+
+    private String getCourseId(int period) {
+        try {
+            JSONObject periodJSON = coursesJSON.getJSONObject(period);
+            return periodJSON.getString("periodID");
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -2,7 +2,6 @@ package ga.caseyavila.velcro;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
@@ -10,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;

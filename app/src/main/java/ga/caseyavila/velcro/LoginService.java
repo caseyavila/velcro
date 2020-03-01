@@ -26,7 +26,15 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            casey.findStudentId();
+            if (sharedPreferences.contains("studentId") && sharedPreferences.contains("username") && sharedPreferences.contains("password")) {
+                casey.setStudentId(sharedPreferences.getString("studentId", "error"));
+                casey.setUsername(sharedPreferences.getString("username", "error"));
+                casey.setPassword(sharedPreferences.getString("password", "error"));
+            } else {
+                casey.findStudentId();
+            }
+
+            casey.getReportCard();
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("username", casey.getUsername());
@@ -34,7 +42,6 @@ public class LoginService extends AsyncTask<Void, Void, Void> {
             editor.putString("studentId", casey.getStudentId());
             editor.apply();
 
-            casey.getReportCard();
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }

@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,6 +8,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.appbar.AppBarLayout;
+import org.json.JSONException;
+
+import java.io.IOException;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 
@@ -29,7 +33,9 @@ public class CourseActivity extends AppCompatActivity {
         setSupportActionBar(appBar);
         getSupportActionBar().setTitle(casey.getCourseName(bundle.getInt("period")));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
-        appBar.setNavigationOnClickListener(view -> finish());
+        appBar.setNavigationOnClickListener(view -> finish());  // Finish activity when back button is pressed
+
+        new CourseService(this, period).execute();
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         CourseViewAdapter adapter = new CourseViewAdapter();
