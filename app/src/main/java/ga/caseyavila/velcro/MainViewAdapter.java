@@ -15,7 +15,7 @@ import static ga.caseyavila.velcro.LoginActivity.casey;
 
 public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHolder> {
 
-    Context context;
+    private Context context;
 
     MainViewAdapter(Context ctx) {
         context = ctx;

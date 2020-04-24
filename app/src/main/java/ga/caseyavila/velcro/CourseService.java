@@ -3,7 +3,6 @@ package ga.caseyavila.velcro;
 import android.app.Activity;
 import android.os.AsyncTask;
 import org.json.JSONException;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.LoginActivity.casey;
@@ -37,6 +36,8 @@ public class CourseService extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
+
+        ((CourseActivity) activity).addCards();
     }
 }
 

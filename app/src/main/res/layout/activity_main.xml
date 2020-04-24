@@ -13,17 +13,6 @@
             tools:context="ga.caseyavila.velcro.MainActivity">
 
 
-        <ProgressBar
-                android:id="@+id/progress_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:indeterminate="true"
-                android:max="100"
-                android:visibility="invisible"
-                android:layout_marginTop="-7dp"
-                tools:ignore="MissingConstraints"/>
-
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/refresh"
                 android:layout_width="match_parent"
@@ -35,7 +24,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clipToPadding="false"
-                    android:paddingBottom="10dp"
+                    android:paddingBottom="9dp"
                     android:scrollbars="vertical"
                     android:layoutAnimation="@anim/layout_fall_down">
 

@@ -13,6 +13,8 @@ import static ga.caseyavila.velcro.LoginActivity.casey;
 
 public class CourseActivity extends AppCompatActivity {
 
+    private int period;
+    private CourseViewAdapter adapter;
     private AppBarLayout appBarLayout;
     private MaterialToolbar appBar;
 
@@ -23,7 +25,7 @@ public class CourseActivity extends AppCompatActivity {
 
         Bundle bundle = this.getIntent().getExtras();
         assert bundle != null;
-        int period = bundle.getInt("period");
+        period = bundle.getInt("period");
 
         appBarLayout = findViewById(R.id.appbar_layout);
         appBar = findViewById(R.id.appbar);
@@ -33,10 +35,13 @@ public class CourseActivity extends AppCompatActivity {
         appBar.setNavigationOnClickListener(view -> finish());  // Finish activity when back button is pressed
 
         new CourseService(this, period).execute();
+    }
 
+    void addCards() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        CourseViewAdapter adapter = new CourseViewAdapter();
+        adapter = new CourseViewAdapter(this, period);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 }

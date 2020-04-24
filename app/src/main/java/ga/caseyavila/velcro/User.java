@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro;
 
+import android.content.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,6 +9,9 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import android.util.Base64;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.lang.Math;
 
 import static ga.caseyavila.velcro.LoginActivity.casey;
 import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
@@ -27,6 +31,7 @@ public class User {
     private String studentId;
     private boolean isLoggedIn;
     private int numberOfPeriods;
+    private static final Pattern scoreEarnedPattern = Pattern.compile("[-+]?([0-9]*\\.[0-9]+|[0-9]+)(?=\\s/\\s)");
 
     public String getUsername() {
         return this.username;
@@ -60,9 +65,25 @@ public class User {
         this.schoolUrl = url;
     }
 
+    boolean isLoggedIn() {
+        return this.isLoggedIn;
+    }
+
     private String credentials(String username, String password) {
         String encodedInput = username + ":" + password;
         return Base64.encodeToString(encodedInput.getBytes(), Base64.NO_WRAP);
+    }
+
+    private String getVelcroUUID() {
+        if (sharedPreferences.contains("UUID")) {
+            return sharedPreferences.getString("UUID", "");
+        } else {
+            String uuid = UUID.randomUUID().toString();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("UUID", uuid);
+            editor.apply();
+            return uuid;
+        }
     }
 
     void findStudentId() throws IOException, JSONException {
@@ -71,7 +92,7 @@ public class User {
                 .method(Connection.Method.GET)
                 .data("devOS", "Android")
                 .data("hash", "false")
-                .data("uuid", UUID.randomUUID().toString())
+                .data("uuid", getVelcroUUID())
                 .data("version", "3.2.4")
                 .data("year", "2020")
                 .header("Authorization", "Basic " + credentials(username, password))
@@ -94,6 +115,7 @@ public class User {
             isLoggedIn = true;
         }
         setNumberOfPeriods(coursesJSON.length());
+        System.out.println(casey.getVelcroUUID());
     }
 
     void findProgressReport(int period) throws IOException, JSONException {
@@ -105,7 +127,7 @@ public class User {
                 .header("Authorization", "Basic " + credentials(sharedPreferences.getString("username", ""), sharedPreferences.getString("password", "")))
                 .execute();
 
-        progressReportJSON.put(period, progressReportResponse.body());
+        progressReportJSON.put(period, (JSONObject) new JSONArray(progressReportResponse.body()).get(0));  // Place JSONObject directly in array, instead of array with one object
     }
 
     String getScore(int period) {
@@ -168,11 +190,84 @@ public class User {
         return numberOfPeriods;
     }
 
-    boolean isLoggedIn() {
-        return this.isLoggedIn;
+    private JSONObject getPeriodProgressReportJSON(int period) {
+        try {
+            return progressReportJSON.getJSONObject(period);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    void setLoggedIn(boolean isLoggedIn) {
-        this.isLoggedIn = isLoggedIn;
+    int getNumberOfAssignments(int period) {
+        try {
+            return getPeriodProgressReportJSON(period).getJSONArray("grades").length();  // Return the number of items in the array "grades"
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    JSONObject getAssignmentJSONObject(int period, int assignment) {
+        try {
+            JSONArray assignmentsArray = getPeriodProgressReportJSON(period).getJSONArray("grades");
+            return assignmentsArray.getJSONObject(assignment);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    String getAssignmentName(int period, int assignment) {
+        try {
+            JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
+            return assignmentObject.getJSONObject("assignment").getString("title");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    String getAssignmentCategory(int period, int assignment) {
+        try {
+            JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
+            return assignmentObject.getJSONObject("assignment").getString("categoryName");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    String getAssignmentScoreEarned(int period, int assignment) {
+        try {
+            JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
+            String scoreString = assignmentObject.getString("score");
+            Matcher m = scoreEarnedPattern.matcher(scoreString);
+            if (m.find()) {
+                return m.group();
+            } else {
+                return null;
+            }
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    String getAssignmentScorePossible(int period, int assignment) {
+        try {
+            JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
+            return assignmentObject.getJSONObject("assignment").getString("maxPoints");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    String getAssignmentPercentage(int period, int assignment) {
+        try {
+            float scoreEarned = Float.parseFloat(getAssignmentScoreEarned(period, assignment));
+            float scorePossible = Float.parseFloat(getAssignmentScorePossible(period, assignment));
+            float percentage = ((scoreEarned / scorePossible) * 100);
+            return (double) Math.round(percentage * 100) / 100 + "%";  // Round output to 2 decimal places
+        } catch (NullPointerException e) {
+            return null;
+        }
     }
 }
