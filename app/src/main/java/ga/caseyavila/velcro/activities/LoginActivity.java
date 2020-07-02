@@ -17,7 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
-import ga.caseyavila.velcro.LoginService;
+import ga.caseyavila.velcro.LoginAsyncTask;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.User;
 
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
         usernameLayout.setEnabled(false);
         passwordLayout.setEnabled(false);
 
-        new LoginService(this).execute();
+        new LoginAsyncTask(this).execute();
     }
 
     private void autoLogin() {

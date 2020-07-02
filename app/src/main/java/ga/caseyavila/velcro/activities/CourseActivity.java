@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.appbar.AppBarLayout;
-import ga.caseyavila.velcro.CourseService;
+import ga.caseyavila.velcro.CourseAsyncTask;
 import ga.caseyavila.velcro.adapters.CourseViewAdapter;
 import ga.caseyavila.velcro.R;
 
@@ -37,7 +37,7 @@ public class CourseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
         appBar.setNavigationOnClickListener(view -> finish());  // Finish activity when back button is pressed
 
-        new CourseService(this, period).execute();
+        new CourseAsyncTask(this, period).execute();
     }
 
     public void addCards() {

@@ -12,11 +12,11 @@ import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
-public class LoginService extends AsyncTask<Void, Void, Void> {
+public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private WeakReference<Activity> activityReference;
 
-    public LoginService(Activity activity) {
+    public LoginAsyncTask(Activity activity) {
         activityReference = new WeakReference<>(activity);
     }
 

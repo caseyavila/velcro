@@ -12,7 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ga.caseyavila.velcro.fragments.LogoutDialogFragment;
 import ga.caseyavila.velcro.adapters.MainViewAdapter;
 import ga.caseyavila.velcro.R;
-import ga.caseyavila.velcro.RefreshService;
+import ga.caseyavila.velcro.RefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
         refreshLayout.setProgressBackgroundColorSchemeColor(ContextCompat.getColor(this, R.color.colorRefresh));
         refreshLayout.setOnRefreshListener(
-                () -> new RefreshService((Activity) findViewById(R.id.main_recycler_view).getContext()).execute()
+                () -> new RefreshAsyncTask((Activity) findViewById(R.id.main_recycler_view).getContext()).execute()
         );
         refreshLayout.setEnabled(false);
 

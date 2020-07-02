@@ -2,21 +2,20 @@ package ga.caseyavila.velcro;
 
 import android.app.Activity;
 import android.os.AsyncTask;
-import ga.caseyavila.velcro.activities.CourseActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import ga.caseyavila.velcro.activities.MainActivity;
 import org.json.JSONException;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
-
-public class CourseService extends AsyncTask<Void, Void, Void> {
+public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private WeakReference<Activity> activityReference;
-    private int period;
 
-    public CourseService(Activity activity, int courseNumber) {
+    public RefreshAsyncTask(Activity activity) {
         activityReference = new WeakReference<>(activity);
-        period = courseNumber;
     }
 
     @Override
@@ -26,7 +25,7 @@ public class CourseService extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            casey.findProgressReport(period);
+            casey.getReportCard();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -38,7 +37,9 @@ public class CourseService extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
 
-        ((CourseActivity) activity).addCards();
+        ((MainActivity) activity).updateCards();
+
+        SwipeRefreshLayout refreshLayout = activity.findViewById(R.id.refresh);
+        refreshLayout.setRefreshing(false);
     }
 }
-
