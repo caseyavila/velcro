@@ -1,4 +1,4 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,14 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
+import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.activities.CourseActivity;
 
-import static ga.caseyavila.velcro.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHolder> {
 
     private Context context;
 
-    MainViewAdapter(Context ctx) {
+    public MainViewAdapter(Context ctx) {
         context = ctx;
     }
 

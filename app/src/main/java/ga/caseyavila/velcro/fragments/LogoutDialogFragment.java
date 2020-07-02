@@ -1,4 +1,4 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.fragments;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -9,10 +9,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.activities.LoginActivity;
 
 import java.util.Objects;
 
-import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
+import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 public class LogoutDialogFragment extends DialogFragment {
     @NonNull

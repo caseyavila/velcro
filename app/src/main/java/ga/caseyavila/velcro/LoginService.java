@@ -5,17 +5,18 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
+import ga.caseyavila.velcro.activities.MainActivity;
 import org.json.JSONException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import static ga.caseyavila.velcro.LoginActivity.casey;
-import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 public class LoginService extends AsyncTask<Void, Void, Void> {
 
     private WeakReference<Activity> activityReference;
 
-    LoginService(Activity activity) {
+    public LoginService(Activity activity) {
         activityReference = new WeakReference<>(activity);
     }
 

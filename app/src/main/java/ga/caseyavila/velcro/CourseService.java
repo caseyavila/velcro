@@ -2,10 +2,11 @@ package ga.caseyavila.velcro;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import ga.caseyavila.velcro.activities.CourseActivity;
 import org.json.JSONException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import static ga.caseyavila.velcro.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 
 public class CourseService extends AsyncTask<Void, Void, Void> {
@@ -13,7 +14,7 @@ public class CourseService extends AsyncTask<Void, Void, Void> {
     private WeakReference<Activity> activityReference;
     private int period;
 
-    CourseService(Activity activity, int courseNumber) {
+    public CourseService(Activity activity, int courseNumber) {
         activityReference = new WeakReference<>(activity);
         period = courseNumber;
     }

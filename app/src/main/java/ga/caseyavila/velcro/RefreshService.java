@@ -3,17 +3,18 @@ package ga.caseyavila.velcro;
 import android.app.Activity;
 import android.os.AsyncTask;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import ga.caseyavila.velcro.activities.MainActivity;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import static ga.caseyavila.velcro.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class RefreshService extends AsyncTask<Void, Void, Void> {
 
     private WeakReference<Activity> activityReference;
 
-    RefreshService(Activity activity) {
+    public RefreshService(Activity activity) {
         activityReference = new WeakReference<>(activity);
     }
 

@@ -9,7 +9,7 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        tools:context="ga.caseyavila.velcro.LoginActivity">
+        tools:context="ga.caseyavila.velcro.activities.LoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_layout"

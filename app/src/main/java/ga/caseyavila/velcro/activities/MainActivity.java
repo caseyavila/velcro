@@ -1,4 +1,4 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,9 +9,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import ga.caseyavila.velcro.fragments.LogoutDialogFragment;
+import ga.caseyavila.velcro.adapters.MainViewAdapter;
+import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.RefreshService;
 
-import static ga.caseyavila.velcro.LoginActivity.casey;
-import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -49,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         refreshLayout.setEnabled(true);
     }
 
-    void updateCards() {
+    public void updateCards() {
         for (int i = 0; i < casey.getNumberOfPeriods(); i++) {
             adapter.notifyItemChanged(i);
         }

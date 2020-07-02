@@ -13,8 +13,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.Math;
 
-import static ga.caseyavila.velcro.LoginActivity.casey;
-import static ga.caseyavila.velcro.LoginActivity.sharedPreferences;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 public class User {
 
@@ -41,7 +41,7 @@ public class User {
         return this.password;
     }
 
-    String getStudentId() {
+    public String getStudentId() {
         return this.studentId.toString();
     }
 
@@ -49,11 +49,11 @@ public class User {
         this.studentId = studentId;
     }
 
-    void setUsername(String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    void setPassword(String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -86,7 +86,7 @@ public class User {
         }
     }
 
-    void findStudentId() throws IOException, JSONException {
+    public void findStudentId() throws IOException, JSONException {
         isLoggedIn = false;
         studentIdResponse = Jsoup.connect(baseUrl + "/mapi/login")
                 .method(Connection.Method.GET)
@@ -102,7 +102,7 @@ public class User {
         studentId = loginJSON.getString("userID");
     }
 
-    void getReportCard() throws IOException, JSONException {
+    public void getReportCard() throws IOException, JSONException {
         reportCardResponse = Jsoup.connect(baseUrl + "/mapi/report_card")
                 .method(Connection.Method.GET)
                 .data("studentID", casey.getStudentId())
@@ -118,7 +118,7 @@ public class User {
         System.out.println(casey.getVelcroUUID());
     }
 
-    void findProgressReport(int period) throws IOException, JSONException {
+    public void findProgressReport(int period) throws IOException, JSONException {
         progressReportResponse = Jsoup.connect(baseUrl + "/mapi/progress_report")
                 .method(Connection.Method.GET)
                 .data("periodID", casey.getCourseId(period))
@@ -130,7 +130,7 @@ public class User {
         progressReportJSON.put(period, (JSONObject) new JSONArray(progressReportResponse.body()).get(0));  // Place JSONObject directly in array, instead of array with one object
     }
 
-    String getScore(int period) {
+    public String getScore(int period) {
         try {
             JSONObject periodJSON = coursesJSON.getJSONObject(period);
             // Return a blank string if the score is null
@@ -141,7 +141,7 @@ public class User {
         return "error";
     }
 
-    String getGrade(int period) {
+    public String getGrade(int period) {
         try {
             JSONObject periodJSON = coursesJSON.getJSONObject(period);
             // Return a blank string if the grade is null
@@ -152,7 +152,7 @@ public class User {
         return "error";
     }
 
-    String getTeacher(int period) {
+    public String getTeacher(int period) {
         try {
             JSONObject periodJSON = coursesJSON.getJSONObject(period);
             return periodJSON.getString("teacherName");
@@ -162,7 +162,7 @@ public class User {
         return "error";
     }
 
-    String getCourseName(int period) {
+    public String getCourseName(int period) {
         try {
             JSONObject periodJSON = coursesJSON.getJSONObject(period);
             return periodJSON.getString("courseName");
@@ -186,7 +186,7 @@ public class User {
         numberOfPeriods = periods;
     }
 
-    int getNumberOfPeriods() {
+    public int getNumberOfPeriods() {
         return numberOfPeriods;
     }
 
@@ -199,7 +199,7 @@ public class User {
         }
     }
 
-    int getNumberOfAssignments(int period) {
+    public int getNumberOfAssignments(int period) {
         try {
             return getPeriodProgressReportJSON(period).getJSONArray("grades").length();  // Return the number of items in the array "grades"
         } catch (JSONException e) {
@@ -208,7 +208,7 @@ public class User {
         }
     }
 
-    JSONObject getAssignmentJSONObject(int period, int assignment) {
+    public JSONObject getAssignmentJSONObject(int period, int assignment) {
         try {
             JSONArray assignmentsArray = getPeriodProgressReportJSON(period).getJSONArray("grades");
             return assignmentsArray.getJSONObject(assignment);
@@ -218,7 +218,7 @@ public class User {
         }
     }
 
-    String getAssignmentName(int period, int assignment) {
+    public String getAssignmentName(int period, int assignment) {
         try {
             JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
             return assignmentObject.getJSONObject("assignment").getString("title");
@@ -227,7 +227,7 @@ public class User {
         }
     }
 
-    String getAssignmentCategory(int period, int assignment) {
+    public String getAssignmentCategory(int period, int assignment) {
         try {
             JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
             return assignmentObject.getJSONObject("assignment").getString("categoryName");
@@ -236,7 +236,7 @@ public class User {
         }
     }
 
-    String getAssignmentScoreEarned(int period, int assignment) {
+    public String getAssignmentScoreEarned(int period, int assignment) {
         try {
             JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
             String scoreString = assignmentObject.getString("score");
@@ -251,7 +251,7 @@ public class User {
         }
     }
 
-    String getAssignmentScorePossible(int period, int assignment) {
+    public String getAssignmentScorePossible(int period, int assignment) {
         try {
             JSONObject assignmentObject = getAssignmentJSONObject(period, assignment);
             return assignmentObject.getJSONObject("assignment").getString("maxPoints");
@@ -260,7 +260,7 @@ public class User {
         }
     }
 
-    String getAssignmentPercentage(int period, int assignment) {
+    public String getAssignmentPercentage(int period, int assignment) {
         try {
             float scoreEarned = Float.parseFloat(getAssignmentScoreEarned(period, assignment));
             float scorePossible = Float.parseFloat(getAssignmentScorePossible(period, assignment));

@@ -1,4 +1,4 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.activities;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.appbar.AppBarLayout;
+import ga.caseyavila.velcro.CourseService;
+import ga.caseyavila.velcro.adapters.CourseViewAdapter;
+import ga.caseyavila.velcro.R;
 
-import static ga.caseyavila.velcro.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 
 public class CourseActivity extends AppCompatActivity {
@@ -37,7 +40,7 @@ public class CourseActivity extends AppCompatActivity {
         new CourseService(this, period).execute();
     }
 
-    void addCards() {
+    public void addCards() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         adapter = new CourseViewAdapter(this, period);
         recyclerView.setAdapter(adapter);

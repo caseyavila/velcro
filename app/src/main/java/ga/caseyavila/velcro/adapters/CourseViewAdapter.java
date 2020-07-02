@@ -1,4 +1,4 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,8 +7,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
+import ga.caseyavila.velcro.R;
 
-import static ga.caseyavila.velcro.LoginActivity.casey;
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 
 public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.ViewHolder> {
@@ -16,7 +17,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
     private Context context;
     private int period;
 
-    CourseViewAdapter(Context ctx, int prd) {
+    public CourseViewAdapter(Context ctx, int prd) {
         context = ctx;
         period = prd;
     }

@@ -1,4 +1,4 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.activities;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -17,11 +17,14 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
+import ga.caseyavila.velcro.LoginService;
+import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.User;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    static SharedPreferences sharedPreferences;
+    public static SharedPreferences sharedPreferences;
     private TextInputEditText usernameText;
     private TextInputEditText passwordText;
     private TextInputLayout usernameLayout;
