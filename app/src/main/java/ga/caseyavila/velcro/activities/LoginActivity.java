@@ -17,7 +17,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
-import ga.caseyavila.velcro.LoginAsyncTask;
+import ga.caseyavila.velcro.asynctasks.LoginAsyncTask;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.User;
 

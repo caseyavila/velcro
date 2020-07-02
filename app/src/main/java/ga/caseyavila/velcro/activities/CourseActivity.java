@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.appbar.AppBarLayout;
-import ga.caseyavila.velcro.CourseAsyncTask;
+import ga.caseyavila.velcro.asynctasks.CourseAsyncTask;
 import ga.caseyavila.velcro.adapters.CourseViewAdapter;
 import ga.caseyavila.velcro.R;
 

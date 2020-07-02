@@ -1,10 +1,11 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.asynctasks;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.view.View;
+import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.MainActivity;
 import org.json.JSONException;
 import java.io.IOException;

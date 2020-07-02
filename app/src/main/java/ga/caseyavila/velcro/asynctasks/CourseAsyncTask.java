@@ -1,4 +1,4 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.asynctasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;

@@ -12,7 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ga.caseyavila.velcro.fragments.LogoutDialogFragment;
 import ga.caseyavila.velcro.adapters.MainViewAdapter;
 import ga.caseyavila.velcro.R;
-import ga.caseyavila.velcro.RefreshAsyncTask;
+import ga.caseyavila.velcro.asynctasks.RefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;

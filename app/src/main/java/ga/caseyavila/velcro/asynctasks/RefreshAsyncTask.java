@@ -1,8 +1,9 @@
-package ga.caseyavila.velcro;
+package ga.caseyavila.velcro.asynctasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.MainActivity;
 import org.json.JSONException;
 

@@ -65,7 +65,7 @@ public class User {
         this.schoolUrl = url;
     }
 
-    boolean isLoggedIn() {
+    public boolean isLoggedIn() {
         return this.isLoggedIn;
     }
 
