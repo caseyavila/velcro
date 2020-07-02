@@ -1,4 +1,4 @@
-# Velcro
+# velcro
 A Schoolloop app written natively for Android.
 
 ## Features
