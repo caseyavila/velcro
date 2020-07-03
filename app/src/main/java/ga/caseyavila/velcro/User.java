@@ -265,9 +265,9 @@ public class User {
             float scoreEarned = Float.parseFloat(getAssignmentScoreEarned(period, assignment));
             float scorePossible = Float.parseFloat(getAssignmentScorePossible(period, assignment));
             float percentage = ((scoreEarned / scorePossible) * 100);
-            return (double) Math.round(percentage * 100) / 100 + "%";  // Round output to 2 decimal places
+            return String.valueOf((double) Math.round(percentage * 100) / 100);  // Round output to 2 decimal places
         } catch (NullPointerException e) {
-            return null;
+            return "";
         }
     }
 }

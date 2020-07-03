@@ -108,16 +108,34 @@
                     android:id="@+id/assignment_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/percentage_sign"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/assignment_score_earned"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintVertical_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintHorizontal_bias="1"
                     android:fontFamily="@font/manrope_extrabold"
                     android:textSize="20sp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="3dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginStart="8dp">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+            <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/percentage_sign"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/assignment_percentage"
+                    app:layout_constraintTop_toTopOf="@id/assignment_percentage"
+                    app:layout_constraintBottom_toBottomOf="@id/assignment_percentage"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:text="@string/percentage_sign"
+                    android:fontFamily="@font/manrope_extrabold"
+                    android:textSize="20sp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="2dp">
 
             </com.google.android.material.textview.MaterialTextView>
 

@@ -36,7 +36,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
         holder.assignmentCategory.setText(casey.getAssignmentCategory(period, position));
         holder.assignmentScoreEarned.setText(casey.getAssignmentScoreEarned(period, position));
         holder.assignmentScorePossible.setText(casey.getAssignmentScorePossible(period, position));
-        holder.assignmentPercentage.setText(casey.getAssignmentPercentage(period, position));
+        holder.assignmentPercentage.setText(casey.getAssignmentPercentage(period, position).toString());
     }
 
     @Override
