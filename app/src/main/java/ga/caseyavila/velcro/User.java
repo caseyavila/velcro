@@ -42,7 +42,7 @@ public class User {
     }
 
     public String getStudentId() {
-        return this.studentId.toString();
+        return this.studentId;
     }
 
     public void setStudentId(String studentId) {
@@ -190,21 +190,21 @@ public class User {
         return numberOfPeriods;
     }
 
-    private JSONObject getPeriodProgressReportJSON(int period) {
-        try {
-            return progressReportJSON.getJSONObject(period);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
     public int getNumberOfAssignments(int period) {
         try {
             return getPeriodProgressReportJSON(period).getJSONArray("grades").length();  // Return the number of items in the array "grades"
         } catch (JSONException e) {
             e.printStackTrace();
             return 0;
+        }
+    }
+
+    private JSONObject getPeriodProgressReportJSON(int period) {
+        try {
+            return progressReportJSON.getJSONObject(period);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
