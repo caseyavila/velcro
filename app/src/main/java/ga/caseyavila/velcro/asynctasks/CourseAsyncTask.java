@@ -2,6 +2,9 @@ package ga.caseyavila.velcro.asynctasks;
 
 import android.app.Activity;
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ProgressBar;
+import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.CourseActivity;
 import org.json.JSONException;
 import java.io.IOException;
@@ -38,7 +41,11 @@ public class CourseAsyncTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         Activity activity = activityReference.get();
 
-        ((CourseActivity) activity).addCards();
+        ProgressBar courseProgressBar = activity.findViewById(R.id.course_progress_bar);
+
+        courseProgressBar.setEnabled(true);  //Make progressbar appear
+        ((CourseActivity) activity).addCards();  //Load cards
+        courseProgressBar.setVisibility(View.INVISIBLE);  //Make progress bar disappear after loading cards
     }
 }
 

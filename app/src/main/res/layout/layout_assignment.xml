@@ -116,7 +116,7 @@
                     app:layout_constraintHorizontal_chainStyle="packed"
                     app:layout_constraintHorizontal_bias="1"
                     android:fontFamily="@font/manrope_extrabold"
-                    android:textSize="20sp"
+                    android:textSize="19sp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginStart="8dp">
@@ -131,9 +131,10 @@
                     app:layout_constraintTop_toTopOf="@id/assignment_percentage"
                     app:layout_constraintBottom_toBottomOf="@id/assignment_percentage"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:textColor="@color/textMediumEmphasis"
                     android:text="@string/percentage_sign"
                     android:fontFamily="@font/manrope_extrabold"
-                    android:textSize="20sp"
+                    android:textSize="19sp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginStart="2dp">
 

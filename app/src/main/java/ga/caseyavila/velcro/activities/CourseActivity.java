@@ -1,6 +1,7 @@
 package ga.caseyavila.velcro.activities;
 
 import android.os.Bundle;
+import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ public class CourseActivity extends AppCompatActivity {
     private CourseViewAdapter adapter;
     private AppBarLayout appBarLayout;
     private MaterialToolbar appBar;
+    private ProgressBar progressBarCourse;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +47,5 @@ public class CourseActivity extends AppCompatActivity {
         adapter = new CourseViewAdapter(this, period);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
     }
 }
