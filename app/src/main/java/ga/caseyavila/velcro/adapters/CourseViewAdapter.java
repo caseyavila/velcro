@@ -25,23 +25,39 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_assignment, parent, false);
+        View view;
+        if (viewType == VIEW_TYPES.Header) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_course_header, parent, false);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_assignment, parent, false);
+        }
         ViewHolder viewHolder = new ViewHolder(view);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.assignmentName.setText(casey.getAssignmentName(period, position));
-        holder.assignmentCategory.setText(casey.getAssignmentCategory(period, position));
-        holder.assignmentScoreEarned.setText(casey.getAssignmentScoreEarned(period, position));
-        holder.assignmentScorePossible.setText(casey.getAssignmentScorePossible(period, position));
-        holder.assignmentPercentage.setText(casey.getAssignmentPercentage(period, position));
+        if (getItemViewType(position) == VIEW_TYPES.Normal) {
+            holder.assignmentName.setText(casey.getAssignmentName(period, position));
+            holder.assignmentCategory.setText(casey.getAssignmentCategory(period, position));
+            holder.assignmentScoreEarned.setText(casey.getAssignmentScoreEarned(period, position));
+            holder.assignmentScorePossible.setText(casey.getAssignmentScorePossible(period, position));
+            holder.assignmentPercentage.setText(casey.getAssignmentPercentage(period, position));
+        }
     }
 
     @Override
     public int getItemCount() {
-            return casey.getNumberOfAssignments(period);
+        return casey.getNumberOfAssignments(period);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return VIEW_TYPES.Header;
+        } else {
+            return VIEW_TYPES.Normal;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -61,5 +77,10 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             assignmentScorePossible = itemView.findViewById(R.id.assignment_score_possible);
             assignmentPercentage = itemView.findViewById(R.id.assignment_percentage);
         }
+    }
+
+    private static class VIEW_TYPES {
+        public static final int Header = 0;
+        public static final int Normal = 1;
     }
 }
