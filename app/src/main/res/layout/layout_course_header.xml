@@ -23,7 +23,7 @@ android:layout_height="wrap_content">
             android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/assignment_name"
+                android:id="@+id/header_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
