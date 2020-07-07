@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.view.LineChartView;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -37,15 +39,18 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (getItemViewType(position) == COURSE_VIEW_TYPES.NORMAL) {
+        if (getItemViewType(position) == COURSE_VIEW_TYPES.HEADER) {
+            holder.headerTeacher.setText(casey.getTeacher(period));
+
+            LineChartData data = new LineChartData();
+
+        } else {
             //Subtract one due to the offset the header card creates
             holder.assignmentName.setText(casey.getAssignmentName(period, position - 1));
             holder.assignmentCategory.setText(casey.getAssignmentCategory(period, position - 1));
             holder.assignmentScoreEarned.setText(casey.getAssignmentScoreEarned(period, position - 1));
             holder.assignmentScorePossible.setText(casey.getAssignmentScorePossible(period, position - 1));
             holder.assignmentPercentage.setText(casey.getAssignmentPercentage(period, position - 1));
-        } else {
-            holder.headerTitle.setText(casey.getCourseName(period));
         }
     }
 
@@ -74,7 +79,8 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
         MaterialTextView assignmentPercentage;
 
         //Views for header card
-        MaterialTextView headerTitle;
+        MaterialTextView headerTeacher;
+        LineChartView trendChart;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,7 +91,8 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             assignmentScorePossible = itemView.findViewById(R.id.assignment_score_possible);
             assignmentPercentage = itemView.findViewById(R.id.assignment_percentage);
 
-            headerTitle = itemView.findViewById(R.id.header_title);
+            headerTeacher = itemView.findViewById(R.id.header_teacher);
+            trendChart = itemView.findViewById(R.id.trend_chart);
         }
     }
 

@@ -23,7 +23,7 @@ android:layout_height="wrap_content">
             android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/header_title"
+                android:id="@+id/header_teacher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -31,9 +31,20 @@ android:layout_height="wrap_content">
                 app:layout_constraintVertical_bias="0"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="18sp"
                 android:maxWidth="225dp">
 
         </com.google.android.material.textview.MaterialTextView>
+
+        <lecho.lib.hellocharts.view.LineChartView
+                android:id="@+id/trend_chart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+        </lecho.lib.hellocharts.view.LineChartView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
