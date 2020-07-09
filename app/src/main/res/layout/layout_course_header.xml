@@ -28,9 +28,9 @@ android:layout_height="wrap_content">
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/trend_chart"
                 app:layout_constraintVertical_bias="0"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="18sp"
@@ -41,9 +41,12 @@ android:layout_height="wrap_content">
         <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/trend_chart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="250dp"
+                android:layout_margin="10dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header_teacher"
+                app:layout_constraintBottom_toBottomOf="parent">
 
         </lecho.lib.hellocharts.view.LineChartView>
 
