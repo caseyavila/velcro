@@ -1,6 +1,8 @@
 package ga.caseyavila.velcro;
 
 import android.content.SharedPreferences;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.PointValue;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -8,11 +10,17 @@ import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import java.io.IOException;
 import android.util.Base64;
-import java.util.UUID;
+
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.Math;
 
+import static android.content.Context.POWER_SERVICE;
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
@@ -32,6 +40,7 @@ public class User {
     private boolean isLoggedIn;
     private int numberOfPeriods;
     private static final Pattern scoreEarnedPattern = Pattern.compile("[-+]?([0-9]*\\.[0-9]+|[0-9]+)(?=\\s/\\s)");
+    private JSONArray trendJSON;
 
     public String getUsername() {
         return this.username;
@@ -270,4 +279,83 @@ public class User {
             return "";
         }
     }
+
+    private JSONArray getTrendJSON(int period) {
+        try {
+            return getPeriodProgressReportJSON(period).getJSONArray("trendScores");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public boolean hasTrends(int period) {
+        JSONObject periodObject = getPeriodProgressReportJSON(period);
+        try {
+            assert periodObject != null;
+            return periodObject.has("trendScores");
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
+
+    public ArrayList<Float> xTrendValues(int period) {
+        ArrayList<Float> values = new ArrayList<>();
+        try {
+            for (int i = 0; i < getTrendJSON(period).length(); i++) {
+                values.add(Float.parseFloat(getTrendJSON(period).getJSONObject(i).getString("dayID")));
+            }
+            return values;
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<Float> yTrendValues(int period) {
+        ArrayList<Float> values = new ArrayList<>();
+        try {
+            for (int i = 0; i < getTrendJSON(period).length(); i++) {
+                values.add(Float.parseFloat(getTrendJSON(period).getJSONObject(i).getString("score")) * 100);
+            }
+            return values;
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public ArrayList<AxisValue> dateLabels(int period) {
+        ArrayList<AxisValue> arrayList = new ArrayList<>();
+        Float difference = getTrendLastDate(period) - getTrendFirstDate(period);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd", Locale.US);
+        Date date;
+        for (int i = 5; i > 0; i--) {
+            Float value = (getTrendFirstDate(period) + (difference * i/5));
+            date = new Date(value.longValue());
+            arrayList.add(new AxisValue(value).setLabel(dateFormat.format(date)));
+        }
+        return arrayList;
+    }
+
+    private Float getTrendFirstDate(int period) {
+        Float firstDate = xTrendValues(period).get(xTrendValues(period).size() - 1);
+        return firstDate;
+    }
+
+    private Float getTrendLastDate(int period) {
+        return xTrendValues(period).get(0);
+    }
+
+    public Float getTrendMax(int period) {
+        return Collections.max(yTrendValues(period));
+    }
+
+    public Float getTrendRange(int period) {
+        Float maxValue = Collections.max(yTrendValues(period));
+        Float minValue = Collections.min(yTrendValues(period));
+        return maxValue - minValue;
+    }
+
+    public Float getTrendMin(int period) {
+        return Collections.min(yTrendValues(period));
+    }
+
 }
