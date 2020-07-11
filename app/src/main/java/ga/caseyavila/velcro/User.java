@@ -2,7 +2,6 @@ package ga.caseyavila.velcro;
 
 import android.content.SharedPreferences;
 import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.PointValue;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -11,16 +10,12 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import android.util.Base64;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.Math;
 
-import static android.content.Context.POWER_SERVICE;
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 

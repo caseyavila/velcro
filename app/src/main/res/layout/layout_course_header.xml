@@ -39,7 +39,7 @@ android:layout_height="wrap_content">
 
         </com.google.android.material.textview.MaterialTextView>
 
-        <!-- Top Padding to prevent clipping of high y-axis labels -->
+        <!-- Top padding instead of margin to prevent clipping of high y-axis labels -->
         <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/trend_chart"
                 android:layout_width="match_parent"

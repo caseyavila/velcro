@@ -1,24 +1,19 @@
 package ga.caseyavila.velcro.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.graphics.Point;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
 import lecho.lib.hellocharts.model.*;
-import lecho.lib.hellocharts.util.AxisAutoValues;
 import lecho.lib.hellocharts.view.LineChartView;
 
-import java.lang.reflect.Array;
-import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
@@ -72,17 +67,19 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
                 Axis axis = new Axis(casey.dateLabels(period));
                 axis.setTextSize(14);
+                axis.setTypeface(ResourcesCompat.getFont(context, R.font.manrope_medium));
                 axis.setHasLines(true);
                 axis.setTextColor(ContextCompat.getColor(context, R.color.textHighEmphasis));
                 axis.setLineColor(ContextCompat.getColor(context, R.color.textMediumEmphasis));
                 data.setAxisXBottom(axis);
 
                 Axis yAxis = new Axis();
+                yAxis.setTextSize(14);
+                yAxis.setTypeface(ResourcesCompat.getFont(context, R.font.manrope_medium));
+                yAxis.setHasLines(true);
                 yAxis.setTextColor(ContextCompat.getColor(context, R.color.textHighEmphasis));
                 yAxis.setLineColor(ContextCompat.getColor(context, R.color.textMediumEmphasis));
-                yAxis.setTextSize(14);
                 yAxis.setMaxLabelChars(3);
-                yAxis.setHasLines(true);
                 data.setAxisYLeft(yAxis);
 
                 lineChartView.setLineChartData(data);
