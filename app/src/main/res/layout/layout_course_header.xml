@@ -32,17 +32,21 @@ android:layout_height="wrap_content">
                 app:layout_constraintVertical_bias="0"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="sans-serif-medium"
                 android:textSize="18sp"
                 android:maxWidth="225dp">
 
         </com.google.android.material.textview.MaterialTextView>
 
+        <!-- Top Padding to prevent clipping of high y-axis labels -->
         <lecho.lib.hellocharts.view.LineChartView
                 android:id="@+id/trend_chart"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:layout_margin="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:paddingTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
