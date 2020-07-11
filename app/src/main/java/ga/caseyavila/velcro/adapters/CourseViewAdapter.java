@@ -89,8 +89,8 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 lineChartView.setInteractive(false);
 
                 Viewport viewport = lineChartView.getCurrentViewport();
-                viewport.top = casey.getTrendMax(period) + (float)0.25*casey.getTrendRange(period);
-                viewport.bottom = casey.getTrendMin(period) - (float)0.25*casey.getTrendRange(period);
+                viewport.top = casey.getTrendMax(period) + (float) 0.25 * casey.getTrendRange(period);  //Have 1/4 of the graph space as top padding
+                viewport.bottom = casey.getTrendMin(period) - (float) 0.25 * casey.getTrendRange(period);  //Have 1/4 of the graph space as bottom padding
                 lineChartView.setMaximumViewport(viewport);
             } else {
                 holder.trendChart.setVisibility(View.GONE);  //Don't show graph if trends do not exist
