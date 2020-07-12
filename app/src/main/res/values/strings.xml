@@ -15,4 +15,5 @@
     <string name="cancel">Cancel</string>
     <string name="division_line">/</string>
     <string name="percentage_sign">%</string>
+    <string name="grade_last_updated">Last updated:&#160;</string> <!-- Enter non-breaking space at end of string -->
 </resources>

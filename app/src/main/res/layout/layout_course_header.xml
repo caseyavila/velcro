@@ -33,9 +33,49 @@ android:layout_height="wrap_content">
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-medium"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:maxWidth="225dp">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/grade_update_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/header_teacher"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/trend_chart"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/textMediumEmphasis">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/header_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/header_percentage"
+                app:layout_constraintEnd_toEndOf="@id/header_percentage"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:textSize="30sp">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/header_percentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/header_grade"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/manrope_medium"
+                android:textColor="@color/textMediumEmphasis">
 
         </com.google.android.material.textview.MaterialTextView>
 
@@ -47,10 +87,11 @@ android:layout_height="wrap_content">
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
+                android:layout_marginTop="5dp"
                 android:paddingTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/header_teacher"
+                app:layout_constraintTop_toBottomOf="@id/grade_update_date"
                 app:layout_constraintBottom_toBottomOf="parent">
 
         </lecho.lib.hellocharts.view.LineChartView>

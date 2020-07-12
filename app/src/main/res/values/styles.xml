@@ -23,4 +23,9 @@
         <item name="android:fontFamily">@font/manrope_medium</item>
     </style>
 
+    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <!-- Make color of ProgressBars consistent with Primary Color located in other places of the app -->
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

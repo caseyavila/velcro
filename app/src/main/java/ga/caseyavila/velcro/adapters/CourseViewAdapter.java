@@ -45,10 +45,10 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (getItemViewType(position) == COURSE_VIEW_TYPES.HEADER) {
+        if (getItemViewType(position) == COURSE_VIEW_TYPES.HEADER) {  //If the card is a header
             holder.headerTeacher.setText(casey.getTeacher(period));
 
-            if (casey.hasTrends(period)) {
+            if (casey.hasTrends(period)) {  //If class has trends (grades posted more than once)
                 LineChartView lineChartView = holder.trendChart;
 
                 List<PointValue> values = new ArrayList<PointValue>();
@@ -60,7 +60,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 line.setFilled(true);
                 line.setHasPoints(false);
 
-                List lines = new ArrayList();
+                List<Line> lines = new ArrayList<Line>();
                 lines.add(line);
 
                 LineChartData data = new LineChartData();
@@ -75,7 +75,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 data.setAxisXBottom(axis);
 
                 Axis yAxis = new Axis();
-                yAxis.setFormatter(new SimpleAxisValueFormatter(1));
+                yAxis.setFormatter(new SimpleAxisValueFormatter(1));  //One place after decimals
                 yAxis.setTextSize(14);
                 yAxis.setTypeface(ResourcesCompat.getFont(context, R.font.manrope_medium));
                 yAxis.setHasLines(true);
@@ -94,6 +94,10 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             } else {
                 holder.trendChart.setVisibility(View.GONE);  //Don't show graph if trends do not exist
             }
+
+            holder.headerGrade.setText(casey.getGrade(period));
+            holder.headerPercentage.setText(casey.getScore(period));
+            holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated) + casey.getGradeUpdateDate(period));
 
         } else {
             //Subtract one due to the offset the header card creates
@@ -131,6 +135,9 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
         //Views for header card
         MaterialTextView headerTeacher;
+        MaterialTextView headerGrade;
+        MaterialTextView headerPercentage;
+        MaterialTextView gradeUpdateDate;
         LineChartView trendChart;
 
         public ViewHolder(View itemView) {
@@ -143,6 +150,9 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             assignmentPercentage = itemView.findViewById(R.id.assignment_percentage);
 
             headerTeacher = itemView.findViewById(R.id.header_teacher);
+            headerGrade = itemView.findViewById(R.id.header_grade);
+            headerPercentage = itemView.findViewById(R.id.header_percentage);
+            gradeUpdateDate = itemView.findViewById(R.id.grade_update_date);
             trendChart = itemView.findViewById(R.id.trend_chart);
         }
     }

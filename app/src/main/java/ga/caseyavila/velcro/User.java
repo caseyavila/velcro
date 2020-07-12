@@ -176,6 +176,15 @@ public class User {
         return "error";
     }
 
+    public String getGradeUpdateDate(int period) {
+        try {
+            return getPeriodProgressReportJSON(period).getString("trendDate").split("T")[0];  //Return everything before "T"
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return "error";
+    }
+
     private String getCourseId(int period) {
         try {
             JSONObject periodJSON = coursesJSON.getJSONObject(period);
