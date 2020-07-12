@@ -10,6 +10,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
+import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.model.*;
 import lecho.lib.hellocharts.view.LineChartView;
 
@@ -74,12 +75,13 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 data.setAxisXBottom(axis);
 
                 Axis yAxis = new Axis();
+                yAxis.setFormatter(new SimpleAxisValueFormatter(1));
                 yAxis.setTextSize(14);
                 yAxis.setTypeface(ResourcesCompat.getFont(context, R.font.manrope_medium));
                 yAxis.setHasLines(true);
                 yAxis.setTextColor(ContextCompat.getColor(context, R.color.textHighEmphasis));
                 yAxis.setLineColor(ContextCompat.getColor(context, R.color.textMediumEmphasis));
-                yAxis.setMaxLabelChars(3);
+                yAxis.setMaxLabelChars(4);
                 data.setAxisYLeft(yAxis);
 
                 lineChartView.setLineChartData(data);

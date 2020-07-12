@@ -320,7 +320,7 @@ public class User {
     public ArrayList<AxisValue> dateLabels(int period) {
         ArrayList<AxisValue> arrayList = new ArrayList<>();
         Float difference = getTrendLastDate(period) - getTrendFirstDate(period);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd", Locale.US);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("M/d", Locale.US);
         Date date;
         for (int i = 5; i > 0; i--) {
             Float value = (getTrendFirstDate(period) + (difference * i/5));
