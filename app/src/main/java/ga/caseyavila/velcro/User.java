@@ -24,28 +24,29 @@ public class User {
     private String username;
     private String password;
     private String schoolUrl = "ahs-fusd-ca";
-    private String baseUrl = "https://" + this.schoolUrl + ".schoolloop.com";
+    private String baseUrl = "https://" + schoolUrl + ".schoolloop.com";
     private Connection.Response studentIdResponse;
     private Connection.Response reportCardResponse;
     private Connection.Response progressReportResponse;
     private JSONObject loginJSON;
     private JSONArray coursesJSON;
     private JSONArray progressReportJSON = new JSONArray();
+    private JSONArray loopMailJSON;
     private String studentId;
     private boolean isLoggedIn;
     private int numberOfPeriods;
     private static final Pattern scoreEarnedPattern = Pattern.compile("[-+]?([0-9]*\\.[0-9]+|[0-9]+)(?=\\s/\\s)");
 
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     public String getStudentId() {
-        return this.studentId;
+        return studentId;
     }
 
     public void setStudentId(String studentId) {
@@ -61,15 +62,15 @@ public class User {
     }
 
     public String getSchool_url() {
-        return this.schoolUrl;
+        return schoolUrl;
     }
 
     public void setSchool_url(String url) {
-        this.schoolUrl = url;
+        schoolUrl = url;
     }
 
     public boolean isLoggedIn() {
-        return this.isLoggedIn;
+        return isLoggedIn;
     }
 
     private String credentials(String username, String password) {
