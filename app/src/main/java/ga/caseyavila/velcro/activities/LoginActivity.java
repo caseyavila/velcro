@@ -90,8 +90,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View v) {
-        casey.setUsername(usernameText.getText().toString());
-        casey.setPassword(passwordText.getText().toString());
+        if (!casey.isAutoLoginReady()) {
+            casey.setUsername(usernameText.getText().toString());
+            casey.setPassword(passwordText.getText().toString());
+        }
 
         progressBar.setVisibility(View.VISIBLE);
         loginButton.setEnabled(false);
@@ -102,11 +104,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void autoLogin() {
-        if (sharedPreferences.contains("username") && sharedPreferences.contains("password") && sharedPreferences.contains("studentId")) {
+        if (casey.isAutoLoginReady()) {
             usernameText.setText(sharedPreferences.getString("username", ""));
-            passwordText.setText(sharedPreferences.getString("password", ""));
+            passwordText.setText("**********");  //Set fake text for password
 
             login(loginButton);
         }
     }
+
 }

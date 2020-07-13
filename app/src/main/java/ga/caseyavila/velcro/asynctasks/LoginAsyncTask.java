@@ -28,21 +28,26 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            if (sharedPreferences.contains("studentId") && sharedPreferences.contains("username") && sharedPreferences.contains("password")) {
-                casey.setStudentId(sharedPreferences.getString("studentId", "error"));
+            //If sharedPreferences already exists...
+            if (casey.isAutoLoginReady()) {
+                //Set fields in User to match
                 casey.setUsername(sharedPreferences.getString("username", "error"));
-                casey.setPassword(sharedPreferences.getString("password", "error"));
+                casey.setHashedPassword(sharedPreferences.getString("hashedPassword", "error"));
+                casey.setStudentId(sharedPreferences.getString("studentId", "error"));
+                casey.setSessionCookie(sharedPreferences.getString("JSESSIONID", "error"));
             } else {
+                //Find values
                 casey.findStudentId();
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("username", casey.getUsername());
+                editor.putString("hashedPassword", casey.getHashedPassword());
+                editor.putString("studentId", casey.getStudentId());
+                editor.putString("JSESSIONID", casey.getSessionCookie());
+                editor.apply();
             }
 
-            casey.getReportCard();
-
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username", casey.getUsername());
-            editor.putString("password", casey.getPassword());
-            editor.putString("studentId", casey.getStudentId());
-            editor.apply();
+            casey.findReportCard();
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();

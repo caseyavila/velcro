@@ -16,7 +16,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.lang.Math;
 
-import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 public class User {
@@ -25,6 +24,8 @@ public class User {
     private String password;
     private String schoolUrl = "ahs-fusd-ca";
     private String baseUrl = "https://" + schoolUrl + ".schoolloop.com";
+    private String sessionCookie;
+    private String hashedPassword;
     private Connection.Response studentIdResponse;
     private Connection.Response reportCardResponse;
     private Connection.Response progressReportResponse;
@@ -41,16 +42,16 @@ public class User {
         return username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
     public String getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    public String getSessionCookie() {
+        return sessionCookie;
     }
 
     public void setUsername(String username) {
@@ -61,12 +62,28 @@ public class User {
         this.password = password;
     }
 
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public void setSessionCookie(String sessionCookie) {
+        this.sessionCookie = sessionCookie;
+    }
+
     public String getSchool_url() {
         return schoolUrl;
     }
 
     public void setSchool_url(String url) {
         schoolUrl = url;
+    }
+
+    public boolean isAutoLoginReady() {
+        return sharedPreferences.contains("username") && sharedPreferences.contains("hashedPassword") && sharedPreferences.contains("studentId") && sharedPreferences.contains("JSESSIONID");
     }
 
     public boolean isLoggedIn() {
@@ -79,7 +96,7 @@ public class User {
     }
 
     private String getVelcroUUID() {
-        if (sharedPreferences.contains("UUID")) {
+        if (sharedPreferences.contains("UUID")) {  //If UUID already exists in shared preferences
             return sharedPreferences.getString("UUID", "");
         } else {
             String uuid = UUID.randomUUID().toString();
@@ -102,36 +119,50 @@ public class User {
                 .header("Authorization", "Basic " + credentials(username, password))
                 .execute();
 
+        password = null;  //Nullify plain-text password after request (ASAP!!!)
+
         loginJSON = new JSONObject(studentIdResponse.body());
+
+        sessionCookie = studentIdResponse.cookie("JSESSIONID");
         studentId = loginJSON.getString("userID");
+        hashedPassword = loginJSON.getString("hashedPassword");
     }
 
-    public void getReportCard() throws IOException, JSONException {
+    public void findReportCard() throws IOException, JSONException {
         reportCardResponse = Jsoup.connect(baseUrl + "/mapi/report_card")
                 .method(Connection.Method.GET)
-                .data("studentID", casey.getStudentId())
+                .data("studentID", getStudentId())
                 .data("trim", "true")
-                .header("Authorization", "Basic " + credentials(casey.getUsername(), casey.getPassword()))
+                .header("Authorization", "Basic " + credentials(username, hashedPassword))
+                .header("SL-HASH", "true")
+                .header("SL-UUID", getVelcroUUID())
+                .cookie("JSESSIONID", sessionCookie)
+                .cookie("slid", studentId)
                 .execute();
 
         coursesJSON = new JSONArray(reportCardResponse.body());
         if (reportCardResponse.statusCode() == 200) {
-            isLoggedIn = true;
+            isLoggedIn = true;  //Set User to logged in status
         }
         setNumberOfPeriods(coursesJSON.length());
-        System.out.println(casey.getVelcroUUID());
+
+        System.out.println(getVelcroUUID());
     }
 
     public void findProgressReport(int period) throws IOException, JSONException {
         progressReportResponse = Jsoup.connect(baseUrl + "/mapi/progress_report")
                 .method(Connection.Method.GET)
-                .data("periodID", casey.getCourseId(period))
+                .data("periodID", getCourseId(period))
                 .data("studentID", sharedPreferences.getString("studentId", ""))
                 .data("trim", "true")
-                .header("Authorization", "Basic " + credentials(sharedPreferences.getString("username", ""), sharedPreferences.getString("password", "")))
+                .header("Authorization", "Basic " + credentials(username, hashedPassword))
+                .header("SL-HASH", "true")
+                .header("SL-UUID", getVelcroUUID())
+                .cookie("JSESSIONID", sessionCookie)
+                .cookie("slid", studentId)
                 .execute();
 
-        progressReportJSON.put(period, (JSONObject) new JSONArray(progressReportResponse.body()).get(0));  // Place JSONObject directly in array, instead of array with one object
+        progressReportJSON.put(period, new JSONArray(progressReportResponse.body()).get(0));  // Place JSONObject directly in array, instead of array with one object
     }
 
     public String getScore(int period) {
@@ -348,6 +379,10 @@ public class User {
         return xTrendValues(period).get(0);
     }
 
+    public Float getTrendMin(int period) {
+        return Collections.min(yTrendValues(period));
+    }
+
     public Float getTrendMax(int period) {
         return Collections.max(yTrendValues(period));
     }
@@ -357,9 +392,4 @@ public class User {
         Float minValue = Collections.min(yTrendValues(period));
         return maxValue - minValue;
     }
-
-    public Float getTrendMin(int period) {
-        return Collections.min(yTrendValues(period));
-    }
-
 }
