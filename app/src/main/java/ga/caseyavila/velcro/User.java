@@ -189,8 +189,7 @@ public class User {
 
     public String getTeacher(int period) {
         try {
-            JSONObject periodJSON = coursesJSON.getJSONObject(period);
-            return periodJSON.getString("teacherName");
+            return coursesJSON.getJSONObject(period).getString("teacherName");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -199,8 +198,7 @@ public class User {
 
     public String getCourseName(int period) {
         try {
-            JSONObject periodJSON = coursesJSON.getJSONObject(period);
-            return periodJSON.getString("courseName");
+            return coursesJSON.getJSONObject(period).getString("courseName");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -218,8 +216,7 @@ public class User {
 
     private String getCourseId(int period) {
         try {
-            JSONObject periodJSON = coursesJSON.getJSONObject(period);
-            return periodJSON.getString("periodID");
+            return coursesJSON.getJSONObject(period).getString("periodID");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -254,8 +251,7 @@ public class User {
 
     public JSONObject getAssignmentJSONObject(int period, int assignment) {
         try {
-            JSONArray assignmentsArray = getPeriodProgressReportJSON(period).getJSONArray("grades");
-            return assignmentsArray.getJSONObject(assignment);
+            return getPeriodProgressReportJSON(period).getJSONArray("grades").getJSONObject(assignment);
         } catch (JSONException e) {
             e.printStackTrace();
             return null;
@@ -337,8 +333,8 @@ public class User {
         ArrayList<Float> values = new ArrayList<>();
         try {
             for (int i = 0; i < getTrendJSON(period).length(); i++) {
-                //Convert milliseconds to seconds by multiplying by one-thousand
-                values.add(Float.parseFloat(getTrendJSON(period).getJSONObject(i).getString("dayID")) / 1000);
+                //Convert milliseconds to days by multiplying by a large number
+                values.add(Float.parseFloat(getTrendJSON(period).getJSONObject(i).getString("dayID")) / 86400000);
             }
             return values;
         } catch (JSONException e) {
@@ -365,7 +361,7 @@ public class User {
         Date date;
         for (int i = 5; i > 0; i--) {
             Float value = (getTrendFirstDate(period) + (difference * i/5));
-            date = new Date(value.longValue() * 1000);  //Convert seconds back to milliseconds
+            date = new Date(value.longValue() * 86400000);  //Convert days back to milliseconds for date conversion
             arrayList.add(new AxisValue(value).setLabel(dateFormat.format(date)));
         }
         return arrayList;
