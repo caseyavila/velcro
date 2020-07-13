@@ -35,7 +35,6 @@ public class User {
     private boolean isLoggedIn;
     private int numberOfPeriods;
     private static final Pattern scoreEarnedPattern = Pattern.compile("[-+]?([0-9]*\\.[0-9]+|[0-9]+)(?=\\s/\\s)");
-    private JSONArray trendJSON;
 
     public String getUsername() {
         return this.username;
@@ -306,7 +305,8 @@ public class User {
         ArrayList<Float> values = new ArrayList<>();
         try {
             for (int i = 0; i < getTrendJSON(period).length(); i++) {
-                values.add(Float.parseFloat(getTrendJSON(period).getJSONObject(i).getString("dayID")));
+                //Convert milliseconds to seconds by multiplying by one-thousand
+                values.add(Float.parseFloat(getTrendJSON(period).getJSONObject(i).getString("dayID")) / 1000);
             }
             return values;
         } catch (JSONException e) {
@@ -328,20 +328,19 @@ public class User {
 
     public ArrayList<AxisValue> dateLabels(int period) {
         ArrayList<AxisValue> arrayList = new ArrayList<>();
-        Float difference = getTrendLastDate(period) - getTrendFirstDate(period);
+        float difference = getTrendLastDate(period) - getTrendFirstDate(period);
         SimpleDateFormat dateFormat = new SimpleDateFormat("M/d", Locale.US);
         Date date;
         for (int i = 5; i > 0; i--) {
             Float value = (getTrendFirstDate(period) + (difference * i/5));
-            date = new Date(value.longValue());
+            date = new Date(value.longValue() * 1000);  //Convert seconds back to milliseconds
             arrayList.add(new AxisValue(value).setLabel(dateFormat.format(date)));
         }
         return arrayList;
     }
 
     private Float getTrendFirstDate(int period) {
-        Float firstDate = xTrendValues(period).get(xTrendValues(period).size() - 1);
-        return firstDate;
+        return xTrendValues(period).get(xTrendValues(period).size() - 1);
     }
 
     private Float getTrendLastDate(int period) {

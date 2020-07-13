@@ -85,7 +85,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 data.setAxisYLeft(yAxis);
 
                 lineChartView.setLineChartData(data);
-                lineChartView.setInteractive(false);
+                lineChartView.setInteractive(true);
 
                 Viewport viewport = lineChartView.getCurrentViewport();
                 viewport.top = casey.getTrendMax(period) + (float) 0.25 * casey.getTrendRange(period);  //Have 1/4 of the graph space as top padding
