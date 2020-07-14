@@ -17,11 +17,6 @@ import ga.caseyavila.velcro.asynctasks.RefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CoursesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CoursesFragment extends Fragment {
 
     private SwipeRefreshLayout refreshLayout;
@@ -31,16 +26,7 @@ public class CoursesFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CoursesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CoursesFragment newInstance(String param1, String param2) {
+    public static CoursesFragment newInstance() {
         CoursesFragment fragment = new CoursesFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
