@@ -26,13 +26,10 @@ public class User {
     private String baseUrl = "https://" + schoolUrl + ".schoolloop.com";
     private String sessionCookie;
     private String hashedPassword;
-    private Connection.Response studentIdResponse;
-    private Connection.Response reportCardResponse;
-    private Connection.Response progressReportResponse;
-    private JSONObject loginJSON;
     private JSONArray coursesJSON;
-    private JSONArray progressReportJSON = new JSONArray();
-    private JSONArray loopMailJSON;
+    private JSONArray progressReportJSON = new JSONArray();  //Initialize array so it is ready to accept progress reports
+    private JSONArray loopMailJSON = new JSONArray();
+    private JSONArray inboxJSON;
     private String studentId;
     private boolean isLoggedIn;
     private int numberOfPeriods;
@@ -107,9 +104,9 @@ public class User {
         }
     }
 
-    public void findStudentId() throws IOException, JSONException {
+    public void findLoginData() throws IOException, JSONException {
         isLoggedIn = false;
-        studentIdResponse = Jsoup.connect(baseUrl + "/mapi/login")
+        Connection.Response loginResponse = Jsoup.connect(baseUrl + "/mapi/login")
                 .method(Connection.Method.GET)
                 .data("devOS", "Android")
                 .data("hash", "false")
@@ -121,17 +118,17 @@ public class User {
 
         password = null;  //Nullify plain-text password after request (ASAP!!!)
 
-        loginJSON = new JSONObject(studentIdResponse.body());
+        JSONObject loginJSON = new JSONObject(loginResponse.body());
 
-        sessionCookie = studentIdResponse.cookie("JSESSIONID");
+        sessionCookie = loginResponse.cookie("JSESSIONID");
         studentId = loginJSON.getString("userID");
         hashedPassword = loginJSON.getString("hashedPassword");
     }
 
     public void findReportCard() throws IOException, JSONException {
-        reportCardResponse = Jsoup.connect(baseUrl + "/mapi/report_card")
+        Connection.Response reportCardResponse = Jsoup.connect(baseUrl + "/mapi/report_card")
                 .method(Connection.Method.GET)
-                .data("studentID", getStudentId())
+                .data("studentID", studentId)
                 .data("trim", "true")
                 .header("Authorization", "Basic " + credentials(username, hashedPassword))
                 .header("SL-HASH", "true")
@@ -145,15 +142,13 @@ public class User {
             isLoggedIn = true;  //Set User to logged in status
         }
         setNumberOfPeriods(coursesJSON.length());
-
-        System.out.println(getVelcroUUID());
     }
 
     public void findProgressReport(int period) throws IOException, JSONException {
-        progressReportResponse = Jsoup.connect(baseUrl + "/mapi/progress_report")
+        Connection.Response progressReportResponse = Jsoup.connect(baseUrl + "/mapi/progress_report")
                 .method(Connection.Method.GET)
                 .data("periodID", getCourseId(period))
-                .data("studentID", sharedPreferences.getString("studentId", ""))
+                .data("studentID", studentId)
                 .data("trim", "true")
                 .header("Authorization", "Basic " + credentials(username, hashedPassword))
                 .header("SL-HASH", "true")
@@ -163,6 +158,24 @@ public class User {
                 .execute();
 
         progressReportJSON.put(period, new JSONArray(progressReportResponse.body()).get(0));  // Place JSONObject directly in array, instead of array with one object
+    }
+
+    public void findLoopMailInbox(int folder) throws IOException, JSONException {
+        Connection.Response loopMailResponse = Jsoup.connect(baseUrl + "/mapi/mail_messages")
+                .method(Connection.Method.GET)
+                .data("folderID", String.valueOf(folder))  //1 for inbox, 2 for sent
+                .data("max", "20")
+                .data("start", "0")
+                .data("studentID", studentId)
+                .header("Authorization", "Basic " + credentials(username, hashedPassword))
+                .header("SL-HASH", "true")
+                .header("SL-UUID", getVelcroUUID())
+                .cookie("JSESSIONID", sessionCookie)
+                .cookie("slid", studentId)
+                .execute();
+
+        loopMailJSON.put(folder, new JSONArray(loopMailResponse.body()));
+        System.out.println(loopMailJSON);
     }
 
     public String getScore(int period) {
@@ -387,5 +400,49 @@ public class User {
         Float maxValue = Collections.max(yTrendValues(period));
         Float minValue = Collections.min(yTrendValues(period));
         return maxValue - minValue;
+    }
+
+    public Boolean isLoopMailRead(int folder, int index) {
+        try {
+            return loopMailJSON.getJSONArray(folder).getJSONObject(index).getBoolean("read");
+        } catch (JSONException e) {
+            return false;
+        }
+    }
+
+    public String getLoopMailSender(int folder, int index) {
+        try {
+            return loopMailJSON.getJSONArray(folder).getJSONObject(index).getJSONObject("sender").getString("name");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public String getLoopMailSendDate(int folder, int index) {
+        try {
+            return loopMailJSON.getJSONArray(folder).getJSONObject(index).getString("date");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public String getLoopMailSubject(int folder, int index) {
+        try {
+            return loopMailJSON.getJSONArray(folder).getJSONObject(index).getString("subject");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public String getLoopMailId(int folder, int index) {
+        try {
+            return loopMailJSON.getJSONArray(folder).getJSONObject(index).getString("ID");
+        } catch (JSONException e) {
+            return null;
+        }
+    }
+
+    public String getLoopMailBody(int folder, int index) {
+        return null;
     }
 }

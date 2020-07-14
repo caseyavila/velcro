@@ -2,32 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-            android:id="@+id/courses"
+            android:id="@+id/navigation_courses"
             android:title="@string/courses"
             android:icon="@drawable/ic_book">
     </item>
 
     <item
-            android:id="@+id/assignments"
+            android:id="@+id/navigation_assignments"
             android:title="@string/assignments"
             android:icon="@drawable/ic_assignment">
     </item>
 
 
     <item
-            android:id="@+id/loopmail"
+            android:id="@+id/navigation_loopmail"
             android:title="@string/loopmail"
             android:icon="@drawable/ic_email">
     </item>
 
     <item
-            android:id="@+id/news"
+            android:id="@+id/navigation_news"
             android:title="@string/news"
             android:icon="@drawable/ic_news">
     </item>
 
     <item
-            android:id="@+id/locker"
+            android:id="@+id/navigation_locker"
             android:title="@string/locker"
             android:icon="@drawable/ic_dns">
     </item>

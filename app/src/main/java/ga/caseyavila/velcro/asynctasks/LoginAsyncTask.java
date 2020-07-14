@@ -37,7 +37,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
                 casey.setSessionCookie(sharedPreferences.getString("JSESSIONID", "error"));
             } else {
                 //Find values
-                casey.findStudentId();
+                casey.findLoginData();
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("username", casey.getUsername());

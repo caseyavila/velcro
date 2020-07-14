@@ -6,46 +6,25 @@
         xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/bottom_navigation"
-            tools:context="ga.caseyavila.velcro.activities.MainActivity">
+            android:id="@+id/container">
 
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/refresh"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                style="@style/Widget.MaterialComponents.BottomNavigationView"
+                android:theme="@style/NavigationBarTheme"
+                app:menu="@menu/bottom_navigation"
+                app:elevation="2dp">
 
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/main_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:clipToPadding="false"
-                    android:paddingBottom="9dp"
-                    android:scrollbars="vertical"
-                    android:layoutAnimation="@anim/layout_fall_down">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            style="@style/Widget.MaterialComponents.BottomNavigationView"
-            android:theme="@style/NavigationBarTheme"
-            app:menu="@menu/bottom_navigation"
-            app:elevation="2dp">
-
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    </FrameLayout>
 
 </RelativeLayout>
 

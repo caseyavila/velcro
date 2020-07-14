@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.MainActivity;
+import ga.caseyavila.velcro.fragments.CoursesFragment;
 import org.json.JSONException;
 
 import java.io.IOException;
@@ -13,10 +14,10 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private WeakReference<Activity> activityReference;
+    private WeakReference<CoursesFragment> coursesFragmentReference;
 
-    public RefreshAsyncTask(Activity activity) {
-        activityReference = new WeakReference<>(activity);
+    public RefreshAsyncTask(CoursesFragment coursesFragment) {
+        coursesFragmentReference = new WeakReference<>(coursesFragment);
     }
 
     @Override
@@ -36,11 +37,11 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
     }
     @Override
     protected void onPostExecute(Void result) {
-        Activity activity = activityReference.get();
+        CoursesFragment coursesFragment = coursesFragmentReference.get();
 
-        ((MainActivity) activity).updateCards();
+        coursesFragment.updateCards();
 
-        SwipeRefreshLayout refreshLayout = activity.findViewById(R.id.refresh);
+        SwipeRefreshLayout refreshLayout = coursesFragment.getView().findViewById(R.id.refresh);
         refreshLayout.setRefreshing(false);
     }
 }
