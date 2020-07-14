@@ -1,7 +1,8 @@
 package ga.caseyavila.velcro.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,13 +23,18 @@ public class CoursesFragment extends Fragment {
     private SwipeRefreshLayout refreshLayout;
     private MainViewAdapter adapter;
 
+    private Boolean animate;
+
+    private static final String ANIMATE = "animate";
+
     public CoursesFragment() {
         // Required empty public constructor
     }
 
-    public static CoursesFragment newInstance() {
+    public static CoursesFragment newInstance(Boolean animate) {
         CoursesFragment fragment = new CoursesFragment();
         Bundle args = new Bundle();
+        args.putBoolean(ANIMATE, animate);
         fragment.setArguments(args);
         return fragment;
     }
@@ -36,6 +42,9 @@ public class CoursesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            animate = getArguments().getBoolean(ANIMATE);
+        }
     }
 
     @Override
@@ -64,6 +73,11 @@ public class CoursesFragment extends Fragment {
 
     public void addCards() {
         RecyclerView recyclerView = getView().findViewById(R.id.main_recycler_view);
+
+        if (animate) {
+            LayoutAnimationController layoutAnimationController = AnimationUtils.loadLayoutAnimation(getContext(), R.anim.layout_fall_down);
+            recyclerView.setLayoutAnimation(layoutAnimationController);
+        }
 
         recyclerView.setNestedScrollingEnabled(false); // Fix scrolling of RecyclerView
 

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.navigation_courses:
-                                openFragment(CoursesFragment.newInstance());
+                                openFragment(CoursesFragment.newInstance(false));
                                 return true;
                             case R.id.navigation_loopmail:
                                 openFragment(LoopMailFragment.newInstance("", ""));
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 };
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
-        openFragment(CoursesFragment.newInstance());
+        openFragment(CoursesFragment.newInstance(true));
     }
 
     private void openFragment(Fragment fragment) {

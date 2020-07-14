@@ -19,8 +19,7 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingBottom="9dp"
-                android:scrollbars="vertical"
-                android:layoutAnimation="@anim/layout_fall_down">
+                android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>
 
