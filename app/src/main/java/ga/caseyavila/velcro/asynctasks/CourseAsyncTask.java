@@ -1,6 +1,5 @@
 package ga.caseyavila.velcro.asynctasks;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -14,11 +13,11 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class CourseAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private WeakReference<Activity> activityReference;
-    private int period;
+    private final WeakReference<CourseActivity> courseActivityReference;
+    private final int period;
 
-    public CourseAsyncTask(Activity activity, int courseNumber) {
-        activityReference = new WeakReference<>(activity);
+    public CourseAsyncTask(CourseActivity courseActivity, int courseNumber) {
+        courseActivityReference = new WeakReference<CourseActivity>(courseActivity);
         period = courseNumber;
     }
 
@@ -39,12 +38,12 @@ public class CourseAsyncTask extends AsyncTask<Void, Void, Void> {
     }
     @Override
     protected void onPostExecute(Void result) {
-        Activity activity = activityReference.get();
+        CourseActivity courseActivity = courseActivityReference.get();
 
-        ProgressBar courseProgressBar = activity.findViewById(R.id.course_progress_bar);
+        ProgressBar courseProgressBar = courseActivity.findViewById(R.id.course_progress_bar);
 
         courseProgressBar.setEnabled(true);  //Make progressbar appear
-        ((CourseActivity) activity).addCards();  //Load cards
+        courseActivity.addCards();  //Load cards
         courseProgressBar.setVisibility(View.INVISIBLE);  //Make progress bar disappear after loading cards
     }
 }

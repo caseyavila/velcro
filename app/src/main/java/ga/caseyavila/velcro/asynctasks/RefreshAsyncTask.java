@@ -14,7 +14,7 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private WeakReference<CoursesFragment> coursesFragmentReference;
+    private final WeakReference<CoursesFragment> coursesFragmentReference;
 
     public RefreshAsyncTask(CoursesFragment coursesFragment) {
         coursesFragmentReference = new WeakReference<>(coursesFragment);
