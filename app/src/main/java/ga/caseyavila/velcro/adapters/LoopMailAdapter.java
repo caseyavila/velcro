@@ -34,7 +34,9 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (casey.isLoopMailRead(1, position)) {
             holder.subject.setTextColor(ContextCompat.getColor(context, R.color.textMediumEmphasis));
+            holder.subject.setTypeface(null, Typeface.NORMAL);
         } else {
+            holder.subject.setTextColor(ContextCompat.getColor(context, R.color.textHighEmphasis));
             holder.subject.setTypeface(null, Typeface.BOLD);
         }
         holder.subject.setText(casey.getLoopMailSubject(1, position));
