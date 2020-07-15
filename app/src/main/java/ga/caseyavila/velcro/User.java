@@ -27,9 +27,8 @@ public class User {
     private String sessionCookie;
     private String hashedPassword;
     private JSONArray coursesJSON;
-    private JSONArray progressReportJSON = new JSONArray();  //Initialize array so it is ready to accept progress reports
-    private JSONArray loopMailJSON = new JSONArray();
-    private JSONArray inboxJSON;
+    private JSONArray progressReportJSON = new JSONArray();  //Initialize array for accepting different periods
+    private JSONArray loopMailJSON = new JSONArray();  //Initialize array for accepting different folders
     private String studentId;
     private boolean isLoggedIn;
     private int numberOfPeriods;
@@ -400,6 +399,14 @@ public class User {
         Float maxValue = Collections.max(yTrendValues(period));
         Float minValue = Collections.min(yTrendValues(period));
         return maxValue - minValue;
+    }
+
+    public int numberOfLoopMails(int folder) {
+        try {
+            return loopMailJSON.getJSONArray(folder).length();
+        } catch (JSONException e) {
+            return 0;
+        }
     }
 
     public Boolean isLoopMailRead(int folder, int index) {

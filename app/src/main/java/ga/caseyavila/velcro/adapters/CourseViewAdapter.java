@@ -22,12 +22,12 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.ViewHolder> {
 
-    private Context context;
-    private int period;
+    private final Context context;
+    private final int period;
 
-    public CourseViewAdapter(Context ctx, int prd) {
-        context = ctx;
-        period = prd;
+    public CourseViewAdapter(Context context, int period) {
+        this.context = context;
+        this.period = period;
     }
 
     @NonNull

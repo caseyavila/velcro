@@ -6,12 +6,11 @@
         android:layout_height="match_parent"
         tools:context=".fragments.CoursesFragment">
 
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:theme="@style/Refresh">
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_recycler_view"
@@ -19,7 +18,8 @@
                 android:layout_height="wrap_content"
                 android:clipToPadding="false"
                 android:paddingBottom="9dp"
-                android:scrollbars="vertical">
+                android:scrollbars="vertical"
+                android:layoutAnimation="@anim/layout_fall_down">
 
         </androidx.recyclerview.widget.RecyclerView>
 

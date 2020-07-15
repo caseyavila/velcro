@@ -21,7 +21,6 @@ import ga.caseyavila.velcro.asynctasks.LoginAsyncTask;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.User;
 
-
 public class LoginActivity extends AppCompatActivity {
 
     public static SharedPreferences sharedPreferences;

@@ -21,7 +21,6 @@ public class CourseActivity extends AppCompatActivity {
     private CourseViewAdapter adapter;
     private AppBarLayout appBarLayout;
     private MaterialToolbar appBar;
-    private ProgressBar progressBarCourse;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,8 +35,8 @@ public class CourseActivity extends AppCompatActivity {
         appBar = findViewById(R.id.appbar);
         setSupportActionBar(appBar);
         getSupportActionBar().setTitle(casey.getCourseName(bundle.getInt("period")));
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
-        appBar.setNavigationOnClickListener(view -> finish());  // Finish activity when back button is pressed
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Add back button
+        appBar.setNavigationOnClickListener(view -> finish());  //Finish activity when back button is pressed
 
         new CourseAsyncTask(this, period).execute();
     }
