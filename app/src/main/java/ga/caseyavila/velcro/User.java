@@ -401,7 +401,7 @@ public class User {
         return maxValue - minValue;
     }
 
-    public int numberOfLoopMails(int folder) {
+    public int getNumberOfLoopMails(int folder) {
         try {
             return loopMailJSON.getJSONArray(folder).length();
         } catch (JSONException e) {

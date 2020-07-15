@@ -1,8 +1,6 @@
 package ga.caseyavila.velcro.activities;
 
 import android.os.Bundle;
-import android.view.MenuItem;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -21,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager manager = this.getSupportFragmentManager();
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
                             attachFragment(CoursesFragment.newInstance(), "courses");
                             return true;
                         case R.id.navigation_loopmail:
-                            attachFragment(LoopMailFragment.newInstance("", ""), "loopmail");
+                            attachFragment(LoopMailFragment.newInstance(), "loopmail");
                             return true;
                     }
                     return false;

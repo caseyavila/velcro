@@ -3,19 +3,19 @@ package ga.caseyavila.velcro.asynctasks;
 import android.os.AsyncTask;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ga.caseyavila.velcro.R;
-import ga.caseyavila.velcro.fragments.CoursesFragment;
+import ga.caseyavila.velcro.fragments.LoopMailFragment;
 import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
-public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
+public class LoopMailRefreshAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private final WeakReference<CoursesFragment> coursesFragmentReference;
+    private final WeakReference<LoopMailFragment> loopMailFragmentWeakReference;
 
-    public RefreshAsyncTask(CoursesFragment coursesFragment) {
-        coursesFragmentReference = new WeakReference<>(coursesFragment);
+    public LoopMailRefreshAsyncTask(LoopMailFragment loopMailFragment) {
+        loopMailFragmentWeakReference = new WeakReference<>(loopMailFragment);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            casey.findReportCard();
+            casey.findLoopMailInbox(1);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {
@@ -35,11 +35,11 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
     }
     @Override
     protected void onPostExecute(Void result) {
-        CoursesFragment coursesFragment = coursesFragmentReference.get();
+        LoopMailFragment loopMailFragment = loopMailFragmentWeakReference.get();
 
-        coursesFragment.updateCards();
+        loopMailFragment.updateCards();
 
-        SwipeRefreshLayout refreshLayout = coursesFragment.getView().findViewById(R.id.refresh);
+        SwipeRefreshLayout refreshLayout = loopMailFragment.getView().findViewById(R.id.loopmail_refresh);
         refreshLayout.setRefreshing(false);
     }
 }

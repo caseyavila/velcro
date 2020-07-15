@@ -1,6 +1,7 @@
 package ga.caseyavila.velcro.fragments;
 
 import android.os.Bundle;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,19 +9,25 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.LoopMailAdapter;
 import ga.caseyavila.velcro.asynctasks.LoopMailAsyncTask;
+import ga.caseyavila.velcro.asynctasks.LoopMailRefreshAsyncTask;
+import ga.caseyavila.velcro.asynctasks.RefreshAsyncTask;
+
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class LoopMailFragment extends Fragment {
 
+    private SwipeRefreshLayout loopMailRefreshLayout;
     private LoopMailAdapter adapter;
 
     public LoopMailFragment() {
         // Required empty public constructor
     }
 
-    public static LoopMailFragment newInstance(String param1, String param2) {
+    public static LoopMailFragment newInstance() {
         LoopMailFragment fragment = new LoopMailFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -42,6 +49,13 @@ public class LoopMailFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        loopMailRefreshLayout = getView().findViewById(R.id.loopmail_refresh);
+        loopMailRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        loopMailRefreshLayout.setOnRefreshListener(
+                () -> new LoopMailRefreshAsyncTask(this).execute()
+        );
+        loopMailRefreshLayout.setEnabled(false);
+
         new LoopMailAsyncTask(this, 1).execute();
     }
 
@@ -52,5 +66,13 @@ public class LoopMailFragment extends Fragment {
         adapter = new LoopMailAdapter(getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        loopMailRefreshLayout.setEnabled(true);
+    }
+
+    public void updateCards() {
+        for (int i = 0; i < casey.getNumberOfLoopMails(1); i++) {
+            adapter.notifyItemChanged(i);
+        }
     }
 }

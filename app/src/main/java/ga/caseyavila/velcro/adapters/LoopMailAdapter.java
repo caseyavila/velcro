@@ -43,7 +43,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return casey.numberOfLoopMails(1);
+        return casey.getNumberOfLoopMails(1);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

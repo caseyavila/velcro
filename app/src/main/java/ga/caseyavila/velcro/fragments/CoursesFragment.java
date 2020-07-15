@@ -52,7 +52,7 @@ public class CoursesFragment extends Fragment {
         refreshLayout.setOnRefreshListener(
                 () -> new RefreshAsyncTask(this).execute()
         );
-        refreshLayout.setEnabled(false);
+        refreshLayout.setEnabled(false);  //Disable refresh while starting up
 
         addCards();
     }
@@ -66,7 +66,7 @@ public class CoursesFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        refreshLayout.setEnabled(true);
+        refreshLayout.setEnabled(true);  //Enable refresh once cards have loaded
     }
 
     public void updateCards() {
