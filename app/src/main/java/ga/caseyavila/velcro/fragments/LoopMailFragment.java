@@ -52,7 +52,7 @@ public class LoopMailFragment extends Fragment {
         loopMailRefreshLayout = getView().findViewById(R.id.loopmail_refresh);
         loopMailRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         loopMailRefreshLayout.setOnRefreshListener(
-                () -> new LoopMailRefreshAsyncTask(this).execute()
+                () -> new LoopMailRefreshAsyncTask(this, 1).execute()
         );
         loopMailRefreshLayout.setEnabled(false);
 

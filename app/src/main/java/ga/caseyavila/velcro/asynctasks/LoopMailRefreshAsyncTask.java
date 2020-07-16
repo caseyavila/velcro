@@ -13,9 +13,11 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 public class LoopMailRefreshAsyncTask extends AsyncTask<Void, Void, Void> {
 
     private final WeakReference<LoopMailFragment> loopMailFragmentWeakReference;
+    private final int folder;
 
-    public LoopMailRefreshAsyncTask(LoopMailFragment loopMailFragment) {
+    public LoopMailRefreshAsyncTask(LoopMailFragment loopMailFragment, int folder) {
         loopMailFragmentWeakReference = new WeakReference<>(loopMailFragment);
+        this.folder = folder;
     }
 
     @Override
@@ -25,7 +27,7 @@ public class LoopMailRefreshAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            casey.findLoopMailInbox(1);
+            casey.findLoopMailInbox(folder);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

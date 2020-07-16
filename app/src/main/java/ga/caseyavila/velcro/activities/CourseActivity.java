@@ -1,7 +1,11 @@
 package ga.caseyavila.velcro.activities;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +15,7 @@ import com.google.android.material.appbar.AppBarLayout;
 import ga.caseyavila.velcro.asynctasks.CourseAsyncTask;
 import ga.caseyavila.velcro.adapters.CourseViewAdapter;
 import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.asynctasks.CourseRefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -19,7 +24,7 @@ public class CourseActivity extends AppCompatActivity {
 
     private int period;
     private CourseViewAdapter adapter;
-    private AppBarLayout appBarLayout;
+    private ProgressBar courseProgressBar;
     private MaterialToolbar appBar;
 
     @Override
@@ -28,17 +33,27 @@ public class CourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course);
 
         Bundle bundle = this.getIntent().getExtras();
-        assert bundle != null;
         period = bundle.getInt("period");
 
-        appBarLayout = findViewById(R.id.appbar_layout);
         appBar = findViewById(R.id.appbar);
         setSupportActionBar(appBar);
-        getSupportActionBar().setTitle(casey.getCourseName(bundle.getInt("period")));
+        getSupportActionBar().setTitle(casey.getCourseName(bundle.getInt("period")));  //Add title of toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Add back button
         appBar.setNavigationOnClickListener(view -> finish());  //Finish activity when back button is pressed
 
         new CourseAsyncTask(this, period).execute();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {  //Add icons to toolbar
+        getMenuInflater().inflate(R.menu.toolbar_course, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        new CourseRefreshAsyncTask(this, period).execute();
+        return super.onOptionsItemSelected(item);
     }
 
     public void addCards() {
@@ -46,5 +61,11 @@ public class CourseActivity extends AppCompatActivity {
         adapter = new CourseViewAdapter(this, period);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    public void updateCards(int period) {
+        for (int i = 0; i < casey.getNumberOfAssignments(period) + 1; i++) {  //Add one for header card
+            adapter.notifyItemChanged(i);
+        }
     }
 }
