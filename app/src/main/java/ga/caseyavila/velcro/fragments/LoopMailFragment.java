@@ -14,7 +14,6 @@ import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.LoopMailAdapter;
 import ga.caseyavila.velcro.asynctasks.LoopMailAsyncTask;
 import ga.caseyavila.velcro.asynctasks.LoopMailRefreshAsyncTask;
-import ga.caseyavila.velcro.asynctasks.RefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 

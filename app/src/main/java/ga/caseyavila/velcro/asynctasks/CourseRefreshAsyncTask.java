@@ -1,9 +1,6 @@
 package ga.caseyavila.velcro.asynctasks;
 
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ProgressBar;
-import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.CourseActivity;
 import org.json.JSONException;
 import java.io.IOException;
