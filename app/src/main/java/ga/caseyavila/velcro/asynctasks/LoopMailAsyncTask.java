@@ -16,7 +16,7 @@ public class LoopMailAsyncTask extends AsyncTask<Void, Void, Void> {
     private final int folder;
 
     public LoopMailAsyncTask(LoopMailFragment loopMailFragment, int folder) {
-        fragmentWeakReference = new WeakReference<LoopMailFragment>(loopMailFragment);
+        fragmentWeakReference = new WeakReference<>(loopMailFragment);
         this.folder = folder;
     }
 
@@ -46,4 +46,3 @@ public class LoopMailAsyncTask extends AsyncTask<Void, Void, Void> {
         loopMailProgressBar.setVisibility(View.INVISIBLE);  //Make progress bar disappear after loading cards
     }
 }
-

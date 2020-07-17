@@ -38,15 +38,12 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
         holder.grade.setText(casey.getGrade(position));
         holder.courseName.setText(casey.getCourseName(position));
         holder.score.setText(casey.getScore(position));
-        holder.cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, CourseActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("period", position);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
+        holder.cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, CourseActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("period", position);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         });
     }
 

@@ -1,7 +1,9 @@
 package ga.caseyavila.velcro.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.activities.CourseActivity;
+import ga.caseyavila.velcro.activities.LoopMailBodyActivity;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -41,6 +45,14 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
         }
         holder.subject.setText(casey.getLoopMailSubject(1, position));
         holder.sender.setText(casey.getLoopMailSender(1, position));
+        holder.cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, LoopMailBodyActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("folder", 1);
+            bundle.putInt("index", position);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        });
     }
 
     @Override

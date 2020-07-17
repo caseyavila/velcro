@@ -33,6 +33,9 @@
         <activity
                 android:name=".activities.CourseActivity">
         </activity>
+        <activity
+                android:name=".activities.LoopMailBodyActivity">
+        </activity>
     </application>
 
 </manifest>
