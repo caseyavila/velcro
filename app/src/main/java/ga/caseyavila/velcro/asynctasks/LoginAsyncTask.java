@@ -15,7 +15,7 @@ import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
 
-    private WeakReference<Activity> activityReference;
+    private final WeakReference<Activity> activityReference;
 
     public LoginAsyncTask(Activity activity) {
         activityReference = new WeakReference<>(activity);

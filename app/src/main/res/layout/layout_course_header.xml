@@ -54,6 +54,7 @@ android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/header_grade"
+                android:fontFamily="@font/manrope_medium"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"

@@ -31,6 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:ignore="MissingConstraints">
+
         </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
