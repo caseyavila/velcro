@@ -21,6 +21,7 @@ public class LoopMailFragment extends Fragment {
 
     private SwipeRefreshLayout loopMailRefreshLayout;
     private LoopMailAdapter adapter;
+    private final int folder = 1;
 
     public LoopMailFragment() {
         // Required empty public constructor
@@ -51,11 +52,11 @@ public class LoopMailFragment extends Fragment {
         loopMailRefreshLayout = getView().findViewById(R.id.loopmail_refresh);
         loopMailRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         loopMailRefreshLayout.setOnRefreshListener(
-                () -> new LoopMailRefreshAsyncTask(this, 1).execute()
+                () -> new LoopMailRefreshAsyncTask(this, folder).execute()
         );
         loopMailRefreshLayout.setEnabled(false);
 
-        new LoopMailAsyncTask(this, 1).execute();
+        new LoopMailAsyncTask(this, folder).execute();
     }
 
     public void addCards() {
@@ -70,7 +71,7 @@ public class LoopMailFragment extends Fragment {
     }
 
     public void updateCards() {
-        for (int i = 0; i < casey.getNumberOfLoopMails(1); i++) {
+        for (int i = 0; i < casey.getNumberOfLoopMails(folder); i++) {
             adapter.notifyItemChanged(i);
         }
     }
