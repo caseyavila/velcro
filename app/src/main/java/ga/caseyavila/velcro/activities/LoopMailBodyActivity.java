@@ -1,7 +1,6 @@
 package ga.caseyavila.velcro.activities;
 
 import android.os.Bundle;
-import android.text.Html;
 import android.text.util.Linkify;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
@@ -36,5 +35,6 @@ public class LoopMailBodyActivity extends AppCompatActivity {
 
     public void addCards() {
         bodyTextView.setText(HtmlCompat.fromHtml(casey.getLoopMailBody(folder, index), HtmlCompat.FROM_HTML_MODE_LEGACY));
+        Linkify.addLinks(bodyTextView, Linkify.WEB_URLS);
     }
 }

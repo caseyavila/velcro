@@ -1,6 +1,9 @@
 package ga.caseyavila.velcro.fragments;
 
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
+import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -21,6 +24,10 @@ public class LoopMailFragment extends Fragment {
 
     private SwipeRefreshLayout loopMailRefreshLayout;
     private LoopMailAdapter adapter;
+    private static final String BUNDLE_RECYCLER_LAYOUT = "loopmail_fragment.recycler.layout";
+    private RecyclerView recyclerView;
+    private Parcelable savedRecyclerLayoutState;
+    private final int folder = 1;
 
     public LoopMailFragment() {
         // Required empty public constructor
@@ -51,15 +58,15 @@ public class LoopMailFragment extends Fragment {
         loopMailRefreshLayout = getView().findViewById(R.id.loopmail_refresh);
         loopMailRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         loopMailRefreshLayout.setOnRefreshListener(
-                () -> new LoopMailRefreshAsyncTask(this, 1).execute()
+                () -> new LoopMailRefreshAsyncTask(this, folder).execute()
         );
         loopMailRefreshLayout.setEnabled(false);
 
-        new LoopMailAsyncTask(this, 1).execute();
+        new LoopMailAsyncTask(this, folder).execute();
     }
 
     public void addCards() {
-        RecyclerView recyclerView = getView().findViewById(R.id.loopmail_recycler_view);
+        recyclerView = getView().findViewById(R.id.loopmail_recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
 
         adapter = new LoopMailAdapter(getContext());
@@ -70,7 +77,7 @@ public class LoopMailFragment extends Fragment {
     }
 
     public void updateCards() {
-        for (int i = 0; i < casey.getNumberOfLoopMails(1); i++) {
+        for (int i = 0; i < casey.getNumberOfLoopMails(folder); i++) {
             adapter.notifyItemChanged(i);
         }
     }
