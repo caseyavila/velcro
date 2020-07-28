@@ -11,4 +11,6 @@ A Schoolloop app written natively for Android.
 - [ ] Ability to edit grades and predict the outcome of assignments
 - [ ] Locker functionality
 
+---
+
 Velcro is not affiliated with School Loop, Inc. in any way. All product and company names are trademarks™ or registered® trademarks of their respective holders.
