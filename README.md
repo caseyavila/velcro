@@ -1,4 +1,6 @@
 # velcro
+![Java CI with Gradle](https://github.com/caseyavila/velcro/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
+
 A Schoolloop app written natively for Android.
 
 ## Features
