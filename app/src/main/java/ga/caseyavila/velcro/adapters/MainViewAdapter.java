@@ -34,10 +34,10 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.periodNumber.setText(String.valueOf(position + 1));  // Add one since "position" starts at 0
-        holder.teacher.setText(casey.getTeacher(position).toUpperCase());
-        holder.grade.setText(casey.getGrade(position));
-        holder.courseName.setText(casey.getCourseName(position));
-        holder.score.setText(casey.getScore(position));
+        holder.teacher.setText(casey.getPeriod(position).getTeacher().toUpperCase());
+        holder.grade.setText(casey.getPeriod(position).getGrade());
+        holder.courseName.setText(casey.getPeriod(position).getCourseName());
+        holder.score.setText(casey.getPeriod(position).getScore());
         holder.cardView.setOnClickListener(view -> {
             Intent intent = new Intent(context, CourseActivity.class);
             Bundle bundle = new Bundle();

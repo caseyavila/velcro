@@ -46,14 +46,15 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (getItemViewType(position) == COURSE_VIEW_TYPES.HEADER) {  //If the card is a header
-            holder.headerTeacher.setText(casey.getTeacher(period));
+            holder.headerTeacher.setText(casey.getPeriod(period).getTeacher());
 
-            if (casey.hasTrends(period)) {  //If class has trends (grades posted more than once)
+            if (casey.getPeriod(period).hasTrends()) {  //If class has trends (grades posted more than once)
                 LineChartView lineChartView = holder.trendChart;
 
                 List<PointValue> values = new ArrayList<PointValue>();
-                for (int i = 0; i < casey.xTrendValues(period).size(); i++) {
-                    values.add(new PointValue(casey.xTrendValues(period).get(i), casey.yTrendValues(period).get(i)));
+                for (int i = 0; i < casey.getPeriod(period).getTrend().xTrendValues().size(); i++) {
+                    values.add(new PointValue(casey.getPeriod(period).getTrend().xTrendValues().get(i),
+                                              casey.getPeriod(period).getTrend().yTrendValues().get(i)));
                 }
 
                 Line line = new Line(values).setColor(ContextCompat.getColor(context, R.color.colorPrimary));
@@ -66,7 +67,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 LineChartData data = new LineChartData();
                 data.setLines(lines);
 
-                Axis axis = new Axis(casey.dateLabels(period));
+                Axis axis = new Axis(casey.getPeriod(period).getTrend().dateLabels());
                 axis.setTextSize(14);
                 axis.setTypeface(ResourcesCompat.getFont(context, R.font.manrope_medium));
                 axis.setHasLines(true);
@@ -88,30 +89,32 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 lineChartView.setInteractive(true);
 
                 Viewport viewport = lineChartView.getCurrentViewport();
-                viewport.top = casey.getTrendMax(period) + (float) 0.25 * casey.getTrendRange(period);  //Have 1/4 of the graph space as top padding
-                viewport.bottom = casey.getTrendMin(period) - (float) 0.25 * casey.getTrendRange(period);  //Have 1/4 of the graph space as bottom padding
+                //Have 1/4 of the graph space as top padding
+                viewport.top = casey.getPeriod(period).getTrend().getTrendMax() + (float) 0.25 * casey.getPeriod(period).getTrend().getTrendRange();
+                //Have 1/4 of the graph space as bottom padding
+                viewport.bottom = casey.getPeriod(period).getTrend().getTrendMin() - (float) 0.25 * casey.getPeriod(period).getTrend().getTrendRange();
                 lineChartView.setMaximumViewport(viewport);
             } else {
                 holder.trendChart.setVisibility(View.GONE);  //Don't show graph if trends do not exist
             }
 
-            holder.headerGrade.setText(casey.getGrade(period));
-            holder.headerPercentage.setText(casey.getScore(period));
-            holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated) + casey.getGradeUpdateDate(period));
+            holder.headerGrade.setText(casey.getPeriod(period).getGrade());
+            holder.headerPercentage.setText(casey.getPeriod(period).getScore());
+            holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated) + casey.getPeriod(period).getGradeUpdateDate());
 
         } else {
             //Subtract one due to the offset the header card creates
-            holder.assignmentName.setText(casey.getAssignmentName(period, position - 1));
-            holder.assignmentCategory.setText(casey.getAssignmentCategory(period, position - 1));
-            holder.assignmentScoreEarned.setText(casey.getAssignmentScoreEarned(period, position - 1));
-            holder.assignmentScorePossible.setText(casey.getAssignmentScorePossible(period, position - 1));
-            holder.assignmentPercentage.setText(casey.getAssignmentPercentage(period, position - 1));
+            holder.assignmentName.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentName());
+            holder.assignmentCategory.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentCategory());
+            holder.assignmentScoreEarned.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentScoreEarned());
+            holder.assignmentScorePossible.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentScorePossible());
+            holder.assignmentPercentage.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentPercentage());
         }
     }
 
     @Override
     public int getItemCount() {
-        return casey.getNumberOfAssignments(period) + 1;  //Add one for header card
+        return casey.getPeriod(period).getNumberOfAssignments() + 1;  //Add one for header card
     }
 
     @Override

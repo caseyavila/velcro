@@ -47,6 +47,10 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
         Typeface manrope = ResourcesCompat.getFont(this, R.font.manrope_medium);
 
+        subdomainText = findViewById(R.id.subdomain_input);
+        subdomainLayout = findViewById(R.id.subdomain_layout);
+        subdomainLayout.setTypeface(manrope);
+
         usernameText = findViewById(R.id.username_input);
         usernameLayout = findViewById(R.id.username_layout);
         usernameLayout.setTypeface(manrope);
@@ -54,10 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         passwordText = findViewById(R.id.password_input);
         passwordLayout = findViewById(R.id.password_layout);
         passwordLayout.setTypeface(manrope);
-
-        subdomainText = findViewById(R.id.subdomain_input);
-        subdomainLayout = findViewById(R.id.subdomain_layout);
-        subdomainLayout.setTypeface(manrope);
 
         loginButton = findViewById(R.id.login_button);
         loginNotification = findViewById(R.id.login_notification);

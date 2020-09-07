@@ -35,7 +35,7 @@ public class CourseActivity extends AppCompatActivity {
 
         appBar = findViewById(R.id.appbar);
         setSupportActionBar(appBar);
-        getSupportActionBar().setTitle(casey.getCourseName(bundle.getInt("period")));  //Add title of toolbar
+        getSupportActionBar().setTitle(casey.getPeriod(bundle.getInt("period")).getCourseName());  //Add title of toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Add back button
         appBar.setNavigationOnClickListener(view -> finish());  //Finish activity when back button is pressed
 
@@ -62,7 +62,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void updateCards(int period) {
-        for (int i = 0; i < casey.getNumberOfAssignments(period) + 1; i++) {  //Add one for header card
+        for (int i = 0; i < casey.getPeriod(period).getNumberOfAssignments() + 1; i++) {  //Add one for header card
             adapter.notifyItemChanged(i);
         }
     }
