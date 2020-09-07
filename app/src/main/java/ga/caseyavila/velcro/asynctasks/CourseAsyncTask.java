@@ -8,6 +8,8 @@ import ga.caseyavila.velcro.activities.CourseActivity;
 import org.json.JSONException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.ParseException;
+
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 
@@ -29,9 +31,7 @@ public class CourseAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         try {
             casey.findProgressReport(period);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException | ParseException e) {
             e.printStackTrace();
         }
         return null;

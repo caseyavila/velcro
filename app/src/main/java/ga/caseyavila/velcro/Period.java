@@ -3,6 +3,12 @@ package ga.caseyavila.velcro;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class Period {
 
     private String courseId;
@@ -27,8 +33,13 @@ public class Period {
         courseName = jsonObject.getString("courseName");
     }
 
-    public void addProgressReport(JSONObject progressReport) throws JSONException {
-        gradeUpdateDate = progressReport.getString("trendDate").split("T")[0];
+    public void addProgressReport(JSONObject progressReport) throws JSONException, ParseException {
+        Date date = (new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US))
+                .parse(progressReport.getString("trendDate"));
+
+        if (date != null) {
+            gradeUpdateDate = DateFormat.getDateTimeInstance().format(date);
+        }
         numberOfAssignments = progressReport.getJSONArray("grades").length();
 
         if (assignmentArray == null) {

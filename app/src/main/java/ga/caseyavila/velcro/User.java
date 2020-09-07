@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import java.io.IOException;
 import android.util.Base64;
 
+import java.text.ParseException;
 import java.util.*;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
@@ -152,7 +153,7 @@ public class User {
     }
 
     // Contains information within an individual class
-    public void findProgressReport(int period) throws IOException, JSONException {
+    public void findProgressReport(int period) throws IOException, JSONException, ParseException {
         Connection.Response progressReportResponse = Jsoup.connect(baseUrl() + "/mapi/progress_report")
                 .method(Connection.Method.GET)
                 .data("periodID", periodArray[period].getCourseId())

@@ -3,6 +3,9 @@ package ga.caseyavila.velcro;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 public class Loopmail {
 
     private String id;
@@ -16,7 +19,7 @@ public class Loopmail {
         id = loopmailJSON.getString("ID");
         isRead = loopmailJSON.getBoolean("read");
         sender = loopmailJSON.getJSONObject("sender").getString("name");
-        sendDate = loopmailJSON.getString("date");
+        sendDate = DateFormat.getDateTimeInstance().format(new Date(loopmailJSON.getLong("date")));
         subject = loopmailJSON.getString("subject");
     }
 
@@ -28,7 +31,7 @@ public class Loopmail {
         return id;
     }
 
-    public Boolean isRead() {
+    public boolean isRead() {
         return isRead;
     }
 

@@ -45,6 +45,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
         }
         holder.subject.setText(casey.getMailBox(1).getLoopmail(position).getSubject());
         holder.sender.setText(casey.getMailBox(1).getLoopmail(position).getSender());
+        holder.sendDate.setText(casey.getMailBox(1).getLoopmail(position).getSendDate());
         holder.cardView.setOnClickListener(view -> {
             Intent intent = new Intent(context, LoopMailBodyActivity.class);
             Bundle bundle = new Bundle();
@@ -66,6 +67,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
         MaterialTextView subject;
         MaterialTextView sender;
+        MaterialTextView sendDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -74,6 +76,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
             subject = itemView.findViewById(R.id.loopmail_subject);
             sender = itemView.findViewById(R.id.loopmail_sender);
+            sendDate = itemView.findViewById(R.id.loopmail_send_date);
         }
     }
 }

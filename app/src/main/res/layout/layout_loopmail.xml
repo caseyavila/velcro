@@ -25,6 +25,8 @@
                     android:id="@+id/loopmail_subject"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -34,10 +36,25 @@
                     android:id="@+id/loopmail_sender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/loopmail_subject">
+                    app:layout_constraintTop_toBottomOf="@id/loopmail_subject"
+                    app:layout_constraintBottom_toTopOf="@id/loopmail_send_date">
 
             </com.google.android.material.textview.MaterialTextView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/loopmail_send_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/loopmail_sender"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            </com.google.android.material.textview.MaterialTextView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
