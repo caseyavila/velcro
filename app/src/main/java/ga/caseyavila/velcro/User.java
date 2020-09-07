@@ -22,8 +22,8 @@ public class User {
 
     private String username;
     private String password;
-    private String schoolUrl = "ahs-fusd-ca";
-    private String baseUrl = "https://" + schoolUrl + ".schoolloop.com";
+    private String subdomain;
+    private String baseUrl;
     private String sessionCookie;
     private String hashedPassword;
     private JSONArray coursesJSON;
@@ -71,16 +71,18 @@ public class User {
         this.sessionCookie = sessionCookie;
     }
 
-    public String getSchool_url() {
-        return schoolUrl;
+    public String getSubdomain() {
+        return subdomain;
     }
 
-    public void setSchool_url(String url) {
-        schoolUrl = url;
+    public void setSubdomain(String subdomain) {
+        this.subdomain = subdomain;
+        // Update base url after updating subdomain
+        baseUrl = "https://" + subdomain + ".schoolloop.com";
     }
 
     public boolean isAutoLoginReady() {
-        return sharedPreferences.contains("username") && sharedPreferences.contains("hashedPassword") && sharedPreferences.contains("studentId") && sharedPreferences.contains("JSESSIONID");
+        return sharedPreferences.contains("subdomain") && sharedPreferences.contains("username") && sharedPreferences.contains("hashedPassword") && sharedPreferences.contains("studentId") && sharedPreferences.contains("JSESSIONID");
     }
 
     public boolean isLoggedIn() {
@@ -157,7 +159,7 @@ public class User {
                 .cookie("slid", studentId)
                 .execute();
 
-        progressReportJSON.put(period, new JSONArray(progressReportResponse.body()).get(0));  // Place JSONObject directly in array, instead of array with one object
+        progressReportJSON.put(period, new JSONArray(progressReportResponse.body()).get(0));
     }
 
     public void findLoopMailInbox(int folder) throws IOException, JSONException {
@@ -182,7 +184,7 @@ public class User {
                 .method(Connection.Method.GET)
                 .data("ID", getLoopMailId(folder, index))
                 .data("studentID", studentId)
-                .data("url", schoolUrl + ".schoolloop.com")
+                .data("url", baseUrl)
                 .header("Authorization", "Basic " + credentials(username, hashedPassword))
                 .header("SL-HASH", "true")
                 .header("SL-UUID", getVelcroUUID())
@@ -277,7 +279,7 @@ public class User {
         }
     }
 
-    public JSONObject getAssignmentJSONObject(int period, int assignment) {
+    private JSONObject getAssignmentJSONObject(int period, int assignment) {
         try {
             return getPeriodProgressReportJSON(period).getJSONArray("grades").getJSONObject(assignment);
         } catch (JSONException e) {

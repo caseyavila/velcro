@@ -12,6 +12,30 @@
         tools:context="ga.caseyavila.velcro.activities.LoginActivity">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/subdomain_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/subdomain"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/username_layout"
+        app:layout_constraintVertical_chainStyle="packed">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/subdomain_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="110dp"
+            android:inputType="text">
+        </com.google.android.material.textfield.TextInputEditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
@@ -20,20 +44,16 @@
             android:layout_marginLeft="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/login_button"
-            app:layout_constraintTop_toTopOf="parent"
-            android:hint="@string/username"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintTop_toBottomOf="@id/subdomain_layout"
+            app:layout_constraintBottom_toTopOf="@id/password_layout"
+        android:hint="@string/username">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username_input"
                 android:inputType="text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:ignore="MissingConstraints">
-
+                android:layout_height="wrap_content">
         </com.google.android.material.textfield.TextInputEditText>
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -44,34 +64,32 @@
             android:hint="@string/password"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/username_layout"
-            tools:ignore="MissingConstraints">
+            app:layout_constraintBottom_toTopOf="@id/login_button">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:imeOptions="actionGo"
-                tools:ignore="MissingConstraints">
+                android:imeOptions="actionGo">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-            android:id="@+id/login_button"
+        android:id="@+id/login_button"
             android:text="@string/login"
-            tools:ignore="MissingConstraints"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="100dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/username_layout"
+            app:layout_constraintTop_toBottomOf="@+id/password_layout"
             android:onClick="login"/>
 
     <ProgressBar
@@ -92,5 +110,12 @@
             android:text="@string/failed_login"
             app:layout_constraintTop_toBottomOf="@id/password_layout"
             app:layout_constraintEnd_toEndOf="@id/password_layout"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

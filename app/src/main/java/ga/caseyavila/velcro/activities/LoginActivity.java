@@ -25,9 +25,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public static SharedPreferences sharedPreferences;
     private TextInputEditText usernameText;
-    private TextInputEditText passwordText;
     private TextInputLayout usernameLayout;
+    private TextInputEditText passwordText;
     private TextInputLayout passwordLayout;
+    private TextInputEditText subdomainText;
+    private TextInputLayout subdomainLayout;
     private MaterialButton loginButton;
     private MaterialTextView loginNotification;
     private ProgressBar progressBar;
@@ -48,62 +50,51 @@ public class LoginActivity extends AppCompatActivity {
         usernameText = findViewById(R.id.username_input);
         usernameLayout = findViewById(R.id.username_layout);
         usernameLayout.setTypeface(manrope);
+
         passwordText = findViewById(R.id.password_input);
         passwordLayout = findViewById(R.id.password_layout);
         passwordLayout.setTypeface(manrope);
+
+        subdomainText = findViewById(R.id.subdomain_input);
+        subdomainLayout = findViewById(R.id.subdomain_layout);
+        subdomainLayout.setTypeface(manrope);
+
         loginButton = findViewById(R.id.login_button);
         loginNotification = findViewById(R.id.login_notification);
         loginNotification.setVisibility(View.INVISIBLE);
+
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
-        usernameText.setOnFocusChangeListener((v, hasFocus) -> {  // Hide keyboard when user clicks off TextView
-            if (!hasFocus) {
-                hideKeyboard(v);
+        passwordText.setOnEditorActionListener((textView, i, keyEvent) -> {
+            if (i == EditorInfo.IME_ACTION_GO) {
+                login(loginButton);
             }
-        });
-
-        passwordText.setOnFocusChangeListener((v, hasFocus) -> {
-            if (!hasFocus) {
-                hideKeyboard(v);
-            }
-        });
-
-        passwordText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if (i == EditorInfo.IME_ACTION_GO) {
-                    login(loginButton);
-                }
-                return false;
-            }
+            return false;
         });
 
         autoLogin();
     }
 
-    private void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        assert inputMethodManager != null;
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     public void login(View v) {
         if (!casey.isAutoLoginReady()) {
+            casey.setSubdomain(subdomainText.getText().toString());
             casey.setUsername(usernameText.getText().toString());
             casey.setPassword(passwordText.getText().toString());
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        loginButton.setEnabled(false);
+        subdomainLayout.setEnabled(false);
         usernameLayout.setEnabled(false);
         passwordLayout.setEnabled(false);
+        loginButton.setEnabled(false);
 
         new LoginAsyncTask(this).execute();
     }
 
     private void autoLogin() {
         if (casey.isAutoLoginReady()) {
+            subdomainText.setText(sharedPreferences.getString("subdomain", ""));
             usernameText.setText(sharedPreferences.getString("username", ""));
             passwordText.setText("**********");  //Set fake text for password
 

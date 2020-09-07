@@ -31,6 +31,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
             //If sharedPreferences already exists...
             if (casey.isAutoLoginReady()) {
                 //Set fields in User to match
+                casey.setSubdomain(sharedPreferences.getString("subdomain", "error"));
                 casey.setUsername(sharedPreferences.getString("username", "error"));
                 casey.setHashedPassword(sharedPreferences.getString("hashedPassword", "error"));
                 casey.setStudentId(sharedPreferences.getString("studentId", "error"));
@@ -40,6 +41,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
                 casey.findLoginData();
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("subdomain", casey.getSubdomain());
                 editor.putString("username", casey.getUsername());
                 editor.putString("hashedPassword", casey.getHashedPassword());
                 editor.putString("studentId", casey.getStudentId());
@@ -65,6 +67,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
         } else {  // Alert user if username and password doesn't match
             activity.findViewById(R.id.login_notification).setVisibility(View.VISIBLE);
             activity.findViewById(R.id.login_button).setEnabled(true);
+            activity.findViewById(R.id.subdomain_layout).setEnabled(true);
             activity.findViewById(R.id.username_layout).setEnabled(true);
             activity.findViewById(R.id.password_layout).setEnabled(true);
         }

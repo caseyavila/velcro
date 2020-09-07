@@ -2,6 +2,7 @@
     <string name="app_name">Velcro</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
+    <string name="subdomain">Subdomain</string>
     <string name="courses">Courses</string>
     <string name="assignments">Assignments</string>
     <string name="loopmail">Loopmail</string>
