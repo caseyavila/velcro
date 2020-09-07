@@ -77,7 +77,7 @@ public class LoopMailFragment extends Fragment {
     }
 
     public void updateCards() {
-        for (int i = 0; i < casey.getNumberOfLoopMails(folder); i++) {
+        for (int i = 0; i < casey.getMailBox(folder).getNumberOfLoopMails(); i++) {
             adapter.notifyItemChanged(i);
         }
     }

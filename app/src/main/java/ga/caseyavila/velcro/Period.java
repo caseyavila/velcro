@@ -31,7 +31,9 @@ public class Period {
         gradeUpdateDate = progressReport.getString("trendDate").split("T")[0];
         numberOfAssignments = progressReport.getJSONArray("grades").length();
 
-        assignmentArray = new Assignment[numberOfAssignments];
+        if (assignmentArray == null) {
+            assignmentArray = new Assignment[numberOfAssignments];
+        }
 
         for (int i = 0; i < assignmentArray.length; i++) {
             assignmentArray[i] = new Assignment(progressReport.getJSONArray("grades").getJSONObject(i));

@@ -36,15 +36,15 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (casey.isLoopMailRead(1, position)) {
+        if (casey.getMailBox(1).getLoopmail(position).isRead()) {
             holder.subject.setTextColor(ContextCompat.getColor(context, R.color.textMediumEmphasis));
             holder.subject.setTypeface(null, Typeface.NORMAL);
         } else {
             holder.subject.setTextColor(ContextCompat.getColor(context, R.color.textHighEmphasis));
             holder.subject.setTypeface(null, Typeface.BOLD);
         }
-        holder.subject.setText(casey.getLoopMailSubject(1, position));
-        holder.sender.setText(casey.getLoopMailSender(1, position));
+        holder.subject.setText(casey.getMailBox(1).getLoopmail(position).getSubject());
+        holder.sender.setText(casey.getMailBox(1).getLoopmail(position).getSender());
         holder.cardView.setOnClickListener(view -> {
             Intent intent = new Intent(context, LoopMailBodyActivity.class);
             Bundle bundle = new Bundle();
@@ -57,7 +57,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return casey.getNumberOfLoopMails(1);
+        return casey.getMailBox(1).getNumberOfLoopMails();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

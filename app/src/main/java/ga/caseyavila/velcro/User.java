@@ -21,8 +21,7 @@ public class User {
     private String sessionCookie;
     private String hashedPassword;
     private Period[] periodArray;
-    private JSONArray loopMailFoldersJSON = new JSONArray();  //Initialize array for accepting different folders
-    private JSONObject loopMailBodiesJSON = new JSONObject();  //Initialize array for accepting different folders
+    private Mailbox[] mailboxArray;
     private String studentId;
     private boolean isLoggedIn;
 
@@ -185,13 +184,16 @@ public class User {
                 .cookie("slid", studentId)
                 .execute();
 
-        loopMailFoldersJSON.put(folder, new JSONArray(loopMailResponse.body()));
+        if (mailboxArray == null) {
+            mailboxArray = new Mailbox[3];
+        }
+        mailboxArray[folder] = new Mailbox(new JSONArray(loopMailResponse.body()));
     }
 
     public void findLoopMailBody(int folder, int index) throws IOException, JSONException {
         Connection.Response loopMailBodyResponse = Jsoup.connect(baseUrl() + "/mapi/mail_messages")
                 .method(Connection.Method.GET)
-                .data("ID", getLoopMailId(folder, index))
+                .data("ID", getMailBox(folder).getLoopmail(index).getId())
                 .data("studentID", studentId)
                 .data("url", baseUrl())
                 .header("Authorization", "Basic " + credentials(username, hashedPassword))
@@ -201,7 +203,7 @@ public class User {
                 .cookie("slid", studentId)
                 .execute();
 
-        loopMailBodiesJSON.put(getLoopMailId(folder, index), new JSONObject(loopMailBodyResponse.body()).getString("message"));
+        mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(loopMailBodyResponse.body()).getString("message"));
     }
 
     public Period getPeriod(int period) {
@@ -212,59 +214,8 @@ public class User {
         return periodArray.length;
     }
 
-    public int getNumberOfLoopMails(int folder) {
-        try {
-            return loopMailFoldersJSON.getJSONArray(folder).length();
-        } catch (JSONException e) {
-            return 0;
-        }
+    public Mailbox getMailBox(int index) {
+        return mailboxArray[index];
     }
 
-    private String getLoopMailId(int folder, int index) {
-        try {
-            return loopMailFoldersJSON.getJSONArray(folder).getJSONObject(index).getString("ID");
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
-    public Boolean isLoopMailRead(int folder, int index) {
-        try {
-            return loopMailFoldersJSON.getJSONArray(folder).getJSONObject(index).getBoolean("read");
-        } catch (JSONException e) {
-            return false;
-        }
-    }
-
-    public String getLoopMailSender(int folder, int index) {
-        try {
-            return loopMailFoldersJSON.getJSONArray(folder).getJSONObject(index).getJSONObject("sender").getString("name");
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
-    public String getLoopMailSendDate(int folder, int index) {
-        try {
-            return loopMailFoldersJSON.getJSONArray(folder).getJSONObject(index).getString("date");
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
-    public String getLoopMailSubject(int folder, int index) {
-        try {
-            return loopMailFoldersJSON.getJSONArray(folder).getJSONObject(index).getString("subject");
-        } catch (JSONException e) {
-            return null;
-        }
-    }
-
-    public String getLoopMailBody(int folder, int index) {
-        try {
-            return loopMailBodiesJSON.getString(getLoopMailId(folder, index));
-        } catch (JSONException e) {
-            return null;
-        }
-    }
 }
