@@ -1,16 +1,14 @@
 package ga.caseyavila.velcro.fragments;
 
 import android.os.Bundle;
-import android.os.Parcel;
 import android.os.Parcelable;
-import androidx.annotation.Nullable;
+
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ga.caseyavila.velcro.R;
@@ -24,9 +22,8 @@ public class LoopMailFragment extends Fragment {
 
     private SwipeRefreshLayout loopMailRefreshLayout;
     private LoopMailAdapter adapter;
-    private static final String BUNDLE_RECYCLER_LAYOUT = "loopmail_fragment.recycler.layout";
     private RecyclerView recyclerView;
-    private Parcelable savedRecyclerLayoutState;
+    private Parcelable recyclerViewState;
     private final int folder = 1;
 
     public LoopMailFragment() {
@@ -65,15 +62,25 @@ public class LoopMailFragment extends Fragment {
         new LoopMailAsyncTask(this, folder).execute();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Store scroll state of recyclerview
+        recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+    }
+
     public void addCards() {
         recyclerView = getView().findViewById(R.id.loopmail_recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
 
         adapter = new LoopMailAdapter(getContext());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         loopMailRefreshLayout.setEnabled(true);
+
+        if (recyclerViewState != null && recyclerView.getLayoutManager() != null) {
+            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+        }
     }
 
     public void updateCards() {

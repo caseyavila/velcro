@@ -20,15 +20,19 @@ import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 public class User {
 
+    private String subdomain;
     private String username;
     private String password;
-    private String subdomain;
-    private String cookie;
     private String hashedPassword;
+    private String studentId;
+    private String cookie;
     private Period[] periodArray;
     private Mailbox[] mailboxArray;
-    private String studentId;
     private boolean isLoggedIn;
+
+    public String getSubdomain() {
+        return subdomain;
+    }
 
     public String getUsername() {
         return username;
@@ -42,8 +46,12 @@ public class User {
         return studentId;
     }
 
-    public String getSessionCookie() {
+    public String getCookie() {
         return cookie;
+    }
+
+    public void setSubdomain(String subdomain) {
+        this.subdomain = subdomain;
     }
 
     public void setUsername(String username) {
@@ -62,16 +70,8 @@ public class User {
         this.studentId = studentId;
     }
 
-    public void setSessionCookie(String cookie) {
+    public void setCookie(String cookie) {
         this.cookie = cookie;
-    }
-
-    public String getSubdomain() {
-        return subdomain;
-    }
-
-    public void setSubdomain(String subdomain) {
-        this.subdomain = subdomain;
     }
 
     public boolean isLoggedIn() {
@@ -84,6 +84,18 @@ public class User {
                sharedPreferences.contains("hashedPassword") &&
                sharedPreferences.contains("studentId") &&
                sharedPreferences.contains("cookie");
+    }
+
+    public int getNumberOfPeriods() {
+        return periodArray.length;
+    }
+
+    public Period getPeriod(int period) {
+        return periodArray[period];
+    }
+
+    public Mailbox getMailBox(int index) {
+        return mailboxArray[index];
     }
 
     private String baseUrl() {
@@ -141,7 +153,7 @@ public class User {
             for (String cookie : cookieList) {
                 freshCookies.add(cookie.split(";")[0]);
             }
-            cookie = TextUtils.join(";", freshCookies);
+            cookie = TextUtils.join("; ", freshCookies);
         }
 
         studentId = loginJSON.getString("userID");
@@ -219,7 +231,7 @@ public class User {
 
     public void findLoopMailBody(int folder, int index) throws IOException, JSONException {
         HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/mail_messages" +
-                "?ID=" + getMailBox(folder).getLoopmail(index).getId() +
+                "?ID=" + mailboxArray[folder].getLoopmail(index).getId() +
                 "&studentID=" + studentId +
                 "&trim=true")
                 .openConnection();
@@ -232,17 +244,5 @@ public class User {
         urlConnection.connect();
 
         mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
-    }
-
-    public Period getPeriod(int period) {
-        return periodArray[period];
-    }
-
-    public int getNumberOfPeriods() {
-        return periodArray.length;
-    }
-
-    public Mailbox getMailBox(int index) {
-        return mailboxArray[index];
     }
 }

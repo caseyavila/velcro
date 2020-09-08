@@ -35,7 +35,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
                 casey.setUsername(sharedPreferences.getString("username", "error"));
                 casey.setHashedPassword(sharedPreferences.getString("hashedPassword", "error"));
                 casey.setStudentId(sharedPreferences.getString("studentId", "error"));
-                casey.setSessionCookie(sharedPreferences.getString("cookie", "error"));
+                casey.setCookie(sharedPreferences.getString("cookie", "error"));
             } else {
                 //Find values
                 casey.findLoginData();
@@ -45,7 +45,7 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
                 editor.putString("username", casey.getUsername());
                 editor.putString("hashedPassword", casey.getHashedPassword());
                 editor.putString("studentId", casey.getStudentId());
-                editor.putString("cookie", casey.getSessionCookie());
+                editor.putString("cookie", casey.getCookie());
                 editor.apply();
             }
 

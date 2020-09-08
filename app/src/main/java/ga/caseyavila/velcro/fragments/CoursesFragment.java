@@ -3,6 +3,8 @@ package ga.caseyavila.velcro.fragments;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ public class CoursesFragment extends Fragment {
 
     private SwipeRefreshLayout refreshLayout;
     private MainViewAdapter adapter;
+    private RecyclerView recyclerView;
+    private Parcelable recyclerViewState;
 
     public CoursesFragment() {
         // Required empty public constructor
@@ -57,16 +61,26 @@ public class CoursesFragment extends Fragment {
         addCards();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        // Store scroll state of recyclerview
+        recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
+    }
+
     public void addCards() {
-        RecyclerView recyclerView = getView().findViewById(R.id.main_recycler_view);
+        recyclerView = getView().findViewById(R.id.main_recycler_view);
 
         recyclerView.setNestedScrollingEnabled(false); // Fix scrolling of RecyclerView
 
         adapter = new MainViewAdapter(getContext());
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         refreshLayout.setEnabled(true);  //Enable refresh once cards have loaded
+
+        if (recyclerViewState != null && recyclerView.getLayoutManager() != null) {
+            recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
+        }
     }
 
     public void updateCards() {
