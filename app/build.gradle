@@ -17,7 +17,8 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -35,6 +36,5 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha04'
 
-    implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'com.github.lecho:hellocharts-library:1.5.8@aar'
 }

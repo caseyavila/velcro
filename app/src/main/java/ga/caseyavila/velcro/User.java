@@ -4,11 +4,15 @@ import android.content.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Connection;
-import org.jsoup.Jsoup;
+
 import java.io.IOException;
+
+import android.text.TextUtils;
 import android.util.Base64;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.*;
 
@@ -19,7 +23,7 @@ public class User {
     private String username;
     private String password;
     private String subdomain;
-    private String sessionCookie;
+    private String cookie;
     private String hashedPassword;
     private Period[] periodArray;
     private Mailbox[] mailboxArray;
@@ -39,7 +43,7 @@ public class User {
     }
 
     public String getSessionCookie() {
-        return sessionCookie;
+        return cookie;
     }
 
     public void setUsername(String username) {
@@ -58,8 +62,8 @@ public class User {
         this.studentId = studentId;
     }
 
-    public void setSessionCookie(String sessionCookie) {
-        this.sessionCookie = sessionCookie;
+    public void setSessionCookie(String cookie) {
+        this.cookie = cookie;
     }
 
     public String getSubdomain() {
@@ -79,7 +83,7 @@ public class User {
                sharedPreferences.contains("username") &&
                sharedPreferences.contains("hashedPassword") &&
                sharedPreferences.contains("studentId") &&
-               sharedPreferences.contains("JSESSIONID");
+               sharedPreferences.contains("cookie");
     }
 
     private String baseUrl() {
@@ -103,45 +107,66 @@ public class User {
         }
     }
 
+    private static String inputStreamToString(InputStream inputStream) {
+        Scanner scanner = new Scanner(inputStream);
+        StringBuilder stringBuilder = new StringBuilder();
+        while (scanner.hasNext()) {
+            stringBuilder.append(scanner.nextLine());
+        }
+        return stringBuilder.toString();
+    }
+
     public void findLoginData() throws IOException, JSONException {
-        isLoggedIn = false;
-        Connection.Response loginResponse = Jsoup.connect(baseUrl() + "/mapi/login")
-                .method(Connection.Method.GET)
-                .data("devOS", "Android")
-                .data("hash", "false")
-                .data("uuid", getVelcroUUID())
-                .data("version", "3.2.4")
-                .data("year", "2020")
-                .header("Authorization", "Basic " + credentials(username, password))
-                .execute();
+        HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/login" +
+                "?devOS=Android" +
+                "&hash=false" +
+                "&uuid=" + getVelcroUUID() +
+                "&version=3.2.4" +
+                "&year=2020" +
+                "&trim=true")
+                .openConnection();
+
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, password));
+        urlConnection.connect();
 
         password = null;  //Nullify plain-text password after request (ASAP!!!)
 
-        JSONObject loginJSON = new JSONObject(loginResponse.body());
+        JSONObject loginJSON = new JSONObject(inputStreamToString(urlConnection.getInputStream()));
 
-        sessionCookie = loginResponse.cookie("JSESSIONID");
+        //Build cookie string from Set-Cookie headers
+        List<String> cookieList = urlConnection.getHeaderFields().get("Set-Cookie");
+        List<String> freshCookies = new ArrayList<>();
+        if (cookieList != null) {
+            for (String cookie : cookieList) {
+                freshCookies.add(cookie.split(";")[0]);
+            }
+            cookie = TextUtils.join(";", freshCookies);
+        }
+
         studentId = loginJSON.getString("userID");
         hashedPassword = loginJSON.getString("hashedPassword");
     }
 
-    // Contains information about overall schedule, classes, teachers, grades
-    public void findReportCard() throws IOException, JSONException {
-        Connection.Response reportCardResponse = Jsoup.connect(baseUrl() + "/mapi/report_card")
-                .method(Connection.Method.GET)
-                .data("studentID", studentId)
-                .data("trim", "true")
-                .header("Authorization", "Basic " + credentials(username, hashedPassword))
-                .header("SL-HASH", "true")
-                .header("SL-UUID", getVelcroUUID())
-                .cookie("JSESSIONID", sessionCookie)
-                .cookie("slid", studentId)
-                .execute();
 
-        if (reportCardResponse.statusCode() == 200) {
-            isLoggedIn = true;  //Set User to logged in status
+    public void findReportCard() throws IOException, JSONException {
+        HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/report_card" +
+                "?studentID=" + studentId +
+                "&trim=true")
+                .openConnection();
+
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
+        urlConnection.setRequestProperty("SL-HASH", "true");
+        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
+        urlConnection.addRequestProperty("Cookie", cookie);
+        urlConnection.connect();
+
+        if (urlConnection.getResponseCode() == 200) {
+            isLoggedIn = true;
         }
 
-        JSONArray jsonArray = new JSONArray(reportCardResponse.body());
+        JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
 
         if (periodArray == null) {
             periodArray = new Period[jsonArray.length()];
@@ -152,59 +177,61 @@ public class User {
         }
     }
 
-    // Contains information within an individual class
     public void findProgressReport(int period) throws IOException, JSONException, ParseException {
-        Connection.Response progressReportResponse = Jsoup.connect(baseUrl() + "/mapi/progress_report")
-                .method(Connection.Method.GET)
-                .data("periodID", periodArray[period].getCourseId())
-                .data("studentID", studentId)
-                .data("trim", "true")
-                .header("Authorization", "Basic " + credentials(username, hashedPassword))
-                .header("SL-HASH", "true")
-                .header("SL-UUID", getVelcroUUID())
-                .cookie("JSESSIONID", sessionCookie)
-                .cookie("slid", studentId)
-                .execute();
+        HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/progress_report" +
+                "?periodID=" + periodArray[period].getCourseId() +
+                "&studentID=" + studentId +
+                "&trim=true")
+                .openConnection();
 
-        JSONArray jsonArray = new JSONArray(progressReportResponse.body());
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
+        urlConnection.setRequestProperty("SL-HASH", "true");
+        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
+        urlConnection.addRequestProperty("Cookie", cookie);
+        urlConnection.connect();
 
+        JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
         periodArray[period].addProgressReport(jsonArray.getJSONObject(0));
     }
 
     public void findLoopMailInbox(int folder) throws IOException, JSONException {
-        Connection.Response loopMailResponse = Jsoup.connect(baseUrl() + "/mapi/mail_messages")
-                .method(Connection.Method.GET)
-                .data("folderID", String.valueOf(folder))  //1 for inbox, 2 for sent
-                .data("max", "20")
-                .data("start", "0")
-                .data("studentID", studentId)
-                .header("Authorization", "Basic " + credentials(username, hashedPassword))
-                .header("SL-HASH", "true")
-                .header("SL-UUID", getVelcroUUID())
-                .cookie("JSESSIONID", sessionCookie)
-                .cookie("slid", studentId)
-                .execute();
+        HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/mail_messages" +
+                "?folderID=" + folder +
+                "&max=" + 20 +
+                "&start=" + 0 +
+                "&studentID=" + studentId +
+                "&trim=true")
+                .openConnection();
+
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
+        urlConnection.setRequestProperty("SL-HASH", "true");
+        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
+        urlConnection.addRequestProperty("Cookie", cookie);
+        urlConnection.connect();
 
         if (mailboxArray == null) {
             mailboxArray = new Mailbox[3];
         }
-        mailboxArray[folder] = new Mailbox(new JSONArray(loopMailResponse.body()));
+        mailboxArray[folder] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
     }
 
     public void findLoopMailBody(int folder, int index) throws IOException, JSONException {
-        Connection.Response loopMailBodyResponse = Jsoup.connect(baseUrl() + "/mapi/mail_messages")
-                .method(Connection.Method.GET)
-                .data("ID", getMailBox(folder).getLoopmail(index).getId())
-                .data("studentID", studentId)
-                .data("url", baseUrl())
-                .header("Authorization", "Basic " + credentials(username, hashedPassword))
-                .header("SL-HASH", "true")
-                .header("SL-UUID", getVelcroUUID())
-                .cookie("JSESSIONID", sessionCookie)
-                .cookie("slid", studentId)
-                .execute();
+        HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/mail_messages" +
+                "?ID=" + getMailBox(folder).getLoopmail(index).getId() +
+                "&studentID=" + studentId +
+                "&trim=true")
+                .openConnection();
 
-        mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(loopMailBodyResponse.body()).getString("message"));
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
+        urlConnection.setRequestProperty("SL-HASH", "true");
+        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
+        urlConnection.addRequestProperty("Cookie", cookie);
+        urlConnection.connect();
+
+        mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
     }
 
     public Period getPeriod(int period) {
@@ -218,5 +245,4 @@ public class User {
     public Mailbox getMailBox(int index) {
         return mailboxArray[index];
     }
-
 }

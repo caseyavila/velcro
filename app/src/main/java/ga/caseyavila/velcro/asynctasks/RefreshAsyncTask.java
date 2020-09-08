@@ -26,9 +26,7 @@ public class RefreshAsyncTask extends AsyncTask<Void, Void, Void> {
     protected Void doInBackground(Void... voids) {
         try {
             casey.findReportCard();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
         return null;
