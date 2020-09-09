@@ -11,16 +11,20 @@ public class Loopmail {
     private String id;
     private boolean isRead;
     private String sender;
+    private String sendDateTime;
     private String sendDate;
     private String subject;
     private String body;
+    private String recipient;
 
     public Loopmail(JSONObject loopmailJSON) throws JSONException {
         id = loopmailJSON.getString("ID");
         isRead = loopmailJSON.getBoolean("read");
         sender = loopmailJSON.getJSONObject("sender").getString("name");
-        sendDate = DateFormat.getDateTimeInstance().format(new Date(loopmailJSON.getLong("date")));
+        sendDateTime = DateFormat.getDateTimeInstance().format(new Date(loopmailJSON.getLong("date")));
+        sendDate = DateFormat.getDateInstance().format(new Date(loopmailJSON.getLong("date")));
         subject = loopmailJSON.getString("subject");
+        recipient = loopmailJSON.getString("shortRecipientString");
     }
 
     public void addBody(String body) {
@@ -39,6 +43,10 @@ public class Loopmail {
         return sender;
     }
 
+    public String getSendDateTime() {
+        return sendDateTime;
+    }
+
     public String getSendDate() {
         return sendDate;
     }
@@ -49,5 +57,9 @@ public class Loopmail {
 
     public String getBody() {
         return body;
+    }
+
+    public String getRecipient() {
+        return recipient;
     }
 }

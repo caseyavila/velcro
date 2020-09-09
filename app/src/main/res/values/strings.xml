@@ -1,20 +1,34 @@
 <resources>
+
     <string name="app_name">Velcro</string>
+
+    <!-- Login screen -->
+    <string name="subdomain">Subdomain</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="subdomain">Subdomain</string>
+    <string name="login">Login</string>
+    <string name="failed_login">Invalid username/password</string>
+
+    <!-- Bottom navigation menu -->
     <string name="courses">Courses</string>
     <string name="assignments">Assignments</string>
     <string name="loopmail">Loopmail</string>
     <string name="news">News</string>
     <string name="locker">Locker</string>
-    <string name="failed_login">Invalid username/password</string>
-    <string name="login">Login</string>
+
+    <!-- Logout dialog -->
     <string name="logout_dialog_message">Are you sure you want to log out?</string>
     <string name="yes">yes</string>
     <string name="cancel">Cancel</string>
+
+    <!-- Course -->
     <string name="division_line">/</string>
     <string name="percentage_sign">%</string>
-    <string name="grade_last_updated">Last updated:&#160;</string>
+    <string name="grade_last_updated">Last updated: %s</string>
     <string name="refresh">refresh</string>
+
+    <!-- Loopmail -->
+    <string name="loopmail_message_sender">From: %s</string>
+    <string name="loopmail_message_recipient">To: %s</string>
+
 </resources>

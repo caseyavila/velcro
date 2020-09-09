@@ -51,7 +51,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             if (casey.getPeriod(period).hasTrends()) {  //If class has trends (grades posted more than once)
                 LineChartView lineChartView = holder.trendChart;
 
-                List<PointValue> values = new ArrayList<PointValue>();
+                List<PointValue> values = new ArrayList<>();
                 for (int i = 0; i < casey.getPeriod(period).getTrend().xTrendValues().size(); i++) {
                     values.add(new PointValue(casey.getPeriod(period).getTrend().xTrendValues().get(i),
                                               casey.getPeriod(period).getTrend().yTrendValues().get(i)));
@@ -61,7 +61,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 line.setFilled(true);
                 line.setHasPoints(false);
 
-                List<Line> lines = new ArrayList<Line>();
+                List<Line> lines = new ArrayList<>();
                 lines.add(line);
 
                 LineChartData data = new LineChartData();
@@ -100,7 +100,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
             holder.headerGrade.setText(casey.getPeriod(period).getGrade());
             holder.headerPercentage.setText(casey.getPeriod(period).getScore());
-            holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated) + casey.getPeriod(period).getGradeUpdateDate());
+            holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated, casey.getPeriod(period).getGradeUpdateDate()));
 
         } else {
             //Subtract one due to the offset the header card creates

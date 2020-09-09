@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
-import ga.caseyavila.velcro.activities.CourseActivity;
-import ga.caseyavila.velcro.activities.LoopMailBodyActivity;
+import ga.caseyavila.velcro.activities.LoopMailMessageActivity;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -45,9 +44,9 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
         }
         holder.subject.setText(casey.getMailBox(1).getLoopmail(position).getSubject());
         holder.sender.setText(casey.getMailBox(1).getLoopmail(position).getSender());
-        holder.sendDate.setText(casey.getMailBox(1).getLoopmail(position).getSendDate());
+        holder.sendDateTime.setText(casey.getMailBox(1).getLoopmail(position).getSendDateTime());
         holder.cardView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, LoopMailBodyActivity.class);
+            Intent intent = new Intent(context, LoopMailMessageActivity.class);
             Bundle bundle = new Bundle();
             bundle.putInt("folder", 1);
             bundle.putInt("index", position);
@@ -67,7 +66,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
         MaterialTextView subject;
         MaterialTextView sender;
-        MaterialTextView sendDate;
+        MaterialTextView sendDateTime;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -76,7 +75,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
             subject = itemView.findViewById(R.id.loopmail_subject);
             sender = itemView.findViewById(R.id.loopmail_sender);
-            sendDate = itemView.findViewById(R.id.loopmail_send_date);
+            sendDateTime = itemView.findViewById(R.id.loopmail_send_date_time);
         }
     }
 }
