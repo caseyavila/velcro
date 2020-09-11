@@ -158,6 +158,8 @@ public class User {
 
         studentId = loginJSON.getString("userID");
         hashedPassword = loginJSON.getString("hashedPassword");
+
+        urlConnection.disconnect();
     }
 
 
@@ -187,6 +189,8 @@ public class User {
         for (int i = 0; i < periodArray.length; i++) {
             periodArray[i] = new Period(jsonArray.getJSONObject(i));
         }
+
+        urlConnection.disconnect();
     }
 
     public void findProgressReport(int period) throws IOException, JSONException, ParseException {
@@ -205,6 +209,8 @@ public class User {
 
         JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
         periodArray[period].addProgressReport(jsonArray.getJSONObject(0));
+
+        urlConnection.disconnect();
     }
 
     public void findLoopMailInbox(int folder) throws IOException, JSONException {
@@ -227,6 +233,8 @@ public class User {
             mailboxArray = new Mailbox[3];
         }
         mailboxArray[folder] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
+
+        urlConnection.disconnect();
     }
 
     public void findLoopMailBody(int folder, int index) throws IOException, JSONException {
@@ -244,5 +252,7 @@ public class User {
         urlConnection.connect();
 
         mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
+        
+        urlConnection.disconnect();
     }
 }
