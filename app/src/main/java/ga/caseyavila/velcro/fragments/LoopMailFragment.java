@@ -3,14 +3,19 @@ package ga.caseyavila.velcro.fragments;
 import android.os.Bundle;
 import android.os.Parcelable;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.appbar.MaterialToolbar;
+
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.LoopMailAdapter;
 import ga.caseyavila.velcro.asynctasks.LoopMailAsyncTask;
@@ -23,6 +28,7 @@ public class LoopMailFragment extends Fragment {
     private SwipeRefreshLayout loopMailRefreshLayout;
     private LoopMailAdapter adapter;
     private RecyclerView recyclerView;
+    private MaterialToolbar appBar;
     private Parcelable recyclerViewState;
     private final int folder = 1;
 
@@ -52,6 +58,9 @@ public class LoopMailFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        appBar = getView().findViewById(R.id.loopmail_appbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(appBar);
+
         loopMailRefreshLayout = getView().findViewById(R.id.loopmail_refresh);
         loopMailRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         loopMailRefreshLayout.setOnRefreshListener(
@@ -75,6 +84,7 @@ public class LoopMailFragment extends Fragment {
 
         adapter = new LoopMailAdapter(getContext());
         recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         loopMailRefreshLayout.setEnabled(true);
 

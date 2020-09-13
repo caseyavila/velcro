@@ -252,7 +252,7 @@ public class User {
         urlConnection.connect();
 
         mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
-        
+
         urlConnection.disconnect();
     }
 }
