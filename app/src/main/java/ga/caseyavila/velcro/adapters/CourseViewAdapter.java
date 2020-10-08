@@ -45,10 +45,10 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (getItemViewType(position) == COURSE_VIEW_TYPES.HEADER) {  //If the card is a header
+        if (getItemViewType(position) == COURSE_VIEW_TYPES.HEADER) {  // If the card is a header
             holder.headerTeacher.setText(casey.getPeriod(period).getTeacher());
 
-            if (casey.getPeriod(period).hasTrends()) {  //If class has trends (grades posted more than once)
+            if (casey.getPeriod(period).hasTrends()) {  // If class has trends (grades posted more than once)
                 LineChartView lineChartView = holder.trendChart;
 
                 List<PointValue> values = new ArrayList<>();
@@ -76,7 +76,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 data.setAxisXBottom(axis);
 
                 Axis yAxis = new Axis();
-                yAxis.setFormatter(new SimpleAxisValueFormatter(1));  //One place after decimals
+                yAxis.setFormatter(new SimpleAxisValueFormatter(1));  // One place after decimals
                 yAxis.setTextSize(14);
                 yAxis.setTypeface(ResourcesCompat.getFont(context, R.font.manrope_medium));
                 yAxis.setHasLines(true);
@@ -89,13 +89,13 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 lineChartView.setInteractive(true);
 
                 Viewport viewport = lineChartView.getCurrentViewport();
-                //Have 1/4 of the graph space as top padding
+                // Have 1/4 of the graph space as top padding
                 viewport.top = casey.getPeriod(period).getTrend().getTrendMax() + (float) 0.25 * casey.getPeriod(period).getTrend().getTrendRange();
-                //Have 1/4 of the graph space as bottom padding
+                // Have 1/4 of the graph space as bottom padding
                 viewport.bottom = casey.getPeriod(period).getTrend().getTrendMin() - (float) 0.25 * casey.getPeriod(period).getTrend().getTrendRange();
                 lineChartView.setMaximumViewport(viewport);
             } else {
-                holder.trendChart.setVisibility(View.GONE);  //Don't show graph if trends do not exist
+                holder.trendChart.setVisibility(View.GONE);  // Don't show graph if trends do not exist
             }
 
             holder.headerGrade.setText(casey.getPeriod(period).getGrade());
@@ -103,7 +103,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated, casey.getPeriod(period).getGradeUpdateDate()));
 
         } else {
-            //Subtract one due to the offset the header card creates
+            // Subtract one due to the offset the header card creates
             holder.assignmentName.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentName());
             holder.assignmentCategory.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentCategory());
             holder.assignmentScoreEarned.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentScoreEarned());
@@ -114,12 +114,12 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return casey.getPeriod(period).getNumberOfAssignments() + 1;  //Add one for header card
+        return casey.getPeriod(period).getNumberOfAssignments() + 1;  // Add one for header card
     }
 
     @Override
     public int getItemViewType(int position) {
-        //Set the first card to a header
+        // Set the first card to a header
         if (position == 0) {
             return COURSE_VIEW_TYPES.HEADER;
         } else {
@@ -129,14 +129,14 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        //Views for assignment card
+        // Views for assignment card
         MaterialTextView assignmentName;
         MaterialTextView assignmentCategory;
         MaterialTextView assignmentScoreEarned;
         MaterialTextView assignmentScorePossible;
         MaterialTextView assignmentPercentage;
 
-        //Views for header card
+        // Views for header card
         MaterialTextView headerTeacher;
         MaterialTextView headerGrade;
         MaterialTextView headerPercentage;

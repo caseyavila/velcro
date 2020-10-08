@@ -42,8 +42,8 @@ public class CourseAsyncTask extends AsyncTask<Void, Void, Void> {
 
         ProgressBar courseProgressBar = courseActivity.findViewById(R.id.course_progress_bar);
 
-        courseProgressBar.setEnabled(true);  //Make progressbar appear
-        courseActivity.addCards();  //Load cards
-        courseProgressBar.setVisibility(View.INVISIBLE);  //Make progress bar disappear after loading cards
+        courseProgressBar.setEnabled(true);  // Make progressbar appear
+        courseActivity.addCards();  // Load cards
+        courseProgressBar.setVisibility(View.INVISIBLE);  // Make progress bar disappear after loading cards
     }
 }

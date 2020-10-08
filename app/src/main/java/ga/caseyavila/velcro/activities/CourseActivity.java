@@ -35,15 +35,15 @@ public class CourseActivity extends AppCompatActivity {
 
         appBar = findViewById(R.id.appbar);
         setSupportActionBar(appBar);
-        getSupportActionBar().setTitle(casey.getPeriod(bundle.getInt("period")).getCourseName());  //Add title of toolbar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  //Add back button
-        appBar.setNavigationOnClickListener(view -> finish());  //Finish activity when back button is pressed
+        getSupportActionBar().setTitle(casey.getPeriod(bundle.getInt("period")).getCourseName());  // Add title of toolbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
+        appBar.setNavigationOnClickListener(view -> finish());  // Finish activity when back button is pressed
 
         new CourseAsyncTask(this, period).execute();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {  //Add icons to toolbar
+    public boolean onCreateOptionsMenu(Menu menu) {  // Add icons to toolbar
         getMenuInflater().inflate(R.menu.toolbar_course, menu);
         return true;
     }
@@ -62,7 +62,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     public void updateCards(int period) {
-        for (int i = 0; i < casey.getPeriod(period).getNumberOfAssignments() + 1; i++) {  //Add one for header card
+        for (int i = 0; i < casey.getPeriod(period).getNumberOfAssignments() + 1; i++) {  // Add one for header card
             adapter.notifyItemChanged(i);
         }
     }

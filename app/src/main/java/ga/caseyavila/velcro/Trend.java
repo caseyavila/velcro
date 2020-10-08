@@ -24,7 +24,7 @@ public class Trend {
         ArrayList<Long> values = new ArrayList<>();
         try {
             for (int i = 0; i < trendJSON.length(); i++) {
-                //Convert milliseconds to days by dividing by a large number
+                // Convert milliseconds to days by dividing by a large number
                 values.add(trendJSON.getJSONObject(i).getLong("dayID") / 86400000);
             }
             return values;
@@ -52,7 +52,8 @@ public class Trend {
         Date date;
         for (int i = 5; i > 0; i--) {
             long value = (getTrendFirstDate() + (difference * i/5));
-            date = new Date(value * 86400000);  //Convert days back to milliseconds for date conversion
+            // Convert days back to milliseconds for date conversion
+            date = new Date(value * 86400000);
             arrayList.add(new AxisValue(value).setLabel(dateFormat.format(date)));
         }
         return arrayList;

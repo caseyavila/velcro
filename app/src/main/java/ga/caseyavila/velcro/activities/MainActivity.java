@@ -15,7 +15,7 @@ import ga.caseyavila.velcro.fragments.LoopMailFragment;
 public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
-    private String currentFragmentTag = "courses";  //Set default fragment tag
+    private String currentFragmentTag = "courses";  // Set default fragment tag
     private FragmentManager manager = this.getSupportFragmentManager();
 
     @Override
@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         bottomNavigationView.setOnNavigationItemReselectedListener(item -> {
-            //Do nothing when re-selecting on bottom navigation
+            // Do nothing when re-selecting on bottom navigation
         });
 
-        openFragment(CoursesFragment.newInstance());  //Initial fragment
+        openFragment(CoursesFragment.newInstance());  // Initial fragment
     }
 
-    private void openFragment(Fragment fragment) {  //Use currentFragmentTag as the initial fragment tag
+    private void openFragment(Fragment fragment) {  // Use currentFragmentTag as the initial fragment tag
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.replace(R.id.container, fragment, currentFragmentTag);
         transaction.commit();
@@ -55,15 +55,15 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = manager.beginTransaction();
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
 
-        if (manager.findFragmentByTag(tag) == null) { //If no fragment in the backStack has the same tag, create a new one
+        if (manager.findFragmentByTag(tag) == null) { // If no fragment in the backStack has the same tag, create a new one
             fragmentTransaction.add(R.id.container, fragment, tag);
             fragmentTransaction.hide(manager.findFragmentByTag(currentFragmentTag));
             fragmentTransaction.commit();
-        } else {  //Simply switch fragments
+        } else {  // Simply switch fragments
             fragmentTransaction.hide(manager.findFragmentByTag(currentFragmentTag));
             fragmentTransaction.show(manager.findFragmentByTag(tag)).commit();
         }
-        currentFragmentTag = tag;  //Set the tag of the current fragment
+        currentFragmentTag = tag;  // Set the tag of the current fragment
     }
 
     @Override

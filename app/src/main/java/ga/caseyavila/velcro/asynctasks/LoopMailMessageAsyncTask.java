@@ -40,7 +40,7 @@ public class LoopMailMessageAsyncTask extends AsyncTask<Void, Void, Void> {
 //        ProgressBar loopMailProgressBar = loopMailMessageActivity.findViewById(R.id.loopmail_progress_bar);
 //
 //        loopMailProgressBar.setEnabled(true);  //Make progressbar appear
-        loopMailMessageActivity.addCards();  //Load cards
+        loopMailMessageActivity.addCards();  // Load cards
 //        loopMailProgressBar.setVisibility(View.INVISIBLE);  //Make progress bar disappear after loading cards
     }
 }

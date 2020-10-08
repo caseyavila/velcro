@@ -96,7 +96,8 @@ public class LoginActivity extends AppCompatActivity {
         if (casey.isAutoLoginReady()) {
             subdomainText.setText(sharedPreferences.getString("subdomain", ""));
             usernameText.setText(sharedPreferences.getString("username", ""));
-            passwordText.setText("**********");  //Set fake text for password
+            // Set fake text for password
+            passwordText.setText("**********");
 
             login(loginButton);
         }

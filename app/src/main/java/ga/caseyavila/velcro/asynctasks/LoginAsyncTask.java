@@ -28,16 +28,16 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... voids) {
         try {
-            //If sharedPreferences already exists...
+            // If sharedPreferences already exists...
             if (casey.isAutoLoginReady()) {
-                //Set fields in User to match
+                // Set fields in User to match
                 casey.setSubdomain(sharedPreferences.getString("subdomain", "error"));
                 casey.setUsername(sharedPreferences.getString("username", "error"));
                 casey.setHashedPassword(sharedPreferences.getString("hashedPassword", "error"));
                 casey.setStudentId(sharedPreferences.getString("studentId", "error"));
                 casey.setCookie(sharedPreferences.getString("cookie", "error"));
             } else {
-                //Find values
+                // Find values
                 casey.findLoginData();
 
                 SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -3,6 +3,7 @@ package ga.caseyavila.velcro;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,10 +30,9 @@ public class Assignment {
         scorePossible = assignmentJSONObject.getJSONObject("assignment").getString("maxPoints");
 
         try {
-            float scoreEarned = Float.parseFloat(getAssignmentScoreEarned());
-            float scorePossible = Float.parseFloat(getAssignmentScorePossible());
-            float percentage = ((scoreEarned / scorePossible) * 100);
-            assignmentPercentage = String.valueOf((double) Math.round(percentage * 100) / 100);  // Round output to 2 decimal places
+            double percentage = Double.parseDouble(scoreEarned) / Double.parseDouble(scorePossible) * 100;
+            // Round to two decimal places
+            assignmentPercentage = String.format(Locale.getDefault(), "%.2f", percentage);
         } catch (NumberFormatException e) {
             assignmentPercentage = "";
         }

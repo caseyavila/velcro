@@ -8,7 +8,6 @@ import ga.caseyavila.velcro.fragments.LoopMailFragment;
 import org.json.JSONException;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.text.ParseException;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -41,8 +40,8 @@ public class LoopMailAsyncTask extends AsyncTask<Void, Void, Void> {
 
         ProgressBar loopMailProgressBar = loopMailFragment.getView().findViewById(R.id.loopmail_progress_bar);
 
-        loopMailProgressBar.setEnabled(true);  //Make progressbar appear
-        loopMailFragment.addCards();  //Load cards
-        loopMailProgressBar.setVisibility(View.INVISIBLE);  //Make progress bar disappear after loading cards
+        loopMailProgressBar.setEnabled(true);  // Make progressbar appear
+        loopMailFragment.addCards();  // Load cards
+        loopMailProgressBar.setVisibility(View.INVISIBLE);  // Make progress bar disappear after loading cards
     }
 }

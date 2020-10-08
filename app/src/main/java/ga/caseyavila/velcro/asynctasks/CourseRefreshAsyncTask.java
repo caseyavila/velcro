@@ -16,7 +16,7 @@ public class CourseRefreshAsyncTask extends AsyncTask<Void, Void, Void> {
     private final int period;
 
     public CourseRefreshAsyncTask(CourseActivity courseActivity, int period) {
-        courseActivityReference = new WeakReference<CourseActivity>(courseActivity);
+        courseActivityReference = new WeakReference<>(courseActivity);
         this.period = period;
     }
 

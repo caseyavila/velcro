@@ -8,7 +8,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.text.ParseException;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
