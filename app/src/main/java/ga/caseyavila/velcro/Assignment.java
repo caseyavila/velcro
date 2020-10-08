@@ -14,7 +14,8 @@ public class Assignment {
     private String scorePossible;
     private String assignmentPercentage;
 
-    private static final Pattern scoreEarnedPattern = Pattern.compile("[-+]?([0-9]*\\.[0-9]+|[0-9]+)(?=\\s/\\s)");
+    // Match everything in front of whitespace slash combination
+    private static final Pattern scoreEarnedPattern = Pattern.compile("^[^\\s/]*");
 
     public Assignment(JSONObject assignmentJSONObject) throws JSONException {
         name = assignmentJSONObject.getJSONObject("assignment").getString("title");
@@ -27,10 +28,14 @@ public class Assignment {
 
         scorePossible = assignmentJSONObject.getJSONObject("assignment").getString("maxPoints");
 
-        float scoreEarned = Float.parseFloat(getAssignmentScoreEarned());
-        float scorePossible = Float.parseFloat(getAssignmentScorePossible());
-        float percentage = ((scoreEarned / scorePossible) * 100);
-        assignmentPercentage = String.valueOf((double) Math.round(percentage * 100) / 100);  // Round output to 2 decimal places
+        try {
+            float scoreEarned = Float.parseFloat(getAssignmentScoreEarned());
+            float scorePossible = Float.parseFloat(getAssignmentScorePossible());
+            float percentage = ((scoreEarned / scorePossible) * 100);
+            assignmentPercentage = String.valueOf((double) Math.round(percentage * 100) / 100);  // Round output to 2 decimal places
+        } catch (NumberFormatException e) {
+            assignmentPercentage = "";
+        }
     }
 
     public String getAssignmentName() {
