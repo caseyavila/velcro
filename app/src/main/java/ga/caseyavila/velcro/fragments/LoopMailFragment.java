@@ -25,7 +25,7 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class LoopMailFragment extends Fragment {
 
-    private SwipeRefreshLayout loopMailRefreshLayout;
+    private SwipeRefreshLayout refreshLayout;
     private LoopMailAdapter adapter;
     private RecyclerView recyclerView;
     private MaterialToolbar appBar;
@@ -61,12 +61,12 @@ public class LoopMailFragment extends Fragment {
         appBar = getView().findViewById(R.id.loopmail_appbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(appBar);
 
-        loopMailRefreshLayout = getView().findViewById(R.id.loopmail_refresh);
-        loopMailRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        loopMailRefreshLayout.setOnRefreshListener(
+        refreshLayout = getView().findViewById(R.id.loopmail_refresh);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout.setOnRefreshListener(
                 () -> new LoopMailRefreshAsyncTask(this, folder).execute()
         );
-        loopMailRefreshLayout.setEnabled(false);
+        refreshLayout.setEnabled(false);
 
         new LoopMailAsyncTask(this, folder).execute();
     }
@@ -86,7 +86,7 @@ public class LoopMailFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        loopMailRefreshLayout.setEnabled(true);
+        refreshLayout.setEnabled(true);
 
         if (recyclerViewState != null && recyclerView.getLayoutManager() != null) {
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);

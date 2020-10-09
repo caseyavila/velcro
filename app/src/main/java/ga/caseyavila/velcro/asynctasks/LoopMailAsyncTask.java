@@ -39,10 +39,10 @@ public class LoopMailAsyncTask extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void result) {
         LoopMailFragment loopMailFragment = fragmentWeakReference.get();
 
-        ProgressBar loopMailProgressBar = loopMailFragment.getView().findViewById(R.id.loopmail_progress_bar);
+        ProgressBar progressBar = loopMailFragment.getView().findViewById(R.id.loopmail_progress_bar);
 
-        loopMailProgressBar.setEnabled(true);  // Make progressbar appear
+        progressBar.setEnabled(true);  // Make progressbar appear
         loopMailFragment.addCards();  // Load cards
-        loopMailProgressBar.setVisibility(View.INVISIBLE);  // Make progress bar disappear after loading cards
+        progressBar.setVisibility(View.INVISIBLE);  // Make progress bar disappear after loading cards
     }
 }

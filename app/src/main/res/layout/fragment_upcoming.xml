@@ -7,6 +7,17 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".fragments.CoursesFragment">
 
+    <ProgressBar
+            android:id="@+id/upcoming_progress_bar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:max="100"
+            android:visibility="visible"
+            android:layout_marginTop="-7dp"
+            tools:ignore="MissingConstraints"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/upcoming_refresh"
             android:layout_width="match_parent"

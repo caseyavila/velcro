@@ -12,7 +12,7 @@ public class LoopMailRefreshAsyncTask extends LoopMailAsyncTask {
 
     @Override
     protected void onPostExecute(Void result) {
-        LoopMailFragment loopMailFragment = this.getFragmentWeakReference().get();
+        LoopMailFragment loopMailFragment = getFragmentWeakReference().get();
 
         loopMailFragment.updateCards();
 

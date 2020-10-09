@@ -5,7 +5,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.fragments.CoursesFragment;
 import org.json.JSONException;
-
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;

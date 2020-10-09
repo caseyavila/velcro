@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.UpcomingAdapter;
 import ga.caseyavila.velcro.asynctasks.UpcomingAsyncTask;
+import ga.caseyavila.velcro.asynctasks.UpcomingRefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -53,9 +54,9 @@ public class UpcomingFragment extends Fragment {
         super.onStart();
         refreshLayout = getView().findViewById(R.id.upcoming_refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-//        refreshLayout.setOnRefreshListener(
-//                () -> new RefreshAsyncTask(this).execute()
-//        );
+        refreshLayout.setOnRefreshListener(
+                () -> new UpcomingRefreshAsyncTask(this).execute()
+        );
         refreshLayout.setEnabled(false);
 
         new UpcomingAsyncTask(this).execute();
