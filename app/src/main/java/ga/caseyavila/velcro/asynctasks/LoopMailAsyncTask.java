@@ -16,13 +16,13 @@ public class LoopMailAsyncTask extends AsyncTask<Void, Void, Void> {
     private final WeakReference<LoopMailFragment> fragmentWeakReference;
     private final int folder;
 
+    WeakReference<LoopMailFragment> getFragmentWeakReference() {
+        return fragmentWeakReference;
+    }
+
     public LoopMailAsyncTask(LoopMailFragment loopMailFragment, int folder) {
         fragmentWeakReference = new WeakReference<>(loopMailFragment);
         this.folder = folder;
-    }
-
-    @Override
-    protected void onPreExecute() {
     }
 
     @Override

@@ -1,43 +1,18 @@
 package ga.caseyavila.velcro.asynctasks;
 
-import android.os.AsyncTask;
 import ga.caseyavila.velcro.activities.CourseActivity;
-import org.json.JSONException;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.text.ParseException;
 
-import static ga.caseyavila.velcro.activities.LoginActivity.casey;
-
-
-public class CourseRefreshAsyncTask extends AsyncTask<Void, Void, Void> {
-
-    private final WeakReference<CourseActivity> courseActivityReference;
-    private final int period;
+public class CourseRefreshAsyncTask extends CourseAsyncTask {
 
     public CourseRefreshAsyncTask(CourseActivity courseActivity, int period) {
-        courseActivityReference = new WeakReference<>(courseActivity);
-        this.period = period;
+        super(courseActivity, period);
     }
 
-    @Override
-    protected void onPreExecute() {
-    }
-
-    @Override
-    protected Void doInBackground(Void... voids) {
-        try {
-            casey.findProgressReport(period);
-        } catch (IOException | JSONException | ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     @Override
     protected void onPostExecute(Void result) {
-        CourseActivity courseActivity = courseActivityReference.get();
+        CourseActivity courseActivity = getCourseActivityReference().get();
 
-        courseActivity.updateCards(period);  //Load cards
+        courseActivity.updateCards(getPeriod());  // Load cards
     }
 }
 

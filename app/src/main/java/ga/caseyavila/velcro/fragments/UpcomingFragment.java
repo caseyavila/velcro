@@ -56,7 +56,7 @@ public class UpcomingFragment extends Fragment {
 //        refreshLayout.setOnRefreshListener(
 //                () -> new RefreshAsyncTask(this).execute()
 //        );
-        refreshLayout.setEnabled(false);  // Disable refresh while starting up
+        refreshLayout.setEnabled(false);
 
         new UpcomingAsyncTask(this).execute();
     }

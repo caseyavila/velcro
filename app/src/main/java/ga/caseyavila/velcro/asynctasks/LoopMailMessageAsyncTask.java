@@ -21,10 +21,6 @@ public class LoopMailMessageAsyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected void onPreExecute() {
-    }
-
-    @Override
     protected Void doInBackground(Void... voids) {
         try {
             casey.findLoopMailBody(folder, index);

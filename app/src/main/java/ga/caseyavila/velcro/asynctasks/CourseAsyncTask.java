@@ -18,13 +18,17 @@ public class CourseAsyncTask extends AsyncTask<Void, Void, Void> {
     private final WeakReference<CourseActivity> courseActivityReference;
     private final int period;
 
+    int getPeriod() {
+        return period;
+    }
+
+    WeakReference<CourseActivity> getCourseActivityReference() {
+        return courseActivityReference;
+    }
+
     public CourseAsyncTask(CourseActivity courseActivity, int period) {
         courseActivityReference = new WeakReference<>(courseActivity);
         this.period = period;
-    }
-
-    @Override
-    protected void onPreExecute() {
     }
 
     @Override
