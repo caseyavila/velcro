@@ -34,7 +34,7 @@ public class Period {
     }
 
     public void addProgressReport(JSONObject progressReport) throws JSONException, ParseException {
-        Date date = (new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.US))
+        Date date = (new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault()))
                 .parse(progressReport.getString("trendDate"));
 
         if (date != null) {

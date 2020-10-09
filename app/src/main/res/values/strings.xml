@@ -30,5 +30,7 @@
     <!-- Loopmail -->
     <string name="loopmail_message_sender">From: %s</string>
     <string name="loopmail_message_recipient">To: %s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

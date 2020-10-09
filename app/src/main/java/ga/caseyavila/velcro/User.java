@@ -27,6 +27,7 @@ public class User {
     private String studentId;
     private String cookie;
     private Period[] periodArray;
+    private Upcoming[] upcomingArray;
     private Mailbox[] mailboxArray;
     private boolean isLoggedIn;
 
@@ -92,6 +93,14 @@ public class User {
 
     public Period getPeriod(int period) {
         return periodArray[period];
+    }
+
+    public int getNumberOfUpcoming() {
+        return upcomingArray.length;
+    }
+
+    public Upcoming getUpcoming(int upcoming) {
+        return upcomingArray[upcoming];
     }
 
     public Mailbox getMailBox(int index) {
@@ -209,6 +218,30 @@ public class User {
 
         JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
         periodArray[period].addProgressReport(jsonArray.getJSONObject(0));
+
+        urlConnection.disconnect();
+    }
+
+    public void findUpcoming() throws IOException, JSONException {
+        HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/assignments" +
+                "?studentID=" + studentId)
+                .openConnection();
+
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
+        urlConnection.setRequestProperty("SL-HASH", "true");
+        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
+        urlConnection.addRequestProperty("Cookie", cookie);
+        urlConnection.connect();
+
+        JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
+        if (upcomingArray == null) {
+            upcomingArray = new Upcoming[jsonArray.length()];
+        }
+
+        for (int i = 0; i < upcomingArray.length; i++) {
+            upcomingArray[i] = new Upcoming(jsonArray.getJSONObject(i));
+        }
 
         urlConnection.disconnect();
     }

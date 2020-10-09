@@ -11,6 +11,7 @@ import ga.caseyavila.velcro.fragments.CoursesFragment;
 import ga.caseyavila.velcro.fragments.LogoutDialogFragment;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.fragments.LoopMailFragment;
+import ga.caseyavila.velcro.fragments.UpcomingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
                     switch (item.getItemId()) {
                         case R.id.navigation_courses:
                             attachFragment(CoursesFragment.newInstance(), "courses");
+                            return true;
+                        case R.id.navigation_assignments:
+                            attachFragment(UpcomingFragment.newInstance(), "assignments");
                             return true;
                         case R.id.navigation_loopmail:
                             attachFragment(LoopMailFragment.newInstance(), "loopmail");

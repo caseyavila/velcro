@@ -34,6 +34,7 @@ public class LoopMailAsyncTask extends AsyncTask<Void, Void, Void> {
         }
         return null;
     }
+
     @Override
     protected void onPostExecute(Void result) {
         LoopMailFragment loopMailFragment = fragmentWeakReference.get();
