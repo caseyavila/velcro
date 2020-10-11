@@ -25,7 +25,7 @@ public class Upcoming {
         return course;
     }
 
-    public String  getPoints() {
+    public String getPoints() {
         return points;
     }
 

@@ -32,10 +32,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull UpcomingAdapter.ViewHolder holder, int position) {
         holder.title.setText(casey.getUpcoming(position).getTitle());
-//        holder.course.setText(casey.getUpcoming(position).getCourse());
-//        holder.points.setText(casey.getUpcoming(position).getPoints());
-//        holder.description.setText(casey.getUpcoming(position).getDescription());
-
+        holder.course.setText(casey.getUpcoming(position).getCourse());
+        holder.points.setText(casey.getUpcoming(position).getPoints());
     }
 
     @Override
@@ -50,7 +48,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         MaterialTextView title;
         MaterialTextView course;
         MaterialTextView points;
-        MaterialTextView description;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +55,8 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             cardView = itemView.findViewById(R.id.upcoming_card);
 
             title = itemView.findViewById(R.id.upcoming_title);
+            course = itemView.findViewById(R.id.upcoming_course);
+            points = itemView.findViewById(R.id.upcoming_points);
         }
     }
 }

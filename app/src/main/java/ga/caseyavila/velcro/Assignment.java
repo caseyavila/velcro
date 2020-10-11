@@ -2,7 +2,6 @@ package ga.caseyavila.velcro;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
