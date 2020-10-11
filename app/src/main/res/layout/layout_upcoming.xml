@@ -22,16 +22,30 @@ android:layout_height="wrap_content">
             android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/upcoming_due_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textColor="@color/textMediumEmphasis"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/upcoming_points"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_bias="0">
+
+        </com.google.android.material.textview.MaterialTextView>
+
+        <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/upcoming_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constrainedWidth="true"
-                android:paddingTop="10dp"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp"
+                android:paddingEnd="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/upcoming_points"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/upcoming_due_date"
                 app:layout_constraintHorizontal_bias="0">
 
         </com.google.android.material.textview.MaterialTextView>
@@ -44,7 +58,7 @@ android:layout_height="wrap_content">
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:paddingBottom="10dp"
-                android:textColor="@color/textMediumEmphasis"
+                android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/upcoming_title"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -56,6 +70,7 @@ android:layout_height="wrap_content">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24sp"
+                android:textColor="@color/textMediumEmphasis"
                 android:fontFamily="@font/manrope_medium"
                 app:layout_constraintStart_toStartOf="@id/pts"
                 app:layout_constraintEnd_toEndOf="@id/pts"

@@ -4,13 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
-
 import ga.caseyavila.velcro.R;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
@@ -34,6 +31,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         holder.title.setText(casey.getUpcoming(position).getTitle());
         holder.course.setText(casey.getUpcoming(position).getCourse());
         holder.points.setText(casey.getUpcoming(position).getPoints());
+        holder.dueDate.setText(casey.getUpcoming(position).getDueDate());
     }
 
     @Override
@@ -48,6 +46,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         MaterialTextView title;
         MaterialTextView course;
         MaterialTextView points;
+        MaterialTextView dueDate;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +56,7 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             title = itemView.findViewById(R.id.upcoming_title);
             course = itemView.findViewById(R.id.upcoming_course);
             points = itemView.findViewById(R.id.upcoming_points);
+            dueDate = itemView.findViewById(R.id.upcoming_due_date);
         }
     }
 }
