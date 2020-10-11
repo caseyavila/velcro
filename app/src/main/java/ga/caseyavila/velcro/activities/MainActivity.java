@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import ga.caseyavila.velcro.fragments.CoursesFragment;
+import ga.caseyavila.velcro.fragments.LockerFragment;
 import ga.caseyavila.velcro.fragments.LogoutDialogFragment;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.fragments.LoopMailFragment;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
                             return true;
                         case R.id.navigation_loopmail:
                             attachFragment(LoopMailFragment.newInstance(), "loopmail");
+                            return true;
+                        case R.id.navigation_locker:
+                            attachFragment(LockerFragment.newInstance(), "locker");
                             return true;
                     }
                     return false;
