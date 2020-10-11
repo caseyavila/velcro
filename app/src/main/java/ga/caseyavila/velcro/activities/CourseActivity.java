@@ -22,7 +22,6 @@ public class CourseActivity extends AppCompatActivity {
 
     private int period;
     private CourseViewAdapter adapter;
-    private ProgressBar courseProgressBar;
     private MaterialToolbar appBar;
 
     @Override

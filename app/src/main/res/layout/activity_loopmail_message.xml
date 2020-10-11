@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-        android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+        <ProgressBar
+                android:id="@+id/loopmail_message_progress_bar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:max="100"
+                android:visibility="visible"
+                android:layout_marginTop="-7dp"
+                tools:ignore="MissingConstraints"/>
 
         <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/loopmail_message_subject"

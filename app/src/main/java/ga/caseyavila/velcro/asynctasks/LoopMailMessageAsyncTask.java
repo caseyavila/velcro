@@ -1,7 +1,9 @@
 package ga.caseyavila.velcro.asynctasks;
 
 import android.os.AsyncTask;
-
+import android.view.View;
+import android.widget.ProgressBar;
+import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.LoopMailMessageActivity;
 import org.json.JSONException;
 import java.io.IOException;
@@ -32,11 +34,11 @@ public class LoopMailMessageAsyncTask extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         LoopMailMessageActivity loopMailMessageActivity = activityWeakReference.get();
-//
-//        ProgressBar loopMailProgressBar = loopMailMessageActivity.findViewById(R.id.loopmail_progress_bar);
-//
-//        loopMailProgressBar.setEnabled(true);  //Make progressbar appear
+
+        ProgressBar progressBar = loopMailMessageActivity.findViewById(R.id.loopmail_message_progress_bar);
+
+        progressBar.setEnabled(true);  // Make progressbar appear
         loopMailMessageActivity.addCards();  // Load cards
-//        loopMailProgressBar.setVisibility(View.INVISIBLE);  //Make progress bar disappear after loading cards
+        progressBar.setVisibility(View.INVISIBLE);  // Make progress bar disappear after loading cards
     }
 }

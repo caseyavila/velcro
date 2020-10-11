@@ -16,7 +16,6 @@ public class LoopMailMessageActivity extends AppCompatActivity {
 
     private int folder;
     private int index;
-    private ProgressBar loopMailMessageProgressBar;
     private MaterialTextView subjectTextView;
     private MaterialTextView senderTextView;
     private MaterialTextView recipientTextView;
