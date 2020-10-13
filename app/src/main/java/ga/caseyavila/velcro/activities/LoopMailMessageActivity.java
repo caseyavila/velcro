@@ -2,7 +2,7 @@ package ga.caseyavila.velcro.activities;
 
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.widget.ProgressBar;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.text.HtmlCompat;
@@ -16,22 +16,22 @@ public class LoopMailMessageActivity extends AppCompatActivity {
 
     private int folder;
     private int index;
-    private MaterialTextView subjectTextView;
-    private MaterialTextView senderTextView;
-    private MaterialTextView recipientTextView;
-    private MaterialTextView dateTextView;
-    private MaterialTextView bodyTextView;
+    private MaterialTextView subject;
+    private MaterialTextView sender;
+    private MaterialTextView recipient;
+    private MaterialTextView date;
+    private MaterialTextView body;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loopmail_message);
 
-        subjectTextView = findViewById(R.id.loopmail_message_subject);
-        senderTextView = findViewById(R.id.loopmail_message_sender);
-        recipientTextView = findViewById(R.id.loopmail_message_recipient);
-        dateTextView = findViewById(R.id.loopmail_message_date);
-        bodyTextView = findViewById(R.id.loopmail_body);
+        subject = findViewById(R.id.loopmail_message_subject);
+        sender = findViewById(R.id.loopmail_message_sender);
+        recipient = findViewById(R.id.loopmail_message_recipient);
+        date = findViewById(R.id.loopmail_message_date);
+        body = findViewById(R.id.loopmail_body);
 
         Bundle bundle = this.getIntent().getExtras();
         folder = bundle.getInt("folder");
@@ -41,12 +41,12 @@ public class LoopMailMessageActivity extends AppCompatActivity {
     }
 
     public void addCards() {
-        subjectTextView.setText(casey.getMailBox(folder).getLoopmail(index).getSubject());
-        senderTextView.setText(getString(R.string.loopmail_message_sender, casey.getMailBox(folder).getLoopmail(index).getSender()));
-        recipientTextView.setText(getString(R.string.loopmail_message_recipient, casey.getMailBox(folder).getLoopmail(index).getRecipient()));
-        dateTextView.setText(casey.getMailBox(folder).getLoopmail(index).getSendDate());
+        subject.setText(casey.getMailBox(folder).getLoopmail(index).getSubject());
+        sender.setText(getString(R.string.loopmail_message_sender, casey.getMailBox(folder).getLoopmail(index).getSender()));
+        recipient.setText(getString(R.string.loopmail_message_recipient, casey.getMailBox(folder).getLoopmail(index).getRecipient()));
+        date.setText(casey.getMailBox(folder).getLoopmail(index).getSendDate());
 
-        bodyTextView.setText(HtmlCompat.fromHtml(casey.getMailBox(folder).getLoopmail(index).getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY));
-        bodyTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        body.setText(HtmlCompat.fromHtml(casey.getMailBox(folder).getLoopmail(index).getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY));
+        body.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

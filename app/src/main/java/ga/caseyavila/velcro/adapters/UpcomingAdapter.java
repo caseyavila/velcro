@@ -1,6 +1,8 @@
 package ga.caseyavila.velcro.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.activities.UpcomingActivity;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHolder> {
+
     private final Context context;
 
     public UpcomingAdapter(Context context) {
@@ -32,6 +36,13 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
         holder.course.setText(casey.getUpcoming(position).getCourse());
         holder.points.setText(casey.getUpcoming(position).getPoints());
         holder.dueDate.setText(casey.getUpcoming(position).getDueDate());
+        holder.cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, UpcomingActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("index", position);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        });
     }
 
     @Override

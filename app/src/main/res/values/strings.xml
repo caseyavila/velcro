@@ -33,6 +33,8 @@
 
     <!-- Upcoming -->
     <string name="pts">pts.</string>
+    <string name="due">Due: %s</string>
+    <string name="info">%s | %s</string>
 
     <!-- Locker -->
     <string name="sorry">Sorry!</string>
