@@ -8,10 +8,10 @@ import java.util.regex.Pattern;
 
 public class Assignment {
 
-    private String name;
-    private String category;
+    private final String name;
+    private final String category;
     private String scoreEarned;
-    private String scorePossible;
+    private final String scorePossible;
     private String assignmentPercentage;
 
     // Match everything in front of whitespace slash combination

@@ -3,7 +3,6 @@ package ga.caseyavila.velcro.activities;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +21,6 @@ public class CourseActivity extends AppCompatActivity {
 
     private int period;
     private CourseViewAdapter adapter;
-    private MaterialToolbar appBar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +30,7 @@ public class CourseActivity extends AppCompatActivity {
         Bundle bundle = this.getIntent().getExtras();
         period = bundle.getInt("period");
 
-        appBar = findViewById(R.id.appbar);
+        MaterialToolbar appBar = findViewById(R.id.appbar);
         setSupportActionBar(appBar);
         getSupportActionBar().setTitle(casey.getPeriod(bundle.getInt("period")).getCourseName());  // Add title of toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button

@@ -14,7 +14,7 @@ import lecho.lib.hellocharts.model.AxisValue;
 
 public class Trend {
 
-    private JSONArray trendJSON;
+    private final JSONArray trendJSON;
 
     public Trend(JSONArray trendJSON) {
         this.trendJSON = trendJSON;

@@ -11,12 +11,11 @@ import java.util.Locale;
 
 public class Period {
 
-    private String courseId;
-    private String score;
-    private String grade;
-    private String teacher;
-    private String courseName;
-
+    private final String courseId;
+    private final String score;
+    private final String grade;
+    private final String teacher;
+    private final String courseName;
     private String gradeUpdateDate;
     private int numberOfAssignments;
     private boolean hasTrends;

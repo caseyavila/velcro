@@ -8,14 +8,14 @@ import java.util.Date;
 
 public class Loopmail {
 
-    private String id;
-    private boolean isRead;
-    private String sender;
-    private String sendDateTime;
-    private String sendDate;
-    private String subject;
+    private final String id;
+    private final boolean isRead;
+    private final String sender;
+    private final String sendDateTime;
+    private final String sendDate;
+    private final String subject;
     private String body;
-    private String recipient;
+    private final String recipient;
 
     public Loopmail(JSONObject loopmailJSON) throws JSONException {
         id = loopmailJSON.getString("ID");

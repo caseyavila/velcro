@@ -5,8 +5,8 @@ import org.json.JSONObject;
 
 public class Link {
 
-    private String title;
-    private String url;
+    private final String title;
+    private final String url;
 
     public Link(JSONObject linkJSON) throws JSONException {
         title = linkJSON.getString("Title");

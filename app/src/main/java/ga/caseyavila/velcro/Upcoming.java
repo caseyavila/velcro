@@ -7,11 +7,11 @@ import java.util.Date;
 
 public class Upcoming {
 
-    private String title;
-    private String course;
-    private String points;
-    private String dueDate;
-    private String description;
+    private final String title;
+    private final String course;
+    private final String points;
+    private final String dueDate;
+    private final String description;
     private Link[] links;
 
     public Upcoming(JSONObject upcomingJSON) throws JSONException {
