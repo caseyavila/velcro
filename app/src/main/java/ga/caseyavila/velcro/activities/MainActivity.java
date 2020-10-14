@@ -16,31 +16,29 @@ import ga.caseyavila.velcro.fragments.UpcomingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView bottomNavigationView;
     private String currentFragmentTag = "courses";  // Set default fragment tag
-    private FragmentManager manager = this.getSupportFragmentManager();
+    private final FragmentManager manager = this.getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         BottomNavigationView.OnNavigationItemSelectedListener navigationItemSelectedListener =
                 item -> {
-                    switch (item.getItemId()) {
-                        case R.id.navigation_courses:
-                            attachFragment(CoursesFragment.newInstance(), "courses");
-                            return true;
-                        case R.id.navigation_assignments:
-                            attachFragment(UpcomingFragment.newInstance(), "assignments");
-                            return true;
-                        case R.id.navigation_loopmail:
-                            attachFragment(LoopMailFragment.newInstance(), "loopmail");
-                            return true;
-                        case R.id.navigation_locker:
-                            attachFragment(LockerFragment.newInstance(), "locker");
-                            return true;
+                    if (item.getItemId() == R.id.navigation_courses) {
+                        attachFragment(CoursesFragment.newInstance(), "courses");
+                        return true;
+                    } else if (item.getItemId() == R.id.navigation_assignments) {
+                        attachFragment(UpcomingFragment.newInstance(), "assignments");
+                        return true;
+                    } else if (item.getItemId() == R.id.navigation_loopmail) {
+                        attachFragment(LoopMailFragment.newInstance(), "loopmail");
+                        return true;
+                    } else if (item.getItemId() == R.id.navigation_locker) {
+                        attachFragment(LockerFragment.newInstance(), "locker");
+                        return true;
                     }
                     return false;
                 };

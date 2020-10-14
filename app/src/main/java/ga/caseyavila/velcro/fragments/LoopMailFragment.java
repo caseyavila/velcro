@@ -60,6 +60,7 @@ public class LoopMailFragment extends Fragment {
 
         appBar = getView().findViewById(R.id.loopmail_appbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(appBar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Loopmail");
 
         refreshLayout = getView().findViewById(R.id.loopmail_refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
