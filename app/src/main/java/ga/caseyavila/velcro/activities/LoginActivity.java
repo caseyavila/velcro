@@ -1,15 +1,11 @@
 package ga.caseyavila.velcro.activities;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.res.ResourcesCompat;
@@ -31,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputEditText subdomainText;
     private TextInputLayout subdomainLayout;
     private MaterialButton loginButton;
-    private MaterialTextView loginNotification;
     private ProgressBar progressBar;
     public static User casey = new User();
 
@@ -60,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordLayout.setTypeface(manrope);
 
         loginButton = findViewById(R.id.login_button);
-        loginNotification = findViewById(R.id.login_notification);
+        MaterialTextView loginNotification = findViewById(R.id.login_notification);
         loginNotification.setVisibility(View.INVISIBLE);
 
         progressBar = findViewById(R.id.progress_bar);
