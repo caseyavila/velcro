@@ -12,6 +12,7 @@ import android.util.Base64;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.*;
@@ -79,14 +80,6 @@ public class User {
         return isLoggedIn;
     }
 
-    public boolean isAutoLoginReady() {
-        return sharedPreferences.contains("subdomain") &&
-               sharedPreferences.contains("username") &&
-               sharedPreferences.contains("hashedPassword") &&
-               sharedPreferences.contains("studentId") &&
-               sharedPreferences.contains("cookie");
-    }
-
     public int getNumberOfPeriods() {
         return periodArray.length;
     }
@@ -107,6 +100,14 @@ public class User {
         return mailboxArray[index];
     }
 
+    public boolean isAutoLoginReady() {
+        return sharedPreferences.contains("subdomain") &&
+                sharedPreferences.contains("username") &&
+                sharedPreferences.contains("hashedPassword") &&
+                sharedPreferences.contains("studentId") &&
+                sharedPreferences.contains("cookie");
+    }
+
     private String baseUrl() {
         return "https://" + subdomain + ".schoolloop.com";
     }
@@ -116,16 +117,13 @@ public class User {
         return Base64.encodeToString(encodedInput.getBytes(), Base64.NO_WRAP);
     }
 
-    private String getVelcroUUID() {
-        if (sharedPreferences.contains("UUID")) {  //If UUID already exists in shared preferences
-            return sharedPreferences.getString("UUID", "");
-        } else {
-            String uuid = UUID.randomUUID().toString();
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("UUID", uuid);
-            editor.apply();
-            return uuid;
-        }
+    // Apply authorization, headers, and cookies to a connection
+    private void setRequestProperties(HttpURLConnection urlConnection) throws ProtocolException {
+        urlConnection.setRequestMethod("GET");
+        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
+        urlConnection.setRequestProperty("SL-HASH", "true");
+        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
+        urlConnection.addRequestProperty("Cookie", cookie);
     }
 
     private static String inputStreamToString(InputStream inputStream) {
@@ -135,6 +133,18 @@ public class User {
             stringBuilder.append(scanner.nextLine());
         }
         return stringBuilder.toString();
+    }
+
+    private String getVelcroUUID() {
+        if (sharedPreferences.contains("UUID")) {  // If UUID already exists in shared preferences
+            return sharedPreferences.getString("UUID", "");
+        } else {
+            String uuid = UUID.randomUUID().toString();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("UUID", uuid);
+            editor.apply();
+            return uuid;
+        }
     }
 
     public void findLoginData() throws IOException, JSONException {
@@ -178,11 +188,7 @@ public class User {
                 "&trim=true")
                 .openConnection();
 
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
-        urlConnection.setRequestProperty("SL-HASH", "true");
-        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
-        urlConnection.addRequestProperty("Cookie", cookie);
+        setRequestProperties(urlConnection);
         urlConnection.connect();
 
         if (urlConnection.getResponseCode() == 200) {
@@ -209,11 +215,7 @@ public class User {
                 "&trim=true")
                 .openConnection();
 
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
-        urlConnection.setRequestProperty("SL-HASH", "true");
-        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
-        urlConnection.addRequestProperty("Cookie", cookie);
+        setRequestProperties(urlConnection);
         urlConnection.connect();
 
         JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
@@ -227,11 +229,7 @@ public class User {
                 "?studentID=" + studentId)
                 .openConnection();
 
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
-        urlConnection.setRequestProperty("SL-HASH", "true");
-        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
-        urlConnection.addRequestProperty("Cookie", cookie);
+        setRequestProperties(urlConnection);
         urlConnection.connect();
 
         JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
@@ -255,11 +253,7 @@ public class User {
                 "&trim=true")
                 .openConnection();
 
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
-        urlConnection.setRequestProperty("SL-HASH", "true");
-        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
-        urlConnection.addRequestProperty("Cookie", cookie);
+        setRequestProperties(urlConnection);
         urlConnection.connect();
 
         if (mailboxArray == null) {
@@ -277,11 +271,7 @@ public class User {
                 "&trim=true")
                 .openConnection();
 
-        urlConnection.setRequestMethod("GET");
-        urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, hashedPassword));
-        urlConnection.setRequestProperty("SL-HASH", "true");
-        urlConnection.setRequestProperty("SL-UUID", getVelcroUUID());
-        urlConnection.addRequestProperty("Cookie", cookie);
+        setRequestProperties(urlConnection);
         urlConnection.connect();
 
         mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
