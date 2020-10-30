@@ -2,7 +2,6 @@ package ga.caseyavila.velcro.fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -10,21 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.google.android.material.appbar.MaterialToolbar;
-
 import org.json.JSONException;
-
 import java.io.IOException;
-
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.LoopMailAdapter;
-import ga.caseyavila.velcro.asynctasks.LoopMailAsyncTask;
-import ga.caseyavila.velcro.asynctasks.LoopMailRefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -71,25 +63,11 @@ public class LoopMailFragment extends Fragment {
         refreshLayout = getView().findViewById(R.id.loopmail_refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(
-                () -> new LoopMailRefreshAsyncTask(this, folder).execute()
+                () -> loadMail(true)
         );
         refreshLayout.setEnabled(false);
 
-        Runnable runnable = () -> {
-            try {
-                casey.findLoopMailInbox(folder);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
-            getActivity().runOnUiThread(() -> {
-                progressBar.setEnabled(true);  // Make progressbar appear
-                addCards();  // Load cards
-                progressBar.setVisibility(View.INVISIBLE);  // Make progress bar disappear after loading cards
-            });
-        };
-
-        Thread thread = new Thread(runnable);
-        thread.start();
+        loadMail(false);
     }
 
     @Override
@@ -118,5 +96,29 @@ public class LoopMailFragment extends Fragment {
         for (int i = 0; i < casey.getMailBox(folder).getNumberOfLoopMails(); i++) {
             adapter.notifyItemChanged(i);
         }
+    }
+
+    private void loadMail(boolean refresh) {
+        final Runnable runnable = () -> {
+            try {
+                casey.findLoopMailInbox(folder);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(() -> {
+                if (refresh) {
+                    updateCards();
+                    SwipeRefreshLayout refreshLayout = getView().findViewById(R.id.loopmail_refresh);
+                    refreshLayout.setRefreshing(false);
+                } else {
+                    progressBar.setEnabled(true);
+                    addCards();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            });
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 }
