@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
 
         passwordText.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_GO) {
-                login();
+                login(loginButton);
             }
             return false;
         });
@@ -77,13 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login() {
-        if (!casey.isAutoLoginReady()) {
-            casey.setSubdomain(subdomainText.getText().toString());
-            casey.setUsername(usernameText.getText().toString());
-            casey.setPassword(passwordText.getText().toString());
-        }
-
+    public void login(View v) {
         // Enable progress bar and fade widgets
         progressBar.setVisibility(View.VISIBLE);
         subdomainLayout.setEnabled(false);
@@ -102,6 +96,10 @@ public class LoginActivity extends AppCompatActivity {
                     casey.setStudentId(sharedPreferences.getString("studentId", "error"));
                     casey.setCookie(sharedPreferences.getString("cookie", "error"));
                 } else {
+                    casey.setSubdomain(subdomainText.getText().toString());
+                    casey.setUsername(usernameText.getText().toString());
+                    casey.setPassword(passwordText.getText().toString());
+
                     // Find values and enter them into sharedPreferences
                     casey.findLoginData();
 
@@ -145,6 +143,6 @@ public class LoginActivity extends AppCompatActivity {
         // Set fake text for password
         passwordText.setText("**********");
 
-        login();
+        login(loginButton);
     }
 }
