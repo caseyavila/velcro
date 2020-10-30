@@ -9,12 +9,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.LoopMailAdapter;
@@ -27,8 +32,8 @@ public class LoopMailFragment extends Fragment {
 
     private SwipeRefreshLayout refreshLayout;
     private LoopMailAdapter adapter;
+    private ProgressBar progressBar;
     private RecyclerView recyclerView;
-    private MaterialToolbar appBar;
     private Parcelable recyclerViewState;
     private final int folder = 1;
 
@@ -58,7 +63,8 @@ public class LoopMailFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        appBar = getView().findViewById(R.id.loopmail_appbar);
+        MaterialToolbar appBar = getView().findViewById(R.id.loopmail_appbar);
+        progressBar = getView().findViewById(R.id.loopmail_progress_bar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(appBar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Loopmail");
 
@@ -69,7 +75,21 @@ public class LoopMailFragment extends Fragment {
         );
         refreshLayout.setEnabled(false);
 
-        new LoopMailAsyncTask(this, folder).execute();
+        Runnable runnable = () -> {
+            try {
+                casey.findLoopMailInbox(folder);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(() -> {
+                progressBar.setEnabled(true);  // Make progressbar appear
+                addCards();  // Load cards
+                progressBar.setVisibility(View.INVISIBLE);  // Make progress bar disappear after loading cards
+            });
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
     @Override

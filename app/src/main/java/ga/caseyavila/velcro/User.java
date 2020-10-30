@@ -102,10 +102,10 @@ public class User {
 
     public boolean isAutoLoginReady() {
         return sharedPreferences.contains("subdomain") &&
-                sharedPreferences.contains("username") &&
-                sharedPreferences.contains("hashedPassword") &&
-                sharedPreferences.contains("studentId") &&
-                sharedPreferences.contains("cookie");
+               sharedPreferences.contains("username") &&
+               sharedPreferences.contains("hashedPassword") &&
+               sharedPreferences.contains("studentId") &&
+               sharedPreferences.contains("cookie");
     }
 
     private String baseUrl() {
