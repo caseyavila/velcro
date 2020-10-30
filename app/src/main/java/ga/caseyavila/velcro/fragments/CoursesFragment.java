@@ -18,10 +18,10 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class CoursesFragment extends Fragment {
 
-    private SwipeRefreshLayout refreshLayout;
     private MainViewAdapter adapter;
     private RecyclerView recyclerView;
     private Parcelable recyclerViewState;
+    private SwipeRefreshLayout refreshLayout;
 
     public CoursesFragment() {
         // Required empty public constructor

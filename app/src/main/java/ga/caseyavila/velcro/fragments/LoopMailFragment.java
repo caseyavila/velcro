@@ -22,11 +22,11 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class LoopMailFragment extends Fragment {
 
-    private SwipeRefreshLayout refreshLayout;
     private LoopMailAdapter adapter;
-    private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private Parcelable recyclerViewState;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout refreshLayout;
     private final int folder = 1;
 
     public LoopMailFragment() {
@@ -56,9 +56,10 @@ public class LoopMailFragment extends Fragment {
         super.onStart();
 
         MaterialToolbar appBar = getView().findViewById(R.id.loopmail_appbar);
-        progressBar = getView().findViewById(R.id.loopmail_progress_bar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(appBar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Loopmail");
+
+        progressBar = getView().findViewById(R.id.loopmail_progress_bar);
 
         refreshLayout = getView().findViewById(R.id.loopmail_refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));

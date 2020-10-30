@@ -1,30 +1,29 @@
 package ga.caseyavila.velcro.fragments;
 
 import android.os.Bundle;
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ProgressBar;
+import org.json.JSONException;
+import java.io.IOException;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.UpcomingAdapter;
-import ga.caseyavila.velcro.asynctasks.UpcomingAsyncTask;
-import ga.caseyavila.velcro.asynctasks.UpcomingRefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class UpcomingFragment extends Fragment {
 
-    private RecyclerView recyclerView;
     private UpcomingAdapter adapter;
-    private SwipeRefreshLayout refreshLayout;
+    private RecyclerView recyclerView;
     private Parcelable recyclerViewState;
+    private ProgressBar progressBar;
+    private SwipeRefreshLayout refreshLayout;
 
     public UpcomingFragment() {
         // Required empty public constructor
@@ -52,14 +51,17 @@ public class UpcomingFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
+        progressBar = getView().findViewById(R.id.upcoming_progress_bar);
+
         refreshLayout = getView().findViewById(R.id.upcoming_refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(
-                () -> new UpcomingRefreshAsyncTask(this).execute()
+                () -> loadUpcoming(true)
         );
         refreshLayout.setEnabled(false);
 
-        new UpcomingAsyncTask(this).execute();
+        loadUpcoming(false);
     }
 
     @Override
@@ -69,7 +71,7 @@ public class UpcomingFragment extends Fragment {
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
     }
 
-    public void addCards() {
+    private void addCards() {
         recyclerView = getView().findViewById(R.id.upcoming_recycler_view);
 
         recyclerView.setNestedScrollingEnabled(false);
@@ -84,9 +86,32 @@ public class UpcomingFragment extends Fragment {
         }
     }
 
-    public void updateCards() {
+    private void updateCards() {
         for (int i = 0; i < casey.getNumberOfUpcoming(); i++) {
             adapter.notifyItemChanged(i);
         }
+    }
+
+    private void loadUpcoming(boolean refresh) {
+        final Runnable runnable = () -> {
+            try {
+                casey.findUpcoming();
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(() -> {
+                if (refresh) {
+                    updateCards();
+                    refreshLayout.setRefreshing(false);
+                } else {
+                    progressBar.setEnabled(true);
+                    addCards();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+            });
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 }
