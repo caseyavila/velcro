@@ -77,7 +77,7 @@ public class LoopMailFragment extends Fragment {
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
     }
 
-    public void addCards() {
+    private void addCards() {
         recyclerView = getView().findViewById(R.id.loopmail_recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
 
@@ -92,7 +92,7 @@ public class LoopMailFragment extends Fragment {
         }
     }
 
-    public void updateCards() {
+    private void updateCards() {
         for (int i = 0; i < casey.getMailBox(folder).getNumberOfLoopMails(); i++) {
             adapter.notifyItemChanged(i);
         }

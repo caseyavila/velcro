@@ -3,17 +3,16 @@ package ga.caseyavila.velcro.fragments;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import org.json.JSONException;
+import java.io.IOException;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.adapters.MainViewAdapter;
-import ga.caseyavila.velcro.asynctasks.RefreshAsyncTask;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -53,7 +52,7 @@ public class CoursesFragment extends Fragment {
         refreshLayout = getView().findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(
-                () -> new RefreshAsyncTask(this).execute()
+                this::refreshCourses
         );
         refreshLayout.setEnabled(false);  // Disable refresh while starting up
 
@@ -67,7 +66,7 @@ public class CoursesFragment extends Fragment {
         recyclerViewState = recyclerView.getLayoutManager().onSaveInstanceState();
     }
 
-    public void addCards() {
+    private void addCards() {
         recyclerView = getView().findViewById(R.id.main_recycler_view);
 
         recyclerView.setNestedScrollingEnabled(false); // Fix scrolling of RecyclerView
@@ -82,9 +81,26 @@ public class CoursesFragment extends Fragment {
         }
     }
 
-    public void updateCards() {
+    private void updateCards() {
         for (int i = 0; i < casey.getNumberOfPeriods(); i++) {
             adapter.notifyItemChanged(i);
         }
+    }
+
+    private void refreshCourses() {
+        final Runnable runnable = () -> {
+            try {
+                casey.findReportCard();
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            getActivity().runOnUiThread(() -> {
+                updateCards();
+                refreshLayout.setRefreshing(false);
+            });
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 }
