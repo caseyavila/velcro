@@ -75,7 +75,7 @@ public class CourseActivity extends AppCompatActivity {
     }
 
     private void loadCourses(boolean refresh) {
-        final Runnable runnable = () -> {
+        Thread thread = new Thread(() -> {
             try {
                 casey.findProgressReport(period);
             } catch (IOException | JSONException | ParseException e) {
@@ -90,9 +90,8 @@ public class CourseActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
-        };
+        });
 
-        Thread thread = new Thread(runnable);
         thread.start();
     }
 }

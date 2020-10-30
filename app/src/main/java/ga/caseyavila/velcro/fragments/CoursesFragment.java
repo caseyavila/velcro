@@ -74,7 +74,7 @@ public class CoursesFragment extends Fragment {
         adapter = new MainViewAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
-        refreshLayout.setEnabled(true);  //Enable refresh once cards have loaded
+        refreshLayout.setEnabled(true);  // Enable refresh once cards have loaded
 
         if (recyclerViewState != null && recyclerView.getLayoutManager() != null) {
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);
@@ -88,7 +88,7 @@ public class CoursesFragment extends Fragment {
     }
 
     private void refreshCourses() {
-        final Runnable runnable = () -> {
+        Thread thread = new Thread(() -> {
             try {
                 casey.findReportCard();
             } catch (IOException | JSONException e) {
@@ -98,9 +98,8 @@ public class CoursesFragment extends Fragment {
                 updateCards();
                 refreshLayout.setRefreshing(false);
             });
-        };
+        });
 
-        Thread thread = new Thread(runnable);
         thread.start();
     }
 }

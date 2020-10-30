@@ -100,7 +100,7 @@ public class LoopMailFragment extends Fragment {
     }
 
     private void loadLoopMail(boolean refresh) {
-        final Runnable runnable = () -> {
+        Thread thread = new Thread(() -> {
             try {
                 casey.findLoopMailInbox(folder);
             } catch (IOException | JSONException e) {
@@ -117,9 +117,8 @@ public class LoopMailFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
-        };
+        });
 
-        Thread thread = new Thread(runnable);
         thread.start();
     }
 }

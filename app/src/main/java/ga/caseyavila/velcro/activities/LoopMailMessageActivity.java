@@ -55,7 +55,7 @@ public class LoopMailMessageActivity extends AppCompatActivity {
     }
 
     private void loadLoopMailMessage() {
-        final Runnable runnable = () -> {
+        Thread thread = new Thread(() -> {
             try {
                 casey.findLoopMailBody(folder, index);
             } catch (IOException | JSONException e) {
@@ -66,9 +66,8 @@ public class LoopMailMessageActivity extends AppCompatActivity {
                 addCards();
                 progressBar.setVisibility(View.INVISIBLE);
             });
-        };
+        });
 
-        Thread thread = new Thread(runnable);
         thread.start();
     }
 }
