@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,7 +14,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
-import ga.caseyavila.velcro.asynctasks.LoginAsyncTask;
+import org.json.JSONException;
+import java.io.IOException;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.User;
 
@@ -28,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout subdomainLayout;
     private MaterialButton loginButton;
     private ProgressBar progressBar;
+    private MaterialTextView loginNotification;
     public static User casey = new User();
 
     static {
@@ -35,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -55,47 +58,93 @@ public class LoginActivity extends AppCompatActivity {
         passwordLayout.setTypeface(manrope);
 
         loginButton = findViewById(R.id.login_button);
-        MaterialTextView loginNotification = findViewById(R.id.login_notification);
-        loginNotification.setVisibility(View.INVISIBLE);
 
         progressBar = findViewById(R.id.progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
 
+        loginNotification = findViewById(R.id.login_notification);
+        loginNotification.setVisibility(View.INVISIBLE);
+
         passwordText.setOnEditorActionListener((textView, i, keyEvent) -> {
             if (i == EditorInfo.IME_ACTION_GO) {
-                login(loginButton);
+                login();
             }
             return false;
         });
 
-        autoLogin();
+        if (casey.isAutoLoginReady()) {
+            autoLogin();
+        }
     }
 
-    public void login(View v) {
+    private void login() {
         if (!casey.isAutoLoginReady()) {
             casey.setSubdomain(subdomainText.getText().toString());
             casey.setUsername(usernameText.getText().toString());
             casey.setPassword(passwordText.getText().toString());
         }
 
+        // Enable progress bar and fade widgets
         progressBar.setVisibility(View.VISIBLE);
         subdomainLayout.setEnabled(false);
         usernameLayout.setEnabled(false);
         passwordLayout.setEnabled(false);
         loginButton.setEnabled(false);
 
-        new LoginAsyncTask(this).execute();
+        final Runnable runnable = () -> {
+            try {
+                // If sharedPreferences already exists...
+                if (casey.isAutoLoginReady()) {
+                    // Set fields in User to match
+                    casey.setSubdomain(sharedPreferences.getString("subdomain", "error"));
+                    casey.setUsername(sharedPreferences.getString("username", "error"));
+                    casey.setHashedPassword(sharedPreferences.getString("hashedPassword", "error"));
+                    casey.setStudentId(sharedPreferences.getString("studentId", "error"));
+                    casey.setCookie(sharedPreferences.getString("cookie", "error"));
+                } else {
+                    // Find values and enter them into sharedPreferences
+                    casey.findLoginData();
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("subdomain", casey.getSubdomain());
+                    editor.putString("username", casey.getUsername());
+                    editor.putString("hashedPassword", casey.getHashedPassword());
+                    editor.putString("studentId", casey.getStudentId());
+                    editor.putString("cookie", casey.getCookie());
+                    editor.apply();
+                }
+
+                casey.findReportCard();
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            runOnUiThread(() -> {
+                if (casey.isLoggedIn()) {
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {  // Alert user if username and password doesn't match
+                    loginNotification.setVisibility(View.VISIBLE);
+                    loginButton.setEnabled(true);
+                    subdomainLayout.setEnabled(true);
+                    usernameLayout.setEnabled(true);
+                    passwordLayout.setEnabled(true);
+                }
+                progressBar.setVisibility(View.INVISIBLE);
+            });
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
     private void autoLogin() {
-        if (casey.isAutoLoginReady()) {
-            subdomainText.setText(sharedPreferences.getString("subdomain", ""));
-            usernameText.setText(sharedPreferences.getString("username", ""));
-            // Set fake text for password
-            passwordText.setText("**********");
+        subdomainText.setText(sharedPreferences.getString("subdomain", ""));
+        usernameText.setText(sharedPreferences.getString("username", ""));
+        // Set fake text for password
+        passwordText.setText("**********");
 
-            login(loginButton);
-        }
+        login();
     }
-
 }
