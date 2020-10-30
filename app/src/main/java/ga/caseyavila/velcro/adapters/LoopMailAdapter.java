@@ -62,7 +62,6 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView cardView;
-
         MaterialTextView subject;
         MaterialTextView sender;
         MaterialTextView sendDateTime;
@@ -71,7 +70,6 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
             super(itemView);
 
             cardView = itemView.findViewById(R.id.loopmail_card);
-
             subject = itemView.findViewById(R.id.loopmail_subject);
             sender = itemView.findViewById(R.id.loopmail_sender);
             sendDateTime = itemView.findViewById(R.id.loopmail_send_date_time);

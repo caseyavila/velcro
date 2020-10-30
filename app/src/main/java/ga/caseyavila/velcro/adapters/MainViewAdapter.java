@@ -54,7 +54,6 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView cardView;
-
         MaterialTextView periodNumber;
         MaterialTextView teacher;
         MaterialTextView grade;
@@ -66,7 +65,6 @@ public class MainViewAdapter extends RecyclerView.Adapter<MainViewAdapter.ViewHo
             super(itemView);
 
             cardView = itemView.findViewById(R.id.period_card);
-
             periodNumber = itemView.findViewById(R.id.period_number);
             teacher = itemView.findViewById(R.id.teacher);
             grade = itemView.findViewById(R.id.grade);

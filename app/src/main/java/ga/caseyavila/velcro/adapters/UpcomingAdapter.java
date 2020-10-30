@@ -53,7 +53,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         MaterialCardView cardView;
-
         MaterialTextView title;
         MaterialTextView course;
         MaterialTextView points;
@@ -63,7 +62,6 @@ public class UpcomingAdapter extends RecyclerView.Adapter<UpcomingAdapter.ViewHo
             super(itemView);
 
             cardView = itemView.findViewById(R.id.upcoming_card);
-
             title = itemView.findViewById(R.id.upcoming_title);
             course = itemView.findViewById(R.id.upcoming_course);
             points = itemView.findViewById(R.id.upcoming_points);

@@ -12,6 +12,7 @@ import ga.caseyavila.velcro.fragments.LockerFragment;
 import ga.caseyavila.velcro.fragments.LogoutDialogFragment;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.fragments.LoopMailFragment;
+import ga.caseyavila.velcro.fragments.NewsFragment;
 import ga.caseyavila.velcro.fragments.UpcomingFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     } else if (item.getItemId() == R.id.navigation_loopmail) {
                         attachFragment(LoopMailFragment.newInstance(), "loopmail");
+                        return true;
+                    } else if (item.getItemId() == R.id.navigation_news) {
+                        attachFragment(NewsFragment.newInstance(), "news");
                         return true;
                     } else if (item.getItemId() == R.id.navigation_locker) {
                         attachFragment(LockerFragment.newInstance(), "locker");

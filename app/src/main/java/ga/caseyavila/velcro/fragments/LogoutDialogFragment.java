@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.LoginActivity;
-
 import java.util.Objects;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;

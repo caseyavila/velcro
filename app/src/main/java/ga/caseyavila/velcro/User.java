@@ -12,6 +12,7 @@ import android.util.Base64;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.text.ParseException;
@@ -29,7 +30,8 @@ public class User {
     private String cookie;
     private Period[] periodArray;
     private Upcoming[] upcomingArray;
-    private Mailbox[] mailboxArray;
+    private final Mailbox[] mailboxArray = new Mailbox[3];
+    private News[] newsArray;
     private boolean isLoggedIn;
 
     public String getSubdomain() {
@@ -98,6 +100,14 @@ public class User {
 
     public Mailbox getMailBox(int index) {
         return mailboxArray[index];
+    }
+
+    public int getNumberOfNews() {
+        return newsArray.length;
+    }
+
+    public News getNews(int index) {
+        return newsArray[index];
     }
 
     public boolean isAutoLoginReady() {
@@ -256,9 +266,6 @@ public class User {
         setRequestProperties(urlConnection);
         urlConnection.connect();
 
-        if (mailboxArray == null) {
-            mailboxArray = new Mailbox[3];
-        }
         mailboxArray[folder] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
 
         urlConnection.disconnect();
@@ -275,6 +282,29 @@ public class User {
         urlConnection.connect();
 
         mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
+
+        urlConnection.disconnect();
+    }
+
+    public void findNews() throws IOException, JSONException {
+        HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/news" +
+                "?alerts=true" +
+                // I couldn't figure out how their api works, but this seemed to work at the time
+                "&lastRequest=" + (System.currentTimeMillis() - 2628000000L) + // One month before the current time...
+                "&studentID=" + studentId)
+                .openConnection();
+
+        setRequestProperties(urlConnection);
+        urlConnection.connect();
+
+        JSONArray jsonArray = new JSONArray(inputStreamToString(urlConnection.getInputStream()));
+        if (newsArray == null) {
+            newsArray = new News[jsonArray.length()];
+        }
+
+        for (int i = 0; i < newsArray.length; i++) {
+            newsArray[i] = new News(jsonArray.getJSONObject(i));
+        }
 
         urlConnection.disconnect();
     }
