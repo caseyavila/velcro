@@ -88,7 +88,7 @@ public class CoursesFragment extends Fragment {
     }
 
     private void refreshCourses() {
-        Thread thread = new Thread(() -> {
+        new Thread(() -> {
             try {
                 casey.findReportCard();
             } catch (IOException | JSONException e) {
@@ -98,8 +98,6 @@ public class CoursesFragment extends Fragment {
                 updateCards();
                 refreshLayout.setRefreshing(false);
             });
-        });
-
-        thread.start();
+        }).start();
     }
 }

@@ -93,7 +93,7 @@ public class UpcomingFragment extends Fragment {
     }
 
     private void loadUpcoming(boolean refresh) {
-        Thread thread = new Thread(() -> {
+        new Thread(() -> {
             try {
                 casey.findUpcoming();
             } catch (IOException | JSONException e) {
@@ -109,8 +109,6 @@ public class UpcomingFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
-        });
-
-        thread.start();
+        }).start();
     }
 }

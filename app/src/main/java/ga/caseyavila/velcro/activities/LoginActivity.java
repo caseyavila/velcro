@@ -85,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordLayout.setEnabled(false);
         loginButton.setEnabled(false);
 
-        Thread thread = new Thread(() -> {
+        new Thread(() -> {
             try {
                 // If sharedPreferences already exists...
                 if (casey.isAutoLoginReady()) {
@@ -131,9 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 progressBar.setVisibility(View.INVISIBLE);
             });
-        });
-
-        thread.start();
+        }).start();
     }
 
     private void autoLogin() {
