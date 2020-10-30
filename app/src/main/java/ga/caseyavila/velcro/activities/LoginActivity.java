@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void login() {
+    public void login() {
         if (!casey.isAutoLoginReady()) {
             casey.setSubdomain(subdomainText.getText().toString());
             casey.setUsername(usernameText.getText().toString());
