@@ -64,11 +64,11 @@ public class LoopMailFragment extends Fragment {
         refreshLayout = getView().findViewById(R.id.loopmail_refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(
-                () -> loadMail(true)
+                () -> loadLoopMail(true)
         );
         refreshLayout.setEnabled(false);
 
-        loadMail(false);
+        loadLoopMail(false);
     }
 
     @Override
@@ -99,7 +99,7 @@ public class LoopMailFragment extends Fragment {
         }
     }
 
-    private void loadMail(boolean refresh) {
+    private void loadLoopMail(boolean refresh) {
         final Runnable runnable = () -> {
             try {
                 casey.findLoopMailInbox(folder);
