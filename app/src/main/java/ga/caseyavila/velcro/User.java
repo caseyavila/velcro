@@ -99,7 +99,7 @@ public class User {
     }
 
     public Mailbox getMailBox(int index) {
-        return mailboxArray[index];
+        return mailboxArray[index - 1];
     }
 
     public int getNumberOfNews() {
@@ -254,9 +254,9 @@ public class User {
         urlConnection.disconnect();
     }
 
-    public void findLoopMailInbox(int folder) throws IOException, JSONException {
+    public void findLoopMailInbox(int mailBox) throws IOException, JSONException {
         HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/mail_messages" +
-                "?folderID=" + folder +
+                "?folderID=" + mailBox +
                 "&max=" + 20 +
                 "&start=" + 0 +
                 "&studentID=" + studentId +
@@ -266,14 +266,14 @@ public class User {
         setRequestProperties(urlConnection);
         urlConnection.connect();
 
-        mailboxArray[folder] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
+        mailboxArray[mailBox - 1] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
 
         urlConnection.disconnect();
     }
 
-    public void findLoopMailBody(int folder, int index) throws IOException, JSONException {
+    public void findLoopMailBody(int mailBox, int index) throws IOException, JSONException {
         HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/mail_messages" +
-                "?ID=" + mailboxArray[folder].getLoopmail(index).getId() +
+                "?ID=" + mailboxArray[mailBox - 1].getLoopmail(index).getId() +
                 "&studentID=" + studentId +
                 "&trim=true")
                 .openConnection();
@@ -281,7 +281,7 @@ public class User {
         setRequestProperties(urlConnection);
         urlConnection.connect();
 
-        mailboxArray[folder].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
+        mailboxArray[mailBox - 1].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
 
         urlConnection.disconnect();
     }
@@ -289,7 +289,7 @@ public class User {
     public void findNews() throws IOException, JSONException {
         HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/news" +
                 "?alerts=true" +
-                // I couldn't figure out how their api works, but this seemed to work at the time
+                // I couldn't figure out how the api works, but this seemed to work
                 "&lastRequest=" + (System.currentTimeMillis() - 2628000000L) + // One month before the current time...
                 "&studentID=" + studentId)
                 .openConnection();

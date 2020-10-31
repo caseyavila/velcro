@@ -2,10 +2,14 @@ package ga.caseyavila.velcro.fragments;
 
 import android.os.Bundle;
 import android.os.Parcelable;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -22,12 +26,13 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
 public class LoopMailFragment extends Fragment {
 
+    private MaterialToolbar appBar;
     private LoopMailAdapter adapter;
     private RecyclerView recyclerView;
     private Parcelable recyclerViewState;
     private ProgressBar progressBar;
     private SwipeRefreshLayout refreshLayout;
-    private final int folder = 1;
+    private int mailBox = 1;
 
     public LoopMailFragment() {
         // Required empty public constructor
@@ -48,16 +53,39 @@ public class LoopMailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
         return inflater.inflate(R.layout.fragment_loopmail, container, false);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.mailboxes, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.navigation_inbox) {
+            mailBox = 1;
+            loadLoopMail(false);
+            appBar.setTitle("Inbox");
+            return true;
+        } else if (item.getItemId() == R.id.navigation_sent) {
+            mailBox = 2;
+            loadLoopMail(false);
+            appBar.setTitle("Sent");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        MaterialToolbar appBar = getView().findViewById(R.id.loopmail_appbar);
+        appBar = getView().findViewById(R.id.loopmail_appbar);
+        appBar.setTitle("Inbox");
         ((AppCompatActivity) getActivity()).setSupportActionBar(appBar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Loopmail");
 
         progressBar = getView().findViewById(R.id.loopmail_progress_bar);
 
@@ -65,6 +93,9 @@ public class LoopMailFragment extends Fragment {
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(() -> loadLoopMail(true));
         refreshLayout.setEnabled(false);
+
+        recyclerView = getView().findViewById(R.id.loopmail_recycler_view);
+        recyclerView.setNestedScrollingEnabled(false);
 
         loadLoopMail(false);
     }
@@ -77,10 +108,7 @@ public class LoopMailFragment extends Fragment {
     }
 
     private void addCards() {
-        recyclerView = getView().findViewById(R.id.loopmail_recycler_view);
-        recyclerView.setNestedScrollingEnabled(false);
-
-        adapter = new LoopMailAdapter(getContext());
+        adapter = new LoopMailAdapter(getContext(), mailBox);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -92,7 +120,7 @@ public class LoopMailFragment extends Fragment {
     }
 
     private void updateCards() {
-        for (int i = 0; i < casey.getMailBox(folder).getNumberOfLoopMails(); i++) {
+        for (int i = 0; i < casey.getMailBox(mailBox).getNumberOfLoopMails(); i++) {
             adapter.notifyItemChanged(i);
         }
     }
@@ -100,7 +128,7 @@ public class LoopMailFragment extends Fragment {
     private void loadLoopMail(boolean refresh) {
         new Thread(() -> {
             try {
-                casey.findLoopMailInbox(folder);
+                casey.findLoopMailInbox(mailBox);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }

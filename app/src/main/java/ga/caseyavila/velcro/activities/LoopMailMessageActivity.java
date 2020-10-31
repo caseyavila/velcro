@@ -38,7 +38,7 @@ public class LoopMailMessageActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.loopmail_message_progress_bar);
 
         Bundle bundle = this.getIntent().getExtras();
-        folder = bundle.getInt("folder");
+        folder = bundle.getInt("mail_box");
         index = bundle.getInt("index");
 
         loadLoopMailMessage();

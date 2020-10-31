@@ -20,9 +20,11 @@ import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHolder> {
 
     private final Context context;
+    private final int mailBox;
 
-    public LoopMailAdapter(Context context) {
+    public LoopMailAdapter(Context context, int mailBox) {
         this.context = context;
+        this.mailBox = mailBox;
     }
 
     @NonNull
@@ -34,20 +36,20 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if (casey.getMailBox(1).getLoopmail(position).isRead()) {
+        if (casey.getMailBox(mailBox).getLoopmail(position).isRead()) {
             holder.subject.setTextColor(ContextCompat.getColor(context, R.color.textMediumEmphasis));
             holder.subject.setTypeface(null, Typeface.NORMAL);
         } else {
             holder.subject.setTextColor(ContextCompat.getColor(context, R.color.textHighEmphasis));
             holder.subject.setTypeface(null, Typeface.BOLD);
         }
-        holder.subject.setText(casey.getMailBox(1).getLoopmail(position).getSubject());
-        holder.sender.setText(casey.getMailBox(1).getLoopmail(position).getSender());
-        holder.sendDateTime.setText(casey.getMailBox(1).getLoopmail(position).getSendDateTime());
+        holder.subject.setText(casey.getMailBox(mailBox).getLoopmail(position).getSubject());
+        holder.sender.setText(casey.getMailBox(mailBox).getLoopmail(position).getSender());
+        holder.sendDateTime.setText(casey.getMailBox(mailBox).getLoopmail(position).getSendDateTime());
         holder.cardView.setOnClickListener(view -> {
             Intent intent = new Intent(context, LoopMailMessageActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt("folder", 1);
+            bundle.putInt("mail_box", mailBox);
             bundle.putInt("index", position);
             intent.putExtras(bundle);
             context.startActivity(intent);
@@ -56,7 +58,7 @@ public class LoopMailAdapter extends RecyclerView.Adapter<LoopMailAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return casey.getMailBox(1).getNumberOfLoopMails();
+        return casey.getMailBox(mailBox).getNumberOfLoopMails();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
