@@ -1,17 +1,17 @@
 package ga.caseyavila.velcro.adapters;
 
 import android.content.Context;
-import android.graphics.Typeface;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
-
 import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.activities.NewsActivity;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -35,6 +35,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
         holder.title.setText(casey.getNews(position).getTitle());
         holder.author.setText(casey.getNews(position).getAuthor());
         holder.date.setText(casey.getNews(position).getDate());
+        holder.cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, NewsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("index", position);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
+        });
     }
 
     @Override

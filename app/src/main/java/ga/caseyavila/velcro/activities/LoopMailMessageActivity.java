@@ -44,12 +44,11 @@ public class LoopMailMessageActivity extends AppCompatActivity {
         loadLoopMailMessage();
     }
 
-    private void addCards() {
+    private void showMessage() {
         subject.setText(casey.getMailBox(folder).getLoopmail(index).getSubject());
         sender.setText(getString(R.string.loopmail_message_sender, casey.getMailBox(folder).getLoopmail(index).getSender()));
         recipient.setText(getString(R.string.loopmail_message_recipient, casey.getMailBox(folder).getLoopmail(index).getRecipient()));
         date.setText(casey.getMailBox(folder).getLoopmail(index).getSendDate());
-
         body.setText(HtmlCompat.fromHtml(casey.getMailBox(folder).getLoopmail(index).getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY));
         body.setMovementMethod(LinkMovementMethod.getInstance());
     }
@@ -63,7 +62,7 @@ public class LoopMailMessageActivity extends AppCompatActivity {
             }
             runOnUiThread(() -> {
                 progressBar.setEnabled(true);
-                addCards();
+                showMessage();
                 progressBar.setVisibility(View.INVISIBLE);
             });
         }).start();

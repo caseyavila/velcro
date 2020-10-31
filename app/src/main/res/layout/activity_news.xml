@@ -9,7 +9,7 @@
             android:layout_height="wrap_content">
 
         <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/upcoming_activity_title"
+                android:id="@+id/news_activity_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -19,7 +19,7 @@
                 android:textSize="18sp"
                 android:fontFamily="@font/manrope_medium"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/upcoming_activity_due_date"
+                app:layout_constraintBottom_toTopOf="@id/news_activity_author"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0">
@@ -27,28 +27,14 @@
         </com.google.android.material.textview.MaterialTextView>
 
         <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/upcoming_activity_due_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:textColor="@color/textMediumEmphasis"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_activity_title"
-                app:layout_constraintBottom_toTopOf="@id/upcoming_activity_info"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0">
-
-        </com.google.android.material.textview.MaterialTextView>
-
-        <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/upcoming_activity_info"
+                android:id="@+id/news_activity_author"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/textMediumEmphasis"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_activity_due_date"
-                app:layout_constraintBottom_toTopOf="@id/upcoming_activity_divider"
+                app:layout_constraintTop_toBottomOf="@id/news_activity_title"
+                app:layout_constraintBottom_toTopOf="@id/news_activity_divider"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0">
@@ -56,23 +42,23 @@
         </com.google.android.material.textview.MaterialTextView>
 
         <View
-                android:id="@+id/upcoming_activity_divider"
+                android:id="@+id/news_activity_divider"
                 android:layout_height="1dp"
                 android:layout_width="match_parent"
                 android:background="@color/colorCardBorder"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_activity_due_date"
-                app:layout_constraintBottom_toTopOf="@id/upcoming_activity_description">
+                app:layout_constraintTop_toBottomOf="@id/news_activity_author"
+                app:layout_constraintBottom_toTopOf="@id/news_activity_description">
 
         </View>
 
         <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/upcoming_activity_description"
+                android:id="@+id/news_activity_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
-                app:layout_constraintTop_toBottomOf="@id/upcoming_activity_divider"
+                app:layout_constraintTop_toBottomOf="@id/news_activity_divider"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">

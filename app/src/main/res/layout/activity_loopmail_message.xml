@@ -96,7 +96,6 @@
                 android:id="@+id/loopmail_body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textIsSelectable="true"
                 android:paddingTop="20dp"
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"

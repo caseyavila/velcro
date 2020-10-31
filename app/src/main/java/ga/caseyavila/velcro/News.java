@@ -10,12 +10,14 @@ public class News {
     private final String title;
     private final String author;
     private final String date;
+    private final String description;
     private final boolean isNew;
 
     public News(JSONObject newsJSON) throws JSONException {
         title = newsJSON.getString("title");
         author = newsJSON.getString("authorName");
         date = DateFormat.getDateInstance().format(new Date(newsJSON.getLong("createdDate")));
+        description = newsJSON.getString("description");
         isNew = newsJSON.getBoolean("isNew");
     }
 
@@ -29,6 +31,10 @@ public class News {
 
     public String getDate() {
         return date;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public boolean isNew() {
