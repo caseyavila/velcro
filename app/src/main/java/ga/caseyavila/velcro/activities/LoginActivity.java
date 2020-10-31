@@ -6,10 +6,13 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -18,16 +21,18 @@ import org.json.JSONException;
 import java.io.IOException;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.User;
+import ga.caseyavila.velcro.fragments.HelpDialogFragment;
 
 public class LoginActivity extends AppCompatActivity {
 
     public static SharedPreferences sharedPreferences;
+    private TextInputEditText subdomainText;
+    private TextInputLayout subdomainLayout;
+    private ImageButton helpButton;
     private TextInputEditText usernameText;
     private TextInputLayout usernameLayout;
     private TextInputEditText passwordText;
     private TextInputLayout passwordLayout;
-    private TextInputEditText subdomainText;
-    private TextInputLayout subdomainLayout;
     private MaterialButton loginButton;
     private ProgressBar progressBar;
     private MaterialTextView loginNotification;
@@ -48,6 +53,8 @@ public class LoginActivity extends AppCompatActivity {
         subdomainText = findViewById(R.id.subdomain_input);
         subdomainLayout = findViewById(R.id.subdomain_layout);
         subdomainLayout.setTypeface(manrope);
+
+        helpButton = findViewById(R.id.help_icon);
 
         usernameText = findViewById(R.id.username_input);
         usernameLayout = findViewById(R.id.username_layout);
@@ -81,6 +88,7 @@ public class LoginActivity extends AppCompatActivity {
         // Enable progress bar and fade widgets
         progressBar.setVisibility(View.VISIBLE);
         subdomainLayout.setEnabled(false);
+        helpButton.setEnabled(false);
         usernameLayout.setEnabled(false);
         passwordLayout.setEnabled(false);
         loginButton.setEnabled(false);
@@ -126,6 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginNotification.setVisibility(View.VISIBLE);
                     loginButton.setEnabled(true);
                     subdomainLayout.setEnabled(true);
+                    helpButton.setEnabled(true);
                     usernameLayout.setEnabled(true);
                     passwordLayout.setEnabled(true);
                 }
@@ -141,5 +150,11 @@ public class LoginActivity extends AppCompatActivity {
         passwordText.setText("**********");
 
         login(loginButton);
+    }
+
+    public void showHelp(View v) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        DialogFragment dialogFragment = new HelpDialogFragment();
+        dialogFragment.show(fragmentManager, "help_dialog");
     }
 }

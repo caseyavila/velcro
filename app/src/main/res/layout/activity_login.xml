@@ -14,17 +14,17 @@
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/subdomain_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/subdomain"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            app:layout_constraintHorizontal_bias="0"
+            android:layout_marginStart="30dp"
+            app:layout_constrainedWidth="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/help_icon"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/username_layout"
-            app:layout_constraintVertical_chainStyle="packed">
+            app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintHorizontal_chainStyle="spread_inside">
 
         <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/subdomain_input"
@@ -32,17 +32,36 @@
                 android:layout_height="wrap_content"
                 android:minWidth="110dp"
                 android:inputType="text">
+
         </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+            android:id="@+id/help_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_help"
+            android:tint="@color/textMediumEmphasis"
+            android:background="@null"
+            android:contentDescription="@string/help"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/subdomain_layout"
+            app:layout_constraintTop_toTopOf="@id/subdomain_layout"
+            app:layout_constraintBottom_toBottomOf="@id/subdomain_layout"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="35dp"
+            android:onClick="showHelp">
+
+    </ImageButton>
 
     <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/username_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/subdomain_layout"
@@ -54,6 +73,7 @@
                 android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
         </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -64,8 +84,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/username_layout"
@@ -77,6 +97,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:imeOptions="actionGo">
+
         </com.google.android.material.textfield.TextInputEditText>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -86,8 +107,8 @@
             android:text="@string/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_marginTop="100dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -8,6 +8,14 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="failed_login">Invalid username/password</string>
+    <string name="help">help</string>
+    <string name="subdomain_explanation">To find out your school\'s subdomain, check
+        what comes before <b>schooloop.com</b>in the url of the login page.
+        \n<font face="monospace">
+        \n<u>ahs-fusd-ca</u>.schoolloop.com
+        \n<u>jbhs-vcusd-ca</u>.schoolloop.com</font>
+    </string>
+    <string name="got_it">Got it</string>
 
     <!-- Bottom navigation menu -->
     <string name="courses">Courses</string>
@@ -47,7 +55,5 @@
         \
         - Casey Avila
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
