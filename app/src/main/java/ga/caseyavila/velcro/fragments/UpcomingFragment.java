@@ -79,7 +79,7 @@ public class UpcomingFragment extends Fragment {
         adapter = new UpcomingAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
-        refreshLayout.setEnabled(true);  //Enable refresh once cards have loaded
+        refreshLayout.setEnabled(true);  // Enable refresh once cards have loaded
 
         if (recyclerViewState != null && recyclerView.getLayoutManager() != null) {
             recyclerView.getLayoutManager().onRestoreInstanceState(recyclerViewState);

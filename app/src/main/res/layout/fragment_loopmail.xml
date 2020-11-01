@@ -9,7 +9,8 @@
     <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:liftOnScroll="true">
+            app:liftOnScroll="true"
+            app:liftOnScrollTargetViewId="@id/loopmail_recycler_view">
 
         <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/loopmail_appbar"
@@ -46,6 +47,7 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingBottom="9dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:scrollbars="vertical">
 
         </androidx.recyclerview.widget.RecyclerView>

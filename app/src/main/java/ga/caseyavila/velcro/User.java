@@ -123,8 +123,7 @@ public class User {
     }
 
     private String credentials(String username, String password) {
-        String encodedInput = username + ":" + password;
-        return Base64.encodeToString(encodedInput.getBytes(), Base64.NO_WRAP);
+        return Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
     }
 
     // Apply authorization, headers, and cookies to a connection
