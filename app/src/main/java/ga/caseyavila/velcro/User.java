@@ -78,6 +78,10 @@ public class User {
         return isLoggedIn;
     }
 
+    public void logOut() {
+        isLoggedIn = false;
+    }
+
     public int getNumberOfPeriods() {
         return periodArray.length;
     }

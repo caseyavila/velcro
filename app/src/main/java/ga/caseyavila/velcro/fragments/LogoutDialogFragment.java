@@ -12,6 +12,7 @@ import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.LoginActivity;
 import java.util.Objects;
 
+import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
 public class LogoutDialogFragment extends DialogFragment {
@@ -24,6 +25,8 @@ public class LogoutDialogFragment extends DialogFragment {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.clear();
                     editor.apply();
+
+                    casey.logOut();
 
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     startActivity(intent);
