@@ -4,15 +4,11 @@ import android.content.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-
 import android.text.TextUtils;
 import android.util.Base64;
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.text.ParseException;
@@ -123,8 +119,7 @@ public class User {
     }
 
     private String credentials(String username, String password) {
-        String encodedInput = username + ":" + password;
-        return Base64.encodeToString(encodedInput.getBytes(), Base64.NO_WRAP);
+        return Base64.encodeToString((username + ":" + password).getBytes(), Base64.NO_WRAP);
     }
 
     // Apply authorization, headers, and cookies to a connection

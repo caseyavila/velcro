@@ -20,6 +20,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import org.json.JSONException;
 import java.io.IOException;
 import ga.caseyavila.velcro.R;
+import ga.caseyavila.velcro.activities.MainActivity;
 import ga.caseyavila.velcro.adapters.LoopMailAdapter;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
@@ -83,19 +84,18 @@ public class LoopMailFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        appBar = getView().findViewById(R.id.loopmail_appbar);
+        appBar = getActivity().findViewById(R.id.loopmail_appbar);
         appBar.setTitle("Inbox");
-        ((AppCompatActivity) getActivity()).setSupportActionBar(appBar);
+        ((MainActivity) getActivity()).setSupportActionBar(appBar);
 
-        progressBar = getView().findViewById(R.id.loopmail_progress_bar);
+        progressBar = getActivity().findViewById(R.id.loopmail_progress_bar);
 
-        refreshLayout = getView().findViewById(R.id.loopmail_refresh);
+        refreshLayout = getActivity().findViewById(R.id.loopmail_refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(() -> loadLoopMail(true));
         refreshLayout.setEnabled(false);
 
-        recyclerView = getView().findViewById(R.id.loopmail_recycler_view);
-        recyclerView.setNestedScrollingEnabled(false);
+        recyclerView = getActivity().findViewById(R.id.loopmail_recycler_view);
 
         loadLoopMail(false);
     }

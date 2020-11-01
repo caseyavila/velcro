@@ -10,10 +10,11 @@
     <string name="failed_login">Invalid username/password</string>
     <string name="help">help</string>
     <string name="subdomain_explanation">To find out your school\'s subdomain, check
-        what comes before <b>schooloop.com</b>in the url of the login page.
-        \n<font face="monospace">
-        \n<u>ahs-fusd-ca</u>.schoolloop.com
-        \n<u>jbhs-vcusd-ca</u>.schoolloop.com</font>
+        what comes before <b>schooloop.com</b> in the url of the login page.
+        \
+        \nExamples:<font face="monospace">
+        \n<u>ahs-fusd-ca</u>
+        \n<u>jbhs-vcusd-ca</u></font>
     </string>
     <string name="got_it">Got it</string>
 

@@ -51,9 +51,7 @@ public class CoursesFragment extends Fragment {
 
         refreshLayout = getView().findViewById(R.id.refresh);
         refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
-        refreshLayout.setOnRefreshListener(
-                this::refreshCourses
-        );
+        refreshLayout.setOnRefreshListener(this::refreshCourses);
         refreshLayout.setEnabled(false);  // Disable refresh while starting up
 
         addCards();
