@@ -68,12 +68,12 @@ public class LoopMailFragment extends Fragment {
         if (item.getItemId() == R.id.navigation_inbox) {
             mailBox = 1;
             loadLoopMail(false);
-            appBar.setTitle("Inbox");
+            setAppBar();
             return true;
         } else if (item.getItemId() == R.id.navigation_sent) {
             mailBox = 2;
             loadLoopMail(false);
-            appBar.setTitle("Sent");
+            setAppBar();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -84,7 +84,7 @@ public class LoopMailFragment extends Fragment {
         super.onStart();
 
         appBar = getActivity().findViewById(R.id.loopmail_appbar);
-        appBar.setTitle("Inbox");
+        setAppBar();
         ((MainActivity) getActivity()).setSupportActionBar(appBar);
 
         progressBar = getActivity().findViewById(R.id.loopmail_progress_bar);
@@ -142,5 +142,16 @@ public class LoopMailFragment extends Fragment {
                 }
             });
         }).start();
+    }
+
+    private void setAppBar() {
+        switch (mailBox) {
+            case 1:
+                appBar.setTitle(R.string.inbox);
+                break;
+            case 2:
+                appBar.setTitle(R.string.sent);
+                break;
+        }
     }
 }

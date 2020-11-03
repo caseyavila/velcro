@@ -20,7 +20,7 @@ import com.google.android.material.textview.MaterialTextView;
 import org.json.JSONException;
 import java.io.IOException;
 import ga.caseyavila.velcro.R;
-import ga.caseyavila.velcro.User;
+import ga.caseyavila.velcro.Student;
 import ga.caseyavila.velcro.fragments.HelpDialogFragment;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private MaterialButton loginButton;
     private ProgressBar progressBar;
     private MaterialTextView loginNotification;
-    public static User casey = new User();
+    public static Student casey = new Student();
 
     static {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        sharedPreferences = getSharedPreferences("LoginData", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("login_data", MODE_PRIVATE);
         Typeface manrope = ResourcesCompat.getFont(this, R.font.manrope_medium);
 
         subdomainText = findViewById(R.id.subdomain_input);

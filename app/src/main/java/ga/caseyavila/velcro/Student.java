@@ -16,7 +16,7 @@ import java.util.*;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.sharedPreferences;
 
-public class User {
+public class Student {
 
     private String subdomain;
     private String username;
@@ -161,8 +161,8 @@ public class User {
                 "?devOS=Android" +
                 "&hash=false" +
                 "&uuid=" + getVelcroUUID() +
-                "&version=3.2.4" +
-                "&year=2020" +
+                "&version=3.2.5" +
+                "&year=" + Calendar.getInstance().get(Calendar.YEAR) +
                 "&trim=true")
                 .openConnection();
 
@@ -170,11 +170,11 @@ public class User {
         urlConnection.setRequestProperty("Authorization", "Basic " + credentials(username, password));
         urlConnection.connect();
 
-        password = null;  //Nullify plain-text password after request (ASAP!!!)
+        password = null;  // Nullify plain-text password after request (ASAP!!!)
 
         JSONObject loginJSON = new JSONObject(inputStreamToString(urlConnection.getInputStream()));
 
-        //Build cookie string from Set-Cookie headers
+        // Build cookie string from Set-Cookie headers
         List<String> cookieList = urlConnection.getHeaderFields().get("Set-Cookie");
         List<String> freshCookies = new ArrayList<>();
         if (cookieList != null) {
