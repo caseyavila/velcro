@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class Period {
 
@@ -45,16 +44,16 @@ public class Period {
             gradeUpdateDate = DateFormat.getDateTimeInstance().format(date);
         }
 
-        // Fill category hash map
+        // Fill weight hash map
         for (int i = 0; i < categoryJSON.length(); i++) {
             weightMap.put(categoryJSON.getJSONObject(i).getString("name"),
-                    categoryJSON.getJSONObject(i).getDouble("weight"));
+                          categoryJSON.getJSONObject(i).getDouble("weight"));
         }
 
         assignmentArray.clear();
 
         for (int i = 0; i < gradeJSON.length(); i++) {
-            assignmentArray.add(new Assignment(gradeJSON.getJSONObject(i)));
+            assignmentArray.add(new Assignment(gradeJSON.getJSONObject(i), weightMap));
         }
 
         hasTrends = progressReport.has("trendScores");
@@ -108,6 +107,7 @@ public class Period {
         double percentage = 0;
         HashMap<String, Category> categoryMap = new HashMap<>();
 
+        // Fill hash map with the amount of points earned and possible in each category
         for (Assignment assignment : assignmentArray) {
             try {
                 double scoreEarned = Double.parseDouble(assignment.getScoreEarned());
@@ -117,15 +117,15 @@ public class Period {
                     categoryMap.get(assignment.getCategory()).scoreEarned += scoreEarned;
                     categoryMap.get(assignment.getCategory()).scorePossible += scorePossible;
                 } else {
-                    categoryMap.put(assignment.getCategory(), new Category(scoreEarned, scorePossible));
+                    categoryMap.put(assignment.getCategory(), new Category(assignment.getWeight(), scoreEarned, scorePossible));
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
 
-        for (Map.Entry<String, Category> entry : categoryMap.entrySet()) {
-            percentage += entry.getValue().scoreEarned / entry.getValue().scorePossible * weightMap.get(entry.getKey());
+        for (Category value : categoryMap.values()) {
+            percentage += value.scoreEarned / value.scorePossible * value.weight;
         }
 
         return String.format(Locale.getDefault(), "%.2f", percentage / effectiveWeight() * 100);
@@ -141,10 +141,12 @@ public class Period {
 
     private static class Category {
 
+        double weight;
         double scoreEarned;
         double scorePossible;
 
-        Category(double scoreEarned, double scorePossible) {
+        Category(double weight, double scoreEarned, double scorePossible) {
+            this.weight = weight;
             this.scoreEarned = scoreEarned;
             this.scorePossible = scorePossible;
         }
