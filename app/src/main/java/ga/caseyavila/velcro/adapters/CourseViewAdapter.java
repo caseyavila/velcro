@@ -16,6 +16,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -98,16 +99,17 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             }
 
             holder.headerGrade.setText(casey.getPeriod(period).getGrade());
-            holder.headerPercentage.setText(casey.getPeriod(period).getScore());
+//            holder.headerPercentage.setText(casey.getPeriod(period).getScore());
+            holder.headerPercentage.setText(casey.getPeriod(period).getCalculatedPercentage());
             holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated, casey.getPeriod(period).getGradeUpdateDate()));
 
         } else {
             // Subtract one due to the offset the header card creates
-            holder.assignmentName.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentName());
-            holder.assignmentCategory.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentCategory());
-            holder.assignmentScoreEarned.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentScoreEarned());
-            holder.assignmentScorePossible.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentScorePossible());
-            holder.assignmentPercentage.setText(casey.getPeriod(period).getAssignment(position - 1).getAssignmentPercentage());
+            holder.assignmentName.setText(casey.getPeriod(period).getAssignment(position - 1).getName());
+            holder.assignmentCategory.setText(casey.getPeriod(period).getAssignment(position - 1).getCategory());
+            holder.assignmentScoreEarned.setText(casey.getPeriod(period).getAssignment(position - 1).getScoreEarned());
+            holder.assignmentScorePossible.setText(casey.getPeriod(period).getAssignment(position - 1).getScorePossible());
+            holder.assignmentPercentage.setText(casey.getPeriod(period).getAssignment(position - 1).getPercentage());
         }
     }
 

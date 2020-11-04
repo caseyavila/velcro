@@ -1,13 +1,17 @@
 package ga.caseyavila.velcro;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class Period {
 
@@ -17,10 +21,9 @@ public class Period {
     private final String teacher;
     private final String courseName;
     private String gradeUpdateDate;
-    private int numberOfAssignments;
     private boolean hasTrends;
-
-    private Assignment[] assignmentArray;
+    private List<Assignment> assignmentArray = new ArrayList<>();
+    private HashMap<String, Double> weightMap = new HashMap<>();
     private Trend trend;
 
 
@@ -33,20 +36,25 @@ public class Period {
     }
 
     public void addProgressReport(JSONObject progressReport) throws JSONException, ParseException {
+        JSONArray gradeJSON = progressReport.getJSONArray("grades");
+        JSONArray categoryJSON = progressReport.getJSONArray("categories");
         Date date = (new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'", Locale.getDefault()))
                 .parse(progressReport.getString("trendDate"));
 
         if (date != null) {
             gradeUpdateDate = DateFormat.getDateTimeInstance().format(date);
         }
-        numberOfAssignments = progressReport.getJSONArray("grades").length();
 
-        if (assignmentArray == null) {
-            assignmentArray = new Assignment[numberOfAssignments];
+        // Fill category hash map
+        for (int i = 0; i < categoryJSON.length(); i++) {
+            weightMap.put(categoryJSON.getJSONObject(i).getString("name"),
+                    categoryJSON.getJSONObject(i).getDouble("weight"));
         }
 
-        for (int i = 0; i < assignmentArray.length; i++) {
-            assignmentArray[i] = new Assignment(progressReport.getJSONArray("grades").getJSONObject(i));
+        assignmentArray.clear();
+
+        for (int i = 0; i < gradeJSON.length(); i++) {
+            assignmentArray.add(new Assignment(gradeJSON.getJSONObject(i)));
         }
 
         hasTrends = progressReport.has("trendScores");
@@ -57,7 +65,7 @@ public class Period {
     }
 
     public Assignment getAssignment(int assignment) {
-        return assignmentArray[assignment];
+        return assignmentArray.get(assignment);
     }
 
     public String getCourseId() {
@@ -85,7 +93,7 @@ public class Period {
     }
 
     public int getNumberOfAssignments() {
-        return numberOfAssignments;
+        return assignmentArray.size();
     }
 
     public boolean hasTrends() {
@@ -94,5 +102,51 @@ public class Period {
 
     public Trend getTrend() {
         return trend;
+    }
+
+    public String getCalculatedPercentage() {
+        double percentage = 0;
+        HashMap<String, Category> categoryMap = new HashMap<>();
+
+        for (Assignment assignment : assignmentArray) {
+            try {
+                double scoreEarned = Double.parseDouble(assignment.getScoreEarned());
+                double scorePossible = Double.parseDouble(assignment.getScorePossible());
+
+                if (categoryMap.containsKey(assignment.getCategory())) {
+                    categoryMap.get(assignment.getCategory()).scoreEarned += scoreEarned;
+                    categoryMap.get(assignment.getCategory()).scorePossible += scorePossible;
+                } else {
+                    categoryMap.put(assignment.getCategory(), new Category(scoreEarned, scorePossible));
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        for (Map.Entry<String, Category> entry : categoryMap.entrySet()) {
+            percentage += entry.getValue().scoreEarned / entry.getValue().scorePossible * weightMap.get(entry.getKey());
+        }
+
+        return String.format(Locale.getDefault(), "%.2f", percentage / effectiveWeight() * 100);
+    }
+
+    private double effectiveWeight() {
+        double accumulator = 0;
+        for (double value : weightMap.values()) {
+            accumulator += value;
+        }
+        return accumulator;
+    }
+
+    private static class Category {
+
+        double scoreEarned;
+        double scorePossible;
+
+        Category(double scoreEarned, double scorePossible) {
+            this.scoreEarned = scoreEarned;
+            this.scorePossible = scorePossible;
+        }
     }
 }

@@ -37,23 +37,23 @@ public class Assignment {
         }
     }
 
-    public String getAssignmentName() {
+    public String getName() {
         return name;
     }
 
-    public String getAssignmentCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public String getAssignmentScoreEarned() {
+    public String getScoreEarned() {
         return scoreEarned;
     }
 
-    public String getAssignmentScorePossible() {
+    public String getScorePossible() {
         return scorePossible;
     }
 
-    public String getAssignmentPercentage() {
+    public String getPercentage() {
         return assignmentPercentage;
     }
 }
