@@ -10,16 +10,11 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
-import ga.caseyavila.velcro.activities.CourseActivity;
-import ga.caseyavila.velcro.activities.MainActivity;
-import ga.caseyavila.velcro.fragments.CoursesFragment;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.model.*;
 import lecho.lib.hellocharts.view.LineChartView;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -103,8 +98,8 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             }
 
             holder.headerGrade.setText(casey.getPeriod(period).getGrade());
-//            holder.headerPercentage.setText(casey.getPeriod(period).getScore());
-            holder.headerPercentage.setText(casey.getPeriod(period).getCalculatedPercentage());
+            holder.headerPercentage.setText(casey.getPeriod(period).getScore());
+//            holder.headerPercentage.setText(casey.getPeriod(period).getCalculatedPercentage());
             holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated, casey.getPeriod(period).getGradeUpdateDate()));
 
         } else {
