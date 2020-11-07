@@ -6,9 +6,9 @@ A Schoolloop app written natively for Android.
 - [x] Open Schoolloop and browse the gradebook
 - [x] Save a user's account and log in automatically
 - [x] Use of storing encrypted login information in lieu of passwords
-- [ ] Loopmail functionality
-- [ ] Assignment functionality
-- [ ] News functionality
+- [x] Loopmail functionality
+- [x] Assignment functionality
+- [x] News functionality
 - [ ] Ability to edit grades and predict the outcome of assignments
 - [ ] Locker functionality
 
