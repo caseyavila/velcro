@@ -1,9 +1,9 @@
 # velcro ![Java CI with Gradle](https://github.com/caseyavila/velcro/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
 
-A Schoolloop app written natively for Android.
+A School Loop app written natively for Android.
 
 ## Features
-- [x] Open Schoolloop and browse the gradebook
+- [x] Open School Loop and browse the gradebook
 - [x] Save a user's account and log in automatically
 - [x] Use of storing encrypted login information in lieu of passwords
 - [x] Loopmail functionality
