@@ -5,21 +5,22 @@ import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.textview.MaterialTextView;
+
 import ga.caseyavila.velcro.R;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
-public class LoopMailAttachmentAdapter extends RecyclerView.Adapter<LoopMailAttachmentAdapter.ViewHolder> {
+public class UpcomingAttachmentAdapter extends RecyclerView.Adapter<UpcomingAttachmentAdapter.ViewHolder> {
 
-    private final int mailBox;
-    private final int loopMail;
+    private final int index;
 
-    public LoopMailAttachmentAdapter(int mailBox, int loopMail) {
-        this.mailBox = mailBox;
-        this.loopMail = loopMail;
+    public UpcomingAttachmentAdapter(int index) {
+        this.index = index;
     }
 
     @NonNull
@@ -31,14 +32,13 @@ public class LoopMailAttachmentAdapter extends RecyclerView.Adapter<LoopMailAtta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        // I know it looks confusing, but it just creates a hyperlink using getTitle and getUrl
-        holder.attachment.setText(Html.fromHtml(String.format("<a href='%s'>%s</a>", casey.getMailBox(mailBox).getLoopmail(loopMail).getAttachment(position).getUrl(), casey.getMailBox(mailBox).getLoopmail(loopMail).getAttachment(position).getTitle())));
+        holder.attachment.setText(Html.fromHtml(String.format("<a href='%s'>%s</a>", casey.getUpcoming(index).getAttachment(position).getUrl(), casey.getUpcoming(index).getAttachment(position).getTitle())));
         holder.attachment.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
     public int getItemCount() {
-        return casey.getMailBox(mailBox).getLoopmail(loopMail).getNumberOfAttachments();
+        return casey.getUpcoming(index).getNumberOfAttachments();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -44,6 +44,8 @@ public class LoopMailMessageActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.loopmail_attachment_recycler_view);
 
         Bundle bundle = this.getIntent().getExtras();
+        assert bundle != null;
+
         mailBox = bundle.getInt("mail_box");
         index = bundle.getInt("index");
 
