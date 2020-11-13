@@ -127,7 +127,7 @@ public class LoopMailFragment extends Fragment {
     private void loadLoopMail(boolean refresh) {
         new Thread(() -> {
             try {
-                casey.findLoopMailInbox(mailBox);
+                casey.findLoopMailInbox(mailBox, 0, 20);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }

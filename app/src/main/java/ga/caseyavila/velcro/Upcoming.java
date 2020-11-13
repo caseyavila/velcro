@@ -13,6 +13,7 @@ public class Upcoming {
     private final String dueDate;
     private final String description;
     private Link[] links;
+    private boolean hasLinks;
 
     public Upcoming(JSONObject upcomingJSON) throws JSONException {
         title = upcomingJSON.getString("title");
@@ -26,8 +27,9 @@ public class Upcoming {
             for (int i = 0; i < links.length; i++) {
                 links[i] = new Link(upcomingJSON.getJSONArray("links").getJSONObject(i));
             }
+            hasLinks = true;
         } catch (JSONException e) {
-            links = null;
+            hasLinks = false;
         }
     }
 
@@ -52,7 +54,7 @@ public class Upcoming {
     }
 
     public boolean hasLinks() {
-        return links != null;
+        return hasLinks;
     }
 
     public Link getLink(int index) {

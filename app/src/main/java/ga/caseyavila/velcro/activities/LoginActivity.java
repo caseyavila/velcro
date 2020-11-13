@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         subdomainLayout = findViewById(R.id.subdomain_layout);
         subdomainLayout.setTypeface(manrope);
 
-        helpButton = findViewById(R.id.help_icon);
+        helpButton = findViewById(R.id.icon_help);
 
         usernameText = findViewById(R.id.username_input);
         usernameLayout = findViewById(R.id.username_layout);

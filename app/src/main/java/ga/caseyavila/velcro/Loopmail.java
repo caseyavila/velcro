@@ -1,5 +1,6 @@
 package ga.caseyavila.velcro;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -16,6 +17,8 @@ public class Loopmail {
     private final String subject;
     private String body;
     private final String recipient;
+    private Link[] links;
+    private boolean hasLinks;
 
     public Loopmail(JSONObject loopmailJSON) throws JSONException {
         id = loopmailJSON.getString("ID");
@@ -25,6 +28,19 @@ public class Loopmail {
         sendDate = DateFormat.getDateInstance().format(new Date(loopmailJSON.getLong("date")));
         subject = loopmailJSON.getString("subject");
         recipient = loopmailJSON.getString("shortRecipientString");
+    }
+
+    public void addLinks(JSONArray linkArray) {
+        try {
+            links = new Link[linkArray.length()];
+            for (int i = 0; i < links.length; i++) {
+                System.out.println("Hello THERE");
+                links[i] = new Link(linkArray.getJSONObject(i));
+            }
+            hasLinks = true;
+        } catch (JSONException e) {
+            hasLinks = false;
+        }
     }
 
     public void addBody(String body) {
@@ -61,5 +77,17 @@ public class Loopmail {
 
     public String getRecipient() {
         return recipient;
+    }
+
+    public Link getLink(int index) {
+        return links[index];
+    }
+
+    public boolean hasLinks() {
+        return hasLinks;
+    }
+
+    public int getNumberOfLinks() {
+        return links.length;
     }
 }

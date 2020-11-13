@@ -20,7 +20,7 @@
             android:layout_marginStart="30dp"
             app:layout_constrainedWidth="true"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/help_icon"
+            app:layout_constraintEnd_toStartOf="@id/icon_help"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/username_layout"
             app:layout_constraintVertical_chainStyle="packed"
@@ -38,7 +38,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <ImageButton
-            android:id="@+id/help_icon"
+            android:id="@+id/icon_help"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_help"

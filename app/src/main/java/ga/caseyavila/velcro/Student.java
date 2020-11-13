@@ -253,11 +253,11 @@ public class Student {
         urlConnection.disconnect();
     }
 
-    public void findLoopMailInbox(int mailBox) throws IOException, JSONException {
+    public void findLoopMailInbox(int mailBox, int start, int max) throws IOException, JSONException {
         HttpURLConnection urlConnection = (HttpURLConnection) new URL(baseUrl() + "/mapi/mail_messages" +
                 "?folderID=" + mailBox +
-                "&max=" + 20 +
-                "&start=" + 0 +
+                "&max=" + max +
+                "&start=" + start +
                 "&studentID=" + studentId +
                 "&trim=true")
                 .openConnection();
@@ -280,7 +280,10 @@ public class Student {
         setRequestProperties(urlConnection);
         urlConnection.connect();
 
-        mailboxArray[mailBox - 1].getLoopmail(index).addBody(new JSONObject(inputStreamToString(urlConnection.getInputStream())).getString("message"));
+        JSONObject response = new JSONObject(inputStreamToString(urlConnection.getInputStream()));
+
+        mailboxArray[mailBox - 1].getLoopmail(index).addBody(response.getString("message"));
+        mailboxArray[mailBox - 1].getLoopmail(index).addLinks(response.getJSONArray("links"));
 
         urlConnection.disconnect();
     }
