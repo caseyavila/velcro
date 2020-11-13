@@ -283,7 +283,7 @@ public class Student {
         JSONObject response = new JSONObject(inputStreamToString(urlConnection.getInputStream()));
 
         mailboxArray[mailBox - 1].getLoopmail(index).addBody(response.getString("message"));
-        mailboxArray[mailBox - 1].getLoopmail(index).addLinks(response.getJSONArray("links"));
+        mailboxArray[mailBox - 1].getLoopmail(index).addAttachments(response.getJSONArray("links"));
 
         urlConnection.disconnect();
     }

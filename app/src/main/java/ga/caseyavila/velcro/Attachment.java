@@ -3,12 +3,12 @@ package ga.caseyavila.velcro;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Link {
+public class Attachment {
 
     private final String title;
     private final String url;
 
-    public Link(JSONObject linkJSON) throws JSONException {
+    public Attachment(JSONObject linkJSON) throws JSONException {
         title = linkJSON.getString("Title");
         url = linkJSON.getString("URL");
     }

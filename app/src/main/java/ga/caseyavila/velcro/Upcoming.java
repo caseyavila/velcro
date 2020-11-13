@@ -12,8 +12,8 @@ public class Upcoming {
     private final String points;
     private final String dueDate;
     private final String description;
-    private Link[] links;
-    private boolean hasLinks;
+    private Attachment[] attachments;
+    private boolean hasAttachments;
 
     public Upcoming(JSONObject upcomingJSON) throws JSONException {
         title = upcomingJSON.getString("title");
@@ -23,13 +23,13 @@ public class Upcoming {
         description = upcomingJSON.getString("description");
 
         try {
-            links = new Link[upcomingJSON.getJSONArray("links").length()];
-            for (int i = 0; i < links.length; i++) {
-                links[i] = new Link(upcomingJSON.getJSONArray("links").getJSONObject(i));
+            attachments = new Attachment[upcomingJSON.getJSONArray("links").length()];
+            for (int i = 0; i < attachments.length; i++) {
+                attachments[i] = new Attachment(upcomingJSON.getJSONArray("links").getJSONObject(i));
             }
-            hasLinks = true;
+            hasAttachments = true;
         } catch (JSONException e) {
-            hasLinks = false;
+            hasAttachments = false;
         }
     }
 
@@ -53,15 +53,15 @@ public class Upcoming {
         return description;
     }
 
-    public boolean hasLinks() {
-        return hasLinks;
+    public boolean hasAttachments() {
+        return hasAttachments;
     }
 
-    public Link getLink(int index) {
-        return links[index];
+    public Attachment getAttachment(int index) {
+        return attachments[index];
     }
 
-    public int numberOfLinks() {
-        return links.length;
+    public int getNumberOfAttachments() {
+        return attachments.length;
     }
 }

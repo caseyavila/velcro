@@ -3,7 +3,6 @@ package ga.caseyavila.velcro.activities;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,7 +14,7 @@ import com.google.android.material.textview.MaterialTextView;
 import org.json.JSONException;
 import java.io.IOException;
 import ga.caseyavila.velcro.R;
-import ga.caseyavila.velcro.adapters.LinkAdapter;
+import ga.caseyavila.velcro.adapters.LoopMailAttachmentAdapter;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 
@@ -30,7 +29,6 @@ public class LoopMailMessageActivity extends AppCompatActivity {
     private MaterialTextView body;
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
-    private LinkAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class LoopMailMessageActivity extends AppCompatActivity {
         date = findViewById(R.id.loopmail_message_date);
         body = findViewById(R.id.loopmail_body);
         progressBar = findViewById(R.id.loopmail_message_progress_bar);
-        recyclerView = findViewById(R.id.loopmail_link_recycler_view);
+        recyclerView = findViewById(R.id.loopmail_attachment_recycler_view);
 
         Bundle bundle = this.getIntent().getExtras();
         mailBox = bundle.getInt("mail_box");
@@ -60,8 +58,8 @@ public class LoopMailMessageActivity extends AppCompatActivity {
         body.setText(HtmlCompat.fromHtml(casey.getMailBox(mailBox).getLoopmail(index).getBody(), HtmlCompat.FROM_HTML_MODE_LEGACY));
         body.setMovementMethod(LinkMovementMethod.getInstance());
 
-        if (casey.getMailBox(mailBox).getLoopmail(index).hasLinks()) {
-            adapter = new LinkAdapter(mailBox, index);
+        if (casey.getMailBox(mailBox).getLoopmail(index).hasAttachments()) {
+            LoopMailAttachmentAdapter adapter = new LoopMailAttachmentAdapter(mailBox, index);
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setNestedScrollingEnabled(false);
             recyclerView.setAdapter(adapter);

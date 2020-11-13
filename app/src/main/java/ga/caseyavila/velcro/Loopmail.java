@@ -17,8 +17,8 @@ public class Loopmail {
     private final String subject;
     private String body;
     private final String recipient;
-    private Link[] links;
-    private boolean hasLinks;
+    private Attachment[] attachments;
+    private boolean hasAttachments;
 
     public Loopmail(JSONObject loopmailJSON) throws JSONException {
         id = loopmailJSON.getString("ID");
@@ -30,16 +30,15 @@ public class Loopmail {
         recipient = loopmailJSON.getString("shortRecipientString");
     }
 
-    public void addLinks(JSONArray linkArray) {
+    public void addAttachments(JSONArray linkArray) {
         try {
-            links = new Link[linkArray.length()];
-            for (int i = 0; i < links.length; i++) {
-                System.out.println("Hello THERE");
-                links[i] = new Link(linkArray.getJSONObject(i));
+            attachments = new Attachment[linkArray.length()];
+            for (int i = 0; i < attachments.length; i++) {
+                attachments[i] = new Attachment(linkArray.getJSONObject(i));
             }
-            hasLinks = true;
+            hasAttachments = true;
         } catch (JSONException e) {
-            hasLinks = false;
+            hasAttachments = false;
         }
     }
 
@@ -79,15 +78,15 @@ public class Loopmail {
         return recipient;
     }
 
-    public Link getLink(int index) {
-        return links[index];
+    public Attachment getAttachment(int index) {
+        return attachments[index];
     }
 
-    public boolean hasLinks() {
-        return hasLinks;
+    public boolean hasAttachments() {
+        return hasAttachments;
     }
 
-    public int getNumberOfLinks() {
-        return links.length;
+    public int getNumberOfAttachments() {
+        return attachments.length;
     }
 }
