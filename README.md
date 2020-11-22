@@ -8,11 +8,11 @@ A School Loop app written natively for Android.
 - [x] Open School Loop and browse the gradebook
 - [x] Save a user's account and log in automatically
 - [x] Use of storing encrypted login information in lieu of passwords
-- [x] Loopmail functionality
-- [x] Assignment functionality
-- [x] News functionality
+- [x] Loopmail support
+- [x] Assignment support
+- [x] News support
 - [ ] Grade simulation
-- [ ] Locker functionality
+- [ ] Locker support
 
 ---
 
