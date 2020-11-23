@@ -8,12 +8,12 @@ A School Loop app written natively for Android.
 - [x] Open School Loop and browse the gradebook
 - [x] Save a user's account and log in automatically
 - [x] Use of storing encrypted login information in lieu of passwords
-- [x] Loopmail functionality
-- [x] Assignment functionality
-- [x] News functionality
-- [ ] Ability to edit grades and predict the outcome of assignments
-- [ ] Locker functionality
+- [x] Loopmail support
+- [x] Assignment support
+- [x] News support
+- [ ] Grade simulation
+- [ ] Locker support
 
 ---
 
-Velcro is not affiliated with School Loop, Inc. in any way. All product and company names are trademarks™ or registered® trademarks of their respective holders.
+Velcro is not affiliated with School Loop, Inc. in any way. All product and company names are property of their respective holders.
