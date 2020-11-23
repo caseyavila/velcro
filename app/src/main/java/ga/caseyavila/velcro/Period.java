@@ -21,10 +21,10 @@ public class Period {
     private final String courseName;
     private String gradeUpdateDate;
     private boolean hasTrends;
+    private Trend trend;
+    private boolean hasWeights;
     private List<Assignment> assignmentArray = new ArrayList<>();
     private HashMap<String, Double> weightMap = new HashMap<>();
-    private Trend trend;
-
 
     public Period(JSONObject jsonObject) throws JSONException {
         courseId = jsonObject.getString("periodID");
@@ -44,10 +44,14 @@ public class Period {
             gradeUpdateDate = DateFormat.getDateTimeInstance().format(date);
         }
 
-        // Fill weight hash map
-        for (int i = 0; i < categoryJSON.length(); i++) {
-            weightMap.put(categoryJSON.getJSONObject(i).getString("name"),
-                          categoryJSON.getJSONObject(i).getDouble("weight"));
+        hasWeights = progressReport.getBoolean("useWeighting");
+
+        if (hasWeights) {
+            // Fill weight hash map
+            for (int i = 0; i < categoryJSON.length(); i++) {
+                weightMap.put(categoryJSON.getJSONObject(i).getString("name"),
+                        categoryJSON.getJSONObject(i).getDouble("weight"));
+            }
         }
 
         assignmentArray.clear();
@@ -126,17 +130,23 @@ public class Period {
 
         for (Category value : categoryMap.values()) {
             percentage += value.scoreEarned / value.scorePossible * value.weight;
+            System.out.printf("%f\t%f\t%f\n", value.weight, value.scorePossible, value.scoreEarned);
         }
 
-        return String.format(Locale.getDefault(), "%.2f", percentage / effectiveWeight() * 100);
+        return String.format(Locale.getDefault(), "%.2f", percentage * 100 / effectiveWeight());
     }
 
+    // Combined weight of categories that have assignments listed
     private double effectiveWeight() {
         double accumulator = 0;
-        for (double value : weightMap.values()) {
-            accumulator += value;
+        if  (hasWeights) {
+            for (double value : weightMap.values()) {
+                accumulator += value;
+            }
+            return accumulator;
+        } else {
+            return 1;
         }
-        return accumulator;
     }
 
     private static class Category {

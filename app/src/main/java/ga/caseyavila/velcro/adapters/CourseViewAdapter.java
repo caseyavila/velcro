@@ -98,8 +98,8 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             }
 
             holder.headerGrade.setText(casey.getPeriod(period).getGrade());
-            holder.headerPercentage.setText(casey.getPeriod(period).getScore());
-//            holder.headerPercentage.setText(casey.getPeriod(period).getCalculatedPercentage());
+//            holder.headerPercentage.setText(casey.getPeriod(period).getScore());
+            holder.headerPercentage.setText(casey.getPeriod(period).getCalculatedPercentage());
             holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated, casey.getPeriod(period).getGradeUpdateDate()));
 
         } else {
