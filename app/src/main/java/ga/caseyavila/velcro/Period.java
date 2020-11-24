@@ -46,12 +46,10 @@ public class Period {
 
         hasWeights = progressReport.getBoolean("useWeighting");
 
-        if (hasWeights) {
-            // Fill weight hash map
-            for (int i = 0; i < categoryJSON.length(); i++) {
-                weightMap.put(categoryJSON.getJSONObject(i).getString("name"),
-                        categoryJSON.getJSONObject(i).getDouble("weight"));
-            }
+        // Fill weight hash map
+        for (int i = 0; i < categoryJSON.length(); i++) {
+            weightMap.put(categoryJSON.getJSONObject(i).getString("name"),
+                    categoryJSON.getJSONObject(i).getDouble("weight"));
         }
 
         assignmentArray.clear();
@@ -117,11 +115,21 @@ public class Period {
                 double scoreEarned = Double.parseDouble(assignment.getScoreEarned());
                 double scorePossible = Double.parseDouble(assignment.getScorePossible());
 
-                if (categoryMap.containsKey(assignment.getCategory())) {
-                    categoryMap.get(assignment.getCategory()).scoreEarned += scoreEarned;
-                    categoryMap.get(assignment.getCategory()).scorePossible += scorePossible;
+                if (hasWeights) {
+                    if (categoryMap.containsKey(assignment.getCategory())) {
+                        categoryMap.get(assignment.getCategory()).scoreEarned += scoreEarned;
+                        categoryMap.get(assignment.getCategory()).scorePossible += scorePossible;
+                    } else {
+                        categoryMap.put(assignment.getCategory(), new Category(assignment.getWeight(), scoreEarned, scorePossible));
+                    }
+                // Create a "main" category that contains all assignments when no weights are involved
                 } else {
-                    categoryMap.put(assignment.getCategory(), new Category(assignment.getWeight(), scoreEarned, scorePossible));
+                    if (categoryMap.containsKey("main")) {
+                        categoryMap.get("main").scoreEarned += scoreEarned;
+                        categoryMap.get("main").scorePossible += scorePossible;
+                    } else {
+                        categoryMap.put("main", new Category(1, scoreEarned, scorePossible));
+                    }
                 }
             } catch (NumberFormatException e) {
                 e.printStackTrace();
@@ -130,7 +138,6 @@ public class Period {
 
         for (Category value : categoryMap.values()) {
             percentage += value.scoreEarned / value.scorePossible * value.weight;
-            System.out.printf("%f\t%f\t%f\n", value.weight, value.scorePossible, value.scoreEarned);
         }
 
         return String.format(Locale.getDefault(), "%.2f", percentage * 100 / effectiveWeight());
