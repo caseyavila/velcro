@@ -83,18 +83,18 @@ public class LoopMailFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        appBar = getActivity().findViewById(R.id.loopmail_appbar);
+        appBar = requireActivity().findViewById(R.id.loopmail_appbar);
         setAppBar();
-        ((MainActivity) getActivity()).setSupportActionBar(appBar);
+        ((MainActivity) requireActivity()).setSupportActionBar(appBar);
 
-        progressBar = getActivity().findViewById(R.id.loopmail_progress_bar);
+        progressBar = requireActivity().findViewById(R.id.loopmail_progress_bar);
 
-        refreshLayout = getActivity().findViewById(R.id.loopmail_refresh);
-        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout = requireActivity().findViewById(R.id.loopmail_refresh);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(() -> loadLoopMail(true));
         refreshLayout.setEnabled(false);
 
-        recyclerView = getActivity().findViewById(R.id.loopmail_recycler_view);
+        recyclerView = requireActivity().findViewById(R.id.loopmail_recycler_view);
 
         loadLoopMail(false);
     }
@@ -131,7 +131,7 @@ public class LoopMailFragment extends Fragment {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-            getActivity().runOnUiThread(() -> {
+            requireActivity().runOnUiThread(() -> {
                 if (refresh) {
                     updateCards();
                     refreshLayout.setRefreshing(false);

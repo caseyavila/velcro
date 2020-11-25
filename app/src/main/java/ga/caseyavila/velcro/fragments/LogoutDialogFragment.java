@@ -19,7 +19,7 @@ public class LogoutDialogFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogTheme);
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity(), R.style.AlertDialogTheme);
         builder.setMessage(R.string.logout_dialog_message)
                 .setPositiveButton(R.string.yes, (dialogInterface, i) -> {
                     SharedPreferences.Editor editor = sharedPreferences.edit();

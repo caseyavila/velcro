@@ -57,6 +57,10 @@ public class Assignment {
         return scoreEarned;
     }
 
+    public void setScoreEarned(String scoreEarned) {
+        this.scoreEarned = scoreEarned;
+    }
+
     public String getScorePossible() {
         return scorePossible;
     }

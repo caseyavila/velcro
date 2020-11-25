@@ -49,8 +49,8 @@ public class CoursesFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        refreshLayout = getView().findViewById(R.id.refresh);
-        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout = requireView().findViewById(R.id.refresh);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(this::refreshCourses);
         refreshLayout.setEnabled(false);  // Disable refresh while starting up
 
@@ -65,7 +65,7 @@ public class CoursesFragment extends Fragment {
     }
 
     private void addCards() {
-        recyclerView = getView().findViewById(R.id.main_recycler_view);
+        recyclerView = requireView().findViewById(R.id.main_recycler_view);
 
         recyclerView.setNestedScrollingEnabled(false); // Fix scrolling of RecyclerView
 
@@ -92,7 +92,7 @@ public class CoursesFragment extends Fragment {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-            getActivity().runOnUiThread(() -> {
+            requireActivity().runOnUiThread(() -> {
                 updateCards();
                 refreshLayout.setRefreshing(false);
             });

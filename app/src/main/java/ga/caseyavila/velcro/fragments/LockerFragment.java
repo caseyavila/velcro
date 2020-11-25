@@ -37,7 +37,7 @@ public class LockerFragment extends Fragment {
 
     @Override
     public void onStart() {
-        MaterialTextView explanation = getView().findViewById(R.id.explanation);
+        MaterialTextView explanation = requireView().findViewById(R.id.explanation);
         explanation.setText(R.string.explanation);
         explanation.setMovementMethod(LinkMovementMethod.getInstance());
         super.onStart();

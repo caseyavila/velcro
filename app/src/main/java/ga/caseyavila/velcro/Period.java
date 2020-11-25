@@ -105,6 +105,10 @@ public class Period {
         return trend;
     }
 
+    public String[] getCategories() {
+        return weightMap.keySet().toArray(new String[0]);
+    }
+
     public String getCalculatedPercentage() {
         double percentage = 0;
         HashMap<String, Category> categoryMap = new HashMap<>();
@@ -146,7 +150,7 @@ public class Period {
     // Combined weight of categories that have assignments listed
     private double effectiveWeight() {
         double accumulator = 0;
-        if  (hasWeights) {
+        if (hasWeights) {
             for (double value : weightMap.values()) {
                 accumulator += value;
             }

@@ -12,6 +12,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.CourseActivity;
+import ga.caseyavila.velcro.activities.MainActivity;
 
 import static ga.caseyavila.velcro.activities.LoginActivity.casey;
 

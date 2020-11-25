@@ -36,6 +36,9 @@
     <string name="grade_last_updated">Last updated: %s</string>
     <string name="refresh">refresh</string>
 
+        <!-- Assignment Edit Dialog -->
+        <string name="apply">apply</string>
+
     <!-- Loopmail -->
     <string name="loopmail_message_sender">From: %s</string>
     <string name="loopmail_message_recipient">To: %s</string>

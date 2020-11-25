@@ -52,10 +52,10 @@ public class NewsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        progressBar = getView().findViewById(R.id.news_progress_bar);
+        progressBar = requireView().findViewById(R.id.news_progress_bar);
 
-        refreshLayout = getView().findViewById(R.id.news_refresh);
-        refreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        refreshLayout = requireView().findViewById(R.id.news_refresh);
+        refreshLayout.setColorSchemeColors(ContextCompat.getColor(requireContext(), R.color.colorPrimary));
         refreshLayout.setOnRefreshListener(() -> loadNews(true));
         refreshLayout.setEnabled(false);
 
@@ -70,7 +70,7 @@ public class NewsFragment extends Fragment {
     }
 
     private void addCards() {
-        recyclerView = getView().findViewById(R.id.news_recycler_view);
+        recyclerView = requireView().findViewById(R.id.news_recycler_view);
         recyclerView.setNestedScrollingEnabled(false);
 
         adapter = new NewsAdapter(getContext());
@@ -97,7 +97,7 @@ public class NewsFragment extends Fragment {
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-            getActivity().runOnUiThread(() -> {
+            requireActivity().runOnUiThread(() -> {
                 if (refresh) {
                     updateCards();
                     refreshLayout.setRefreshing(false);
