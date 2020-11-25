@@ -13,7 +13,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"
-            android:text="Category">
+            android:text="@string/category">
 
     </com.google.android.material.textview.MaterialTextView>
 
@@ -36,7 +36,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="20dp"
-            android:text="Score">
+            android:text="@string/score">
 
     </com.google.android.material.textview.MaterialTextView>
 

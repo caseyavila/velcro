@@ -27,17 +27,19 @@
 
     <!-- Logout dialog -->
     <string name="logout_dialog_message">Are you sure you want to log out?</string>
-    <string name="yes">yes</string>
+    <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
 
     <!-- Course -->
     <string name="division_line">/</string>
     <string name="percentage_sign">%</string>
     <string name="grade_last_updated">Last updated: %s</string>
-    <string name="refresh">refresh</string>
+    <string name="refresh">Refresh</string>
 
         <!-- Assignment Edit Dialog -->
-        <string name="apply">apply</string>
+        <string name="category">Category</string>
+        <string name="score">Score</string>
+        <string name="apply">Apply</string>
 
     <!-- Loopmail -->
     <string name="loopmail_message_sender">From: %s</string>
