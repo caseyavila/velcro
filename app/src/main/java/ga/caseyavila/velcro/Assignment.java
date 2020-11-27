@@ -12,7 +12,7 @@ public class Assignment {
     private final String name;
     private final String category;
     private String scoreEarned;
-    private final String scorePossible;
+    private String scorePossible;
     private String percentage;
     private double weight;
 
@@ -59,6 +59,10 @@ public class Assignment {
 
     public void setScoreEarned(String scoreEarned) {
         this.scoreEarned = scoreEarned;
+    }
+
+    public void setScorePossible(String scorePossible) {
+        this.scorePossible = scorePossible;
     }
 
     public String getScorePossible() {
