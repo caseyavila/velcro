@@ -17,4 +17,12 @@ public class Category {
     public double getWeight() {
         return weight;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 }
