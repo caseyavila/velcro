@@ -1,6 +1,6 @@
 # velcro ![Java CI with Gradle](https://github.com/caseyavila/velcro/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
 
-A School Loop app written natively for Android.
+An improved School Loop app written natively for Android.
 
 <a href="https://play.google.com/store/apps/details?id=ga.caseyavila.velcro"><img alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" height=50px /></a>
 
