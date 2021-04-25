@@ -16,7 +16,7 @@ public class Period {
 
     private final String courseId;
     private final String score;
-    private final String grade;
+    private String grade;
     private final String teacher;
     private final String courseName;
     private String gradeUpdateDate;
@@ -145,6 +145,36 @@ public class Period {
         }
 
         return String.format(Locale.getDefault(), "%.2f", percentage * 100 / effectiveWeight());
+    }
+
+    public String getCalculatedGrade() {
+        if (Double.parseDouble(getCalculatedPercentage()) >= 97) {
+            return "A+";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 93) {
+            return "A";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 90) {
+            return "A-";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 87) {
+            return "B+";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 83) {
+            return "B";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 80) {
+            return "B-";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 77) {
+            return "C+";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 73) {
+            return "C";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 70) {
+            return "C-";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 67) {
+            return "D+";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 63) {
+            return "D";
+        } else if (Double.parseDouble(getCalculatedPercentage()) >= 60) {
+            return "D-";
+        } else {
+            return "F";
+        }
     }
 
     // Combined weight of categories that have assignments listed

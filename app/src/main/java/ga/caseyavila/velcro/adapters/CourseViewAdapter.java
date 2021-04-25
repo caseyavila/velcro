@@ -102,7 +102,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 holder.trendChart.setVisibility(View.GONE);  // Don't show graph if trends do not exist
             }
 
-            holder.headerGrade.setText(casey.getPeriod(period).getGrade());
+            holder.headerGrade.setText(casey.getPeriod(period).getCalculatedGrade());
             holder.headerPercentage.setText(casey.getPeriod(period).getCalculatedPercentage());
             holder.gradeUpdateDate.setText(context.getString(R.string.grade_last_updated, casey.getPeriod(period).getGradeUpdateDate()));
 
@@ -123,9 +123,6 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 dialogFragment.setArguments(bundle);
 
                 dialogFragment.show(fragmentManager, "assignment_edit_dialog");
-
-                //casey.getPeriod(period).getAssignment(position - 1).setScorePossible("1000");
-                //notifyDataSetChanged();
             });
         }
     }

@@ -13,7 +13,6 @@ public class Assignment {
     private String category;
     private String scoreEarned;
     private String scorePossible;
-    private String percentage;
     private double weight;
 
     // Match everything in front of whitespace slash combination
@@ -29,14 +28,6 @@ public class Assignment {
         }
 
         scorePossible = assignmentJSONObject.getJSONObject("assignment").getString("maxPoints");
-
-        try {
-            double doublePercentage = Double.parseDouble(scoreEarned) / Double.parseDouble(scorePossible) * 100;
-            // Round to two decimal places
-            percentage = String.format(Locale.getDefault(), "%.2f", doublePercentage);
-        } catch (NumberFormatException e) {
-            percentage = "";
-        }
 
         if (weightMap.containsKey(category)) {
             weight = weightMap.get(category);
@@ -74,7 +65,13 @@ public class Assignment {
     }
 
     public String getPercentage() {
-        return percentage;
+        try {
+            double doublePercentage = Double.parseDouble(scoreEarned) / Double.parseDouble(scorePossible) * 100;
+            // Round to two decimal places
+            return String.format(Locale.getDefault(), "%.2f", doublePercentage);
+        } catch (NumberFormatException e) {
+            return "";
+        }
     }
 
     public double getWeight() {
