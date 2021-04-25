@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import com.google.android.material.textfield.TextInputEditText;
+
 import ga.caseyavila.velcro.Assignment;
 import ga.caseyavila.velcro.Period;
 import ga.caseyavila.velcro.R;
@@ -38,6 +41,15 @@ public class AssignmentEditDialogFragment extends DialogFragment {
         Spinner spinner = view.findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), R.layout.support_simple_spinner_dropdown_item, period.getCategories());
         spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getPosition(assignment.getCategory()));
+
+        System.out.println(assignment.getScoreEarned());
+
+        TextInputEditText scoreEarnedInput = view.findViewById(R.id.score_earned_input);
+        scoreEarnedInput.setText(assignment.getScoreEarned());
+
+        TextInputEditText scorePossibleInput = view.findViewById(R.id.score_possible_input);
+        scorePossibleInput.setText(assignment.getScorePossible());
 
         builder.setView(view);
 
