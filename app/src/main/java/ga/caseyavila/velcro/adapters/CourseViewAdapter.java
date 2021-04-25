@@ -115,7 +115,7 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
             holder.assignmentPercentage.setText(casey.getPeriod(period).getAssignment(position - 1).getPercentage());
             holder.assignmentCardView.setOnClickListener(view -> {
                 FragmentManager fragmentManager = ((CourseActivity) context).getSupportFragmentManager();
-                DialogFragment dialogFragment = new AssignmentEditDialogFragment();
+                DialogFragment dialogFragment = new AssignmentEditDialogFragment(this);
 
                 Bundle bundle = new Bundle();
                 bundle.putInt("period", period);
@@ -123,6 +123,9 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 dialogFragment.setArguments(bundle);
 
                 dialogFragment.show(fragmentManager, "assignment_edit_dialog");
+
+                //casey.getPeriod(period).getAssignment(position - 1).setScorePossible("1000");
+                //notifyDataSetChanged();
             });
         }
     }

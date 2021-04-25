@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class Assignment {
 
     private final String name;
-    private final String category;
+    private String category;
     private String scoreEarned;
     private String scorePossible;
     private String percentage;
@@ -53,6 +53,10 @@ public class Assignment {
         return category;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
     public String getScoreEarned() {
         return scoreEarned;
     }
@@ -61,12 +65,12 @@ public class Assignment {
         this.scoreEarned = scoreEarned;
     }
 
-    public void setScorePossible(String scorePossible) {
-        this.scorePossible = scorePossible;
-    }
-
     public String getScorePossible() {
         return scorePossible;
+    }
+
+    public void setScorePossible(String scorePossible) {
+        this.scorePossible = scorePossible;
     }
 
     public String getPercentage() {
