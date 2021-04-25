@@ -16,7 +16,7 @@ public class Period {
 
     private final String courseId;
     private final String score;
-    private String grade;
+    private final String grade;
     private final String teacher;
     private final String courseName;
     private String gradeUpdateDate;
