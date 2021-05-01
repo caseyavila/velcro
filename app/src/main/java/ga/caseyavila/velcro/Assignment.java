@@ -14,11 +14,13 @@ public class Assignment {
     private String scoreEarned;
     private String scorePossible;
     private double weight;
+    private HashMap<String, Double> weightMap;
 
     // Match everything in front of whitespace slash combination
     private static final Pattern scoreEarnedPattern = Pattern.compile("^[^\\s/]*");
 
     public Assignment(JSONObject assignmentJSONObject, HashMap<String, Double> weightMap) throws JSONException {
+        this.weightMap = weightMap;
         name = assignmentJSONObject.getJSONObject("assignment").getString("title");
         category = assignmentJSONObject.getJSONObject("assignment").getString("categoryName");
 
@@ -29,8 +31,8 @@ public class Assignment {
 
         scorePossible = assignmentJSONObject.getJSONObject("assignment").getString("maxPoints");
 
-        if (weightMap.containsKey(category)) {
-            weight = weightMap.get(category);
+        if (this.weightMap.containsKey(category)) {
+            weight = this.weightMap.get(category);
         } else {
             weight = 0;
         }
@@ -46,6 +48,7 @@ public class Assignment {
 
     public void setCategory(String category) {
         this.category = category;
+        weight = weightMap.get(category);
     }
 
     public String getScoreEarned() {
