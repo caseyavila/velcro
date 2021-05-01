@@ -269,7 +269,11 @@ public class Student {
         setRequestProperties(urlConnection);
         urlConnection.connect();
 
-        mailboxArray[mailBox - 1] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
+        if (mailboxArray[mailBox - 1] == null) {
+            mailboxArray[mailBox - 1] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
+        } else {  // If you are adding loop mails to an existing mailbox
+            mailboxArray[mailBox - 1].addLoopMail(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
+        }
 
         urlConnection.disconnect();
     }

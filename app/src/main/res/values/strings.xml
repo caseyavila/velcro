@@ -44,6 +44,7 @@
     <!-- Loopmail -->
     <string name="loopmail_message_sender">From: %s</string>
     <string name="loopmail_message_recipient">To: %s</string>
+    <string name="load_more">Load More</string>
 
         <!-- Mailboxes -->
         <string name="inbox">Inbox</string>

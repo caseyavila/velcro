@@ -3,24 +3,28 @@ package ga.caseyavila.velcro;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class Mailbox {
 
-    private Loopmail[] loopmailArray;
+    private final ArrayList<Loopmail> loopmailArray = new ArrayList<>();
 
     public Mailbox(JSONArray mailboxJSON) throws JSONException {
-        if (loopmailArray == null) {
-            loopmailArray = new Loopmail[mailboxJSON.length()];
-        }
-        for (int i = 0; i < loopmailArray.length; i++) {
-            loopmailArray[i] = new Loopmail(mailboxJSON.getJSONObject(i));
+        addLoopMail(mailboxJSON);
+    }
+
+    public void addLoopMail(JSONArray mailboxJSON) throws JSONException {
+        for (int i = 0; i < mailboxJSON.length(); i++) {
+            loopmailArray.add(new Loopmail(mailboxJSON.getJSONObject(i)));
         }
     }
 
     public int getNumberOfLoopMails() {
-        return loopmailArray.length;
+        return loopmailArray.size();
     }
 
     public Loopmail getLoopmail(int index) {
-        return loopmailArray[index];
+        return loopmailArray.get(index);
     }
 }

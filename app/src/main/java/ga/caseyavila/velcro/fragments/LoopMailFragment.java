@@ -107,7 +107,7 @@ public class LoopMailFragment extends Fragment {
     }
 
     private void addCards() {
-        adapter = new LoopMailAdapter(getContext(), mailBox);
+        adapter = new LoopMailAdapter(getContext(), mailBox, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -141,6 +141,17 @@ public class LoopMailFragment extends Fragment {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
             });
+        }).start();
+    }
+
+    public void loadMore() {
+        new Thread(() -> {
+            try {
+                casey.findLoopMailInbox(mailBox, casey.getMailBox(mailBox).getNumberOfLoopMails(), casey.getMailBox(mailBox).getNumberOfLoopMails() + 20);
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+            requireActivity().runOnUiThread(this::updateCards);
         }).start();
     }
 

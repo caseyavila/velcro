@@ -148,29 +148,30 @@ public class Period {
     }
 
     public String getCalculatedGrade() {
-        if (Double.parseDouble(getCalculatedPercentage()) >= 97) {
+        double calculatedPercentage = Double.parseDouble(getCalculatedPercentage());
+        if (calculatedPercentage >= 97) {
             return "A+";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 93) {
+        } else if (calculatedPercentage >= 93) {
             return "A";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 90) {
+        } else if (calculatedPercentage >= 90) {
             return "A-";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 87) {
+        } else if (calculatedPercentage >= 87) {
             return "B+";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 83) {
+        } else if (calculatedPercentage >= 83) {
             return "B";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 80) {
+        } else if (calculatedPercentage >= 80) {
             return "B-";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 77) {
+        } else if (calculatedPercentage >= 77) {
             return "C+";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 73) {
+        } else if (calculatedPercentage >= 73) {
             return "C";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 70) {
+        } else if (calculatedPercentage >= 70) {
             return "C-";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 67) {
+        } else if (calculatedPercentage >= 67) {
             return "D+";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 63) {
+        } else if (calculatedPercentage >= 63) {
             return "D";
-        } else if (Double.parseDouble(getCalculatedPercentage()) >= 60) {
+        } else if (calculatedPercentage >= 60) {
             return "D-";
         } else {
             return "F";

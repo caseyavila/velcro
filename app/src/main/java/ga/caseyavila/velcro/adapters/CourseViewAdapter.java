@@ -129,7 +129,8 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return casey.getPeriod(period).getNumberOfAssignments() + 1;  // Add one for header card
+        // Add one for header card
+        return casey.getPeriod(period).getNumberOfAssignments() + 1;
     }
 
     @Override
