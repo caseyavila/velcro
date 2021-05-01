@@ -23,7 +23,7 @@ public class Period {
     private boolean hasTrends;
     private Trend trend;
     private boolean hasWeights;
-    private List<Assignment> assignmentArray = new ArrayList<>();
+    private final List<Assignment> assignmentArray = new ArrayList<>();
     private HashMap<String, Double> weightMap = new HashMap<>();
 
     public Period(JSONObject jsonObject) throws JSONException {
