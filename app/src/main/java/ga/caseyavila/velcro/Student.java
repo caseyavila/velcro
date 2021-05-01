@@ -274,9 +274,9 @@ public class Student {
         urlConnection.connect();
 
         if (mailboxArray[mailBox - 1] == null) {
-            mailboxArray[mailBox - 1] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
+            mailboxArray[mailBox - 1] = new Mailbox(new JSONArray(inputStreamToString(urlConnection.getInputStream())), 0, 20);
         } else {  // If you are adding loop mails to an existing mailbox
-            mailboxArray[mailBox - 1].addLoopMail(new JSONArray(inputStreamToString(urlConnection.getInputStream())));
+            mailboxArray[mailBox - 1].addLoopMail(new JSONArray(inputStreamToString(urlConnection.getInputStream())), start, max);
         }
 
         urlConnection.disconnect();

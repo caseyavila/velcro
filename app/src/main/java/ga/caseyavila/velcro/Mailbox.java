@@ -10,13 +10,19 @@ public class Mailbox {
 
     private final ArrayList<Loopmail> loopmailArray = new ArrayList<>();
 
-    public Mailbox(JSONArray mailboxJSON) throws JSONException {
-        addLoopMail(mailboxJSON);
+    public Mailbox(JSONArray mailboxJSON, int start, int max) throws JSONException {
+        for (int i = start; i < max; i++) {
+            loopmailArray.add(new Loopmail(mailboxJSON.getJSONObject(i)));
+        }
     }
 
-    public void addLoopMail(JSONArray mailboxJSON) throws JSONException {
-        for (int i = 0; i < mailboxJSON.length(); i++) {
-            loopmailArray.add(new Loopmail(mailboxJSON.getJSONObject(i)));
+    public void addLoopMail(JSONArray mailboxJSON, int start, int max) throws JSONException {
+        for (int i = 0; i < max; i++) {
+            if (start + i > getNumberOfLoopMails() - 1) {
+                loopmailArray.add(new Loopmail(mailboxJSON.getJSONObject(i)));
+            } else {
+                loopmailArray.set(start + i, new Loopmail(mailboxJSON.getJSONObject(i)));
+            }
         }
     }
 

@@ -127,27 +127,30 @@ public class LoopMailFragment extends Fragment {
     private void loadLoopMail(boolean refresh) {
         new Thread(() -> {
             try {
-                casey.findLoopMailInbox(mailBox, 0, 20);
+                if (refresh) {
+                    casey.findLoopMailInbox(mailBox, 0, casey.getMailBox(mailBox).getNumberOfLoopMails());
+                    requireActivity().runOnUiThread(() -> {
+                        updateCards();
+                        refreshLayout.setRefreshing(false);
+                    });
+                } else {
+                    casey.findLoopMailInbox(mailBox, 0, 20);
+                    requireActivity().runOnUiThread(() -> {
+                        progressBar.setEnabled(true);
+                        addCards();
+                        progressBar.setVisibility(View.INVISIBLE);
+                    });
+                }
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
-            requireActivity().runOnUiThread(() -> {
-                if (refresh) {
-                    updateCards();
-                    refreshLayout.setRefreshing(false);
-                } else {
-                    progressBar.setEnabled(true);
-                    addCards();
-                    progressBar.setVisibility(View.INVISIBLE);
-                }
-            });
         }).start();
     }
 
     public void loadMore() {
         new Thread(() -> {
             try {
-                casey.findLoopMailInbox(mailBox, casey.getMailBox(mailBox).getNumberOfLoopMails(), casey.getMailBox(mailBox).getNumberOfLoopMails() + 20);
+                casey.findLoopMailInbox(mailBox, casey.getMailBox(mailBox).getNumberOfLoopMails(), 20);
             } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
