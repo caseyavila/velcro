@@ -95,7 +95,11 @@ public class Student {
     }
 
     public int getNumberOfUpcoming() {
-        return upcomingArray.length;
+        if (upcomingArray == null) {
+            return 0;
+        } else {
+            return upcomingArray.length;
+        }
     }
 
     public Upcoming getUpcoming(int upcoming) {
