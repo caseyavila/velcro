@@ -11,7 +11,7 @@ An improved School Loop app written natively for Android.
 - [x] Loopmail support
 - [x] Assignment support
 - [x] News support
-- [ ] Grade simulation
+- [x] Grade simulation
 - [ ] Locker support
 
 ---
