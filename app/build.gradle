@@ -11,8 +11,8 @@ android {
         applicationId "ga.caseyavila.velcro"
         minSdkVersion 17
         targetSdkVersion 30
-        versionCode 4
-        versionName "1.99.3"
+        versionCode 5
+        versionName "1.99.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
