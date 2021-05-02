@@ -44,4 +44,18 @@
 
     </androidx.recyclerview.widget.RecyclerView>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_assignment_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_gravity="end|bottom"
+            android:contentDescription="@string/add_assignment"
+            android:src="@drawable/ic_add"
+            app:backgroundTint="@color/colorPrimary"
+            app:tint="@android:color/white"
+            app:rippleColor="@android:color/white">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

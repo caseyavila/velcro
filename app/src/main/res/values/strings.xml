@@ -35,11 +35,16 @@
     <string name="percentage_sign">%</string>
     <string name="grade_last_updated">Last updated: %s</string>
     <string name="refresh">Refresh</string>
+    <string name="add_assignment">Add an assignment</string>
 
         <!-- Assignment Edit Dialog -->
         <string name="category">Category</string>
         <string name="score">Score</string>
         <string name="apply">Apply</string>
+
+        <!-- Assignment Add Dialog -->
+        <string name="name">Name</string>
+        <string name="new_assignment">New Assignment</string>
 
     <!-- Loopmail -->
     <string name="loopmail_message_sender">From: %s</string>

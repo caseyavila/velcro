@@ -55,7 +55,7 @@ public class Period {
         assignmentArray.clear();
 
         for (int i = 0; i < gradeJSON.length(); i++) {
-            assignmentArray.add(new Assignment(gradeJSON.getJSONObject(i), weightMap));
+            assignmentArray.add(new Assignment(gradeJSON.getJSONObject(i)));
         }
 
         hasTrends = progressReport.has("trendScores");
@@ -124,7 +124,7 @@ public class Period {
                         categoryMap.get(assignment.getCategory()).scoreEarned += scoreEarned;
                         categoryMap.get(assignment.getCategory()).scorePossible += scorePossible;
                     } else {
-                        categoryMap.put(assignment.getCategory(), new Category(assignment.getWeight(), scoreEarned, scorePossible));
+                        categoryMap.put(assignment.getCategory(), new Category(getWeight(assignment.getCategory()), scoreEarned, scorePossible));
                     }
                 // Create a "main" category that contains all assignments when no weights are involved
                 } else {
@@ -145,6 +145,18 @@ public class Period {
         }
 
         return String.format(Locale.getDefault(), "%.2f", percentage * 100 / effectiveWeight());
+    }
+
+    public double getWeight(String category) {
+        if (weightMap.containsKey(category)) {
+            return weightMap.get(category);
+        } else {
+            return 0;
+        }
+    }
+
+    public void addAssignment(Assignment assignment) {
+        assignmentArray.add(0, assignment);
     }
 
     public String getCalculatedGrade() {
