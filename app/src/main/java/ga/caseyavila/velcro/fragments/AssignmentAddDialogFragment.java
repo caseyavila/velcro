@@ -10,9 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.json.JSONException;
-
 import ga.caseyavila.velcro.Assignment;
 import ga.caseyavila.velcro.Period;
 import ga.caseyavila.velcro.R;
@@ -27,7 +24,7 @@ public class AssignmentAddDialogFragment extends DialogFragment {
     private TextInputEditText nameInput;
     private TextInputEditText scoreEarnedInput;
     private TextInputEditText scorePossibleInput;
-    private CourseViewAdapter courseAdapter;
+    private final CourseViewAdapter courseAdapter;
 
     // Pass card to fragment so we can notify that data set has changed when applied
     public AssignmentAddDialogFragment(CourseViewAdapter adapter) {

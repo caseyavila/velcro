@@ -1,6 +1,5 @@
 package ga.caseyavila.velcro.activities;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import org.json.JSONException;
 import java.io.IOException;
 import java.text.ParseException;
@@ -31,7 +29,6 @@ public class CourseActivity extends AppCompatActivity {
     private int period;
     private CourseViewAdapter adapter;
     private ProgressBar progressBar;
-    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +46,7 @@ public class CourseActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);  // Add back button
         appBar.setNavigationOnClickListener(view -> finish());  // Finish activity when back button is pressed
 
-        floatingActionButton = findViewById(R.id.add_assignment_button);
+        FloatingActionButton floatingActionButton = findViewById(R.id.add_assignment_button);
         floatingActionButton.setOnClickListener(v -> {
             FragmentManager fragmentManager = getSupportFragmentManager();
             DialogFragment dialogFragment = new AssignmentAddDialogFragment(adapter);

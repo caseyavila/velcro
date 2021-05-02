@@ -46,6 +46,9 @@
         <string name="name">Name</string>
         <string name="new_assignment">New Assignment</string>
 
+        <!-- Assignment Remove Dialog -->
+        <string name="assignment_remove_message">Are you sure you want to remove this assignment?</string>
+
     <!-- Loopmail -->
     <string name="loopmail_message_sender">From: %s</string>
     <string name="loopmail_message_recipient">To: %s</string>

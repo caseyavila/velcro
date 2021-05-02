@@ -24,7 +24,7 @@ public class AssignmentEditDialogFragment extends DialogFragment {
     private Spinner spinner;
     private TextInputEditText scoreEarnedInput;
     private TextInputEditText scorePossibleInput;
-    private CourseViewAdapter courseAdapter;
+    private final CourseViewAdapter courseAdapter;
 
     // Pass card to fragment so we can notify that data set has changed when applied
     public AssignmentEditDialogFragment(CourseViewAdapter adapter) {

@@ -16,6 +16,7 @@ import com.google.android.material.textview.MaterialTextView;
 import ga.caseyavila.velcro.R;
 import ga.caseyavila.velcro.activities.CourseActivity;
 import ga.caseyavila.velcro.fragments.AssignmentEditDialogFragment;
+import ga.caseyavila.velcro.fragments.AssignmentRemoveDialogFragment;
 import lecho.lib.hellocharts.formatter.SimpleAxisValueFormatter;
 import lecho.lib.hellocharts.model.*;
 import lecho.lib.hellocharts.view.LineChartView;
@@ -123,6 +124,20 @@ public class CourseViewAdapter extends RecyclerView.Adapter<CourseViewAdapter.Vi
                 dialogFragment.setArguments(bundle);
 
                 dialogFragment.show(fragmentManager, "assignment_edit_dialog");
+            });
+
+            holder.assignmentCardView.setOnLongClickListener(view -> {
+                FragmentManager fragmentManager = ((CourseActivity) context).getSupportFragmentManager();
+                DialogFragment dialogFragment = new AssignmentRemoveDialogFragment(this);
+
+                Bundle bundle = new Bundle();
+                bundle.putInt("period", period);
+                bundle.putInt("assignment", position - 1);
+                dialogFragment.setArguments(bundle);
+
+                dialogFragment.show(fragmentManager, "assignment_remove_dialog");
+
+                return true;
             });
         }
     }

@@ -17,9 +17,7 @@ public class HelpDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(Objects.requireNonNull(getActivity()), R.style.AlertDialogTheme);
         builder.setMessage(R.string.subdomain_explanation)
-                .setPositiveButton(R.string.got_it, (dialogInterface, i) -> {
-                    // Do nothing
-                });
+                .setPositiveButton(R.string.got_it, (dialogInterface, i) -> {dismiss();});
         return builder.create();
     }
 }

@@ -159,6 +159,10 @@ public class Period {
         assignmentArray.add(0, assignment);
     }
 
+    public void removeAssignment(int index) {
+        assignmentArray.remove(index);
+    }
+
     public String getCalculatedGrade() {
         double calculatedPercentage = Double.parseDouble(getCalculatedPercentage());
         if (calculatedPercentage >= 97) {
